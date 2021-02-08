@@ -14,6 +14,7 @@ from scripts.artifacts.accounts_ce import get_accounts_ce
 from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
 from scripts.artifacts.accounts_de import get_accounts_de
 from scripts.artifacts.appicons import get_appicons
+from scripts.artifacts.agent import get_agent
 from scripts.artifacts.build import get_build
 from scripts.artifacts.calllog import get_calllog
 from scripts.artifacts.Cast import get_Cast
@@ -90,6 +91,7 @@ tosearch = {
     'accounts_ce': ('Accounts_ce', '**/system_ce/*/accounts_ce.db'),
     'accounts_ce_authtokens':('Accounts_ce', '**/accounts_ce.db'),
     'accounts_de': ('Accounts_de', '**/system_de/*/accounts_de.db'),
+    'agent': ('Agent Chats', '*/agent_mmssms.db*'),
     'appicons':('Installed Apps', '**/data/com.google.android.apps.nexuslauncher/databases/app_icons.db*'),
     'build':('Device Info', '**/vendor/build.prop'),
     'calllog': ('Call Logs', '**/com.android.providers.contacts/databases/calllog.db'),

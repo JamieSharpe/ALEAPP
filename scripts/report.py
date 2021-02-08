@@ -68,6 +68,7 @@ def get_icon_name(category, artifact):
     elif category == 'WIFI PROFILES':  icon = 'wifi'
     elif category == 'PERMISSIONS':  icon = 'check'
     elif category == 'APP ROLES':  icon = 'tool'
+    elif category == 'AGENT CHATS':  icon = 'message-circle'
         
     return icon
     
