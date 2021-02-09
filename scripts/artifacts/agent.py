@@ -1,5 +1,6 @@
 import sqlite3
 import textwrap
+import os
 
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv, is_platform_windows, open_sqlite_db_readonly
@@ -37,10 +38,15 @@ def get_agent(files_found, report_folder, seeker, wrap_text):
         report = ArtifactHtmlReport('Agent Messages')
         report.start_artifact_report(report_folder, 'Agent Messages')
         report.add_script()
-        data_headers = ('Participants','Original Transmit Date','Message','Mime','Thread ID', 'Message Status' )
+        data_headers = ('Participants','Original Transmit Date','Message','Mime','Thread ID', 'Message Status', 'Row ID' )
         data_list = []
         for row in all_rows:
-            data_list.append((row[0],row[1],row[2],row[3],row[5],row[6]))
+            if row[3] is not None:
+                extension = row[3].split('/')
+                blob_out =  os.path.join(report_folder, str(row[7])+'.'+ str(extension[1]))
+                with open(f'{blob_out}', 'wb') as w:
+                    w.write(row[4])
+            data_list.append((row[0],row[1],row[2],row[3],row[5],row[6],row[7]))
 
         report.write_artifact_data_table(data_headers, data_list, file_found)
         report.end_artifact_report()
