@@ -54,7 +54,14 @@ def get_agent(files_found, report_folder, seeker, wrap_text):
                 blob_out =  os.path.join(report_folder, str(row[7])+'.'+ str(extension[1]))
                 with open(f'{blob_out}', 'wb') as w:
                     w.write(row[4])
-            data_list.append((row[0],time,row[2],row[3],row[5],row[6],row[7]))
+            
+            message = row[2].replace('\n',' ')
+            message = message.strip('\n')
+            message = message.strip('\t')
+            message = message.replace('\t',' ')
+            message = message.strip('\r')
+            message = message.replace('\r',' ')
+            data_list.append((row[0],time,message,row[3],row[5],row[6],row[7]))
 
         report.write_artifact_data_table(data_headers, data_list, file_found)
         report.end_artifact_report()
