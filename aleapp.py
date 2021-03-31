@@ -23,7 +23,7 @@ def main():
         print('')
         with open('path_list.txt', 'a') as paths:
             for key, value in tosearch.items():
-                if type(value[1]) is tuple:
+                if isinstance(value[1], tuple):
                     for x in value[1]:
                         paths.write(x + '\n')
                         print(x)
@@ -34,51 +34,50 @@ def main():
         print('Artifact path list generation completed.')
         return
 
+    input_path = args.input_path
+    extracttype = args.t
+
+    if args.wrap_text is None:
+        wrap_text = True
     else:
-        input_path = args.input_path
-        extracttype = args.t
+        wrap_text = args.wrap_text
 
-        if args.wrap_text is None:
-            wrap_text = True
-        else:
-            wrap_text = args.wrap_text 
-    
-        if args.output_path is None:
-            parser.error('No OUTPUT folder path provided.')
-            return
-        else:
-            output_path = os.path.abspath(args.output_path)
-        
-        if output_path is None:
-            parser.error('No OUTPUT folder selected. Run the program again.')
-            return
-            
-        if input_path is None:
-            parser.error('No INPUT file or folder selected. Run the program again.')
-            return
-        
-        if args.t is None:
-            parser.error('No INPUT FILE TYPE selected. Run the program again.')
-            return
+    if args.output_path is None:
+        parser.error('No OUTPUT folder path provided.')
+        return
+    else:
+        output_path = os.path.abspath(args.output_path)
 
-        if not os.path.exists(input_path):
-            parser.error('INPUT file/folder does not exist! Run the program again.')
-            return
-        
-        if not os.path.exists(output_path):
-            parser.error('OUTPUT folder does not exist! Run the program again.')
-            return  
+    if output_path is None:
+        parser.error('No OUTPUT folder selected. Run the program again.')
+        return
 
-        # Long (260 chars) file path names cause issues in Windows: Fixed with a conversion.
-        if is_platform_windows():
-            if input_path[1] == ':' and extracttype == 'fs':
-                input_path = convert_to_long_path(input_path)
-            if output_path[1] == ':':
-                output_path = convert_to_long_path(output_path)
+    if input_path is None:
+        parser.error('No INPUT file or folder selected. Run the program again.')
+        return
 
-        out_params = OutputParameters(output_path)
+    if args.t is None:
+        parser.error('No INPUT FILE TYPE selected. Run the program again.')
+        return
 
-        crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text)
+    if not os.path.exists(input_path):
+        parser.error('INPUT file/folder does not exist! Run the program again.')
+        return
+
+    if not os.path.exists(output_path):
+        parser.error('OUTPUT folder does not exist! Run the program again.')
+        return
+
+    # Long (260 chars) file path names cause issues in Windows: Fixed with a conversion.
+    if is_platform_windows():
+        if input_path[1] == ':' and extracttype == 'fs':
+            input_path = convert_to_long_path(input_path)
+        if output_path[1] == ':':
+            output_path = convert_to_long_path(output_path)
+
+    out_params = OutputParameters(output_path)
+
+    crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text)
 
 
 def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text):
