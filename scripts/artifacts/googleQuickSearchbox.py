@@ -43,8 +43,6 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.google.android.googlequicksearchbox/app_session/*.binarypb']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
 
         sessions = []

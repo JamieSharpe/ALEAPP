@@ -21,8 +21,6 @@ class SMyFilesStoredPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.sec.android.app.myfiles/databases/FileCache.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
     
         file_found = str(self.files_found[0])

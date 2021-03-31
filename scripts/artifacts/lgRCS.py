@@ -27,8 +27,6 @@ class LgRcsPlugin(ArtefactPlugin):
         self.path_filters = ['*/mmssms.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
         file_found = self.get_rcs_db_path()
         if not file_found:

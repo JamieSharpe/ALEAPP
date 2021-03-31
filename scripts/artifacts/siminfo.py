@@ -21,8 +21,6 @@ class SimInfoPlugin(ArtefactPlugin):
         self.path_filters = ['**/user_de/*/com.android.providers.telephony/databases/telephony.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
 
         slash = '\\' if is_platform_windows() else '/'

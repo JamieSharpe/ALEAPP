@@ -32,8 +32,6 @@ class CelloPlugin(ArtefactPlugin):
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'file'  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
         file_found = self.get_cello_db_path(self.files_found)
         if not file_found:

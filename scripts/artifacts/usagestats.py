@@ -80,8 +80,6 @@ class UsageStatsPlugin(ArtefactPlugin):
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
 
         logfunc ('Android Usagestats XML & Protobuf Parser')

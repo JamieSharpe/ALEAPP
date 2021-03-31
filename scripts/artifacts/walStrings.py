@@ -27,8 +27,6 @@ class WalStringsPlugin(ArtefactPlugin):
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
 
         control_chars = ''.join(map(chr, range(0,32))) + ''.join(map(chr, range(127,160)))

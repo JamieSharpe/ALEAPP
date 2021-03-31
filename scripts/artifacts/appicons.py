@@ -39,8 +39,6 @@ class AppIconsPlugin(ArtefactPlugin):
         self.path_filters = ['**/data/com.google.android.apps.nexuslauncher/databases/app_icons.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
         sessions = []
         for file_found in self.files_found:

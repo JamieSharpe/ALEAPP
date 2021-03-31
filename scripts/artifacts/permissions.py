@@ -23,8 +23,6 @@ class PermissionsPlugin(ArtefactPlugin):
         self.path_filters = ['*/system/packages.xml']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
     
         slash = '\\' if is_platform_windows() else '/'

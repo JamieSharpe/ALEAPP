@@ -22,8 +22,6 @@ class CallLogPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.android.providers.contacts/databases/calllog.db']  # Collection of regex search filters to locate an artefact.
         self.icon = 'phone'  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
     
         file_found = str(self.files_found[0])

@@ -21,8 +21,6 @@ class SMembersEventsPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.samsung.oh/databases/com_pocketgeek_sdk.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
 
     

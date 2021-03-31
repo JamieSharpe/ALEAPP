@@ -21,8 +21,6 @@ class UserDictPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.android.providers.userdictionary/databases/user_dict.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
-
     def _processor(self) -> bool:
 
         file_found = str(self.files_found[0])
