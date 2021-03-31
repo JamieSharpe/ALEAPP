@@ -122,7 +122,7 @@ tosearch = {
     # 'quicksearch_recent':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/files/recently/*'),
     # 'recentactivity':('Recent Activity', '**/system_ce/*'),
     # 'lgRCS':('RCS Chats', '*/mmssms.db*'),
-    'permissions':('Permissions', '*/system/packages.xml'),
+    # 'permissions':('Permissions', '*/system/packages.xml'),
     'roles':('App Roles',('*/system/users/*/roles.xml','*/misc_de/*/apexdata/com.android.permission/roles.xml')),
     'runtimePerms':('Permissions',('*/system/users/*/runtime-permissions.xml','*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml')),
     'scontextLog':('App Interaction', '**/com.samsung.android.providers.context/databases/ContextLog.db'),
