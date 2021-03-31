@@ -9,6 +9,7 @@ from scripts.ilapfuncs import is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc
+from scripts import artifact_report
 
 
 class RecentActivityPlugin(ArtefactPlugin):
@@ -21,17 +22,23 @@ class RecentActivityPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Recent Activity'
+        self.category = 'Recent Activity'
+        self.name = 'Recent Tasks, Snapshots & Images'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_ce/*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
+        self.debug_mode = True
+
     def _processor(self) -> bool:
 
         slash = '\\' if is_platform_windows() else '/'
 
+        self.custom_context = {
+            'artefacts': []
+        }
         # Filter for path xxx/yyy/system_ce/0
         for file_found in self.files_found:
             file_found = str(file_found)
@@ -46,6 +53,9 @@ class RecentActivityPlugin(ArtefactPlugin):
                     self.process_recentactivity(file_found, uid)
                 except ValueError:
                     pass # uid was not a number
+
+        if len(self.custom_context['artefacts']) > 0:
+            artifact_report.GenerateHtmlReport(self, html_template = 'body_artefact_recent_activity.html', allow_html = True, custom_context = self.custom_context)
 
         return True
 
@@ -156,12 +166,12 @@ class RecentActivityPlugin(ArtefactPlugin):
                         cursor.execute('INSERT INTO recent (task_id, effective_uid, affinity, real_activity, first_active_time, last_active_time, last_time_moved, calling_package, user_id, action, component, snap, recimg, fullat1, fullat2)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', datainsert)
                         db.commit()
 
-        report = ArtifactHtmlReport('Recent Tasks, Snapshots & Images')
+        # report = ArtifactHtmlReport('Recent Tasks, Snapshots & Images')
         location = os.path.join(folder, 'recent_tasks')
-        report.start_artifact_report(self.report_folder, f'Recent Activity_{uid}', f'Artifacts located at {location}')
-        report.add_script()
-        data_headers = ('Key', 'Value')
-        image_data_headers = ('Snapshot_Image', 'Recent_Image')
+        # report.start_artifact_report(self.report_folder, f'Recent Activity_{uid}', f'Artifacts located at {location}')
+        # report.add_script()
+
+
 
         #Query to create report
         db = sqlite3.connect(os.path.join(self.report_folder, 'RecentAct_{}.db'.format(uid)))
@@ -194,7 +204,7 @@ class RecentActivityPlugin(ArtefactPlugin):
             else:
                 row2 = row[2]
 
-            report.write_minor_header(f'Application: {row2}')
+            # report.write_minor_header(f'Application: {row2}')
 
             #do loop for headers
             data_list = []
@@ -205,7 +215,9 @@ class RecentActivityPlugin(ArtefactPlugin):
                 else:
                     data_list.append((colnames[x][0], str(row[x])))
 
-            report.write_artifact_data_table(data_headers, data_list, folder, table_id='', write_total=False, write_location=False, cols_repeated_at_bottom=False)
+
+            data_headers = ('Key', 'Value')
+            # report.write_artifact_data_table(data_headers, data_list, folder, table_id='', write_total=False, write_location=False, cols_repeated_at_bottom=False)
 
             image_data_row = []
             image_data_list = [image_data_row]
@@ -218,8 +230,21 @@ class RecentActivityPlugin(ArtefactPlugin):
                 image_data_row.append('No Image')
             else:
                 image_data_row.append('<a href="{1}/{0}"><img src="{1}/{0}" class="img-fluid z-depth-2 zoom" style="max-height: 400px" title="{0}"></a>'.format(str(row[12]), folder_name))
-            report.write_artifact_data_table(image_data_headers, image_data_list, folder, table_id='', table_style="width: auto",
-                write_total=False, write_location=False, html_escape=False, cols_repeated_at_bottom=False)
-            report.write_raw_html('<br />')
 
-        report.end_artifact_report()
+            image_data_headers = ('Snapshot_Image', 'Recent_Image')
+            # report.write_artifact_data_table(image_data_headers, image_data_list, folder, table_id='', table_style="width: auto",
+            #     write_total=False, write_location=False, html_escape=False, cols_repeated_at_bottom=False)
+
+            self.custom_context['artefacts'].append(
+            {
+                'application_name': row2,
+                'application_location': location,
+                'application_keyvar_header': ('Key', 'Value'),
+                'application_keyvar_data'  : data_list,
+                'application_image_header': ('Snapshot_Image', 'Recent_Image'),
+                'application_image_data': image_data_list
+            })
+
+            # report.write_raw_html('<br />')
+
+        # report.end_artifact_report()

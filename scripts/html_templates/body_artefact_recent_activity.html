@@ -1,0 +1,146 @@
+{#
+    Artefact base page.
+
+    Provides a basic structure for an artefact.
+
+    Expected context:
+        context:
+        {
+
+        }
+#}
+
+{% import "macros.html" as macros %}
+{% block main_body %}
+    {# Header #}
+    <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div id="{{ context.unique_id }}"></div>
+        <h1 class="display-5">{{ context.artefact.category }} - {{ context.artefact.name }}</h1>
+        <h6 class="animated fadeIn mb-3">{{ context.artefact.artefact_reference }}</h6>
+    </div>
+
+    {# Artefact files found #}
+
+    <div id="accordion" class="mb-5">
+        <div class="card">
+            <div class="card-header p-0" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                     <h6>Located {{ context.artefact.files_found|length }} artefact files:</h6>
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <ul>
+                        {% for file in context.artefact.files_found %}
+                            <li>{{ file }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Start of custom artefact template rendering. #}
+
+    {% for artefact in context.custom_context.artefacts %}
+
+        {% if artefact.application_name %}
+            <h2>Application: {{ artefact.application_name }}</h2>
+
+            {% if artefact.application_location %}
+                <h6>{{ artefact.application_location }}</h6>
+            {% endif %}
+        {% endif %}
+
+
+        <table class="table table-striped table-bordered table-xsm" cellspacing="0"  style="width: 70%">
+
+            {# Table Header #}
+            {% if artefact.application_keyvar_header %}
+                <thead>
+                    <tr>
+                        {% for header in artefact.application_keyvar_header %}
+                            <th class="th-sm">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {# Table Body #}
+            <tbody>
+                {% for row in artefact.application_keyvar_data %}
+                    <tr>
+                        {% for cell_data in row %}
+                            {% if context.allow_html %}
+                                <td>{{ cell_data|safe }}</td>
+                            {% else %}
+                                <td>{{ cell_data }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            {# Table Footer #}
+            {% if artefact.application_keyvar_header %}
+                <thead>
+                    <tr>
+                        {% for header in artefact.application_keyvar_header %}
+                            <th class="th-sm">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+        </table>
+
+
+        <table class="table table-striped table-bordered table-xsm" cellspacing="0"  style="width: 70%">
+            {# Table Header #}
+            {% if artefact.application_image_header %}
+                <thead>
+                    <tr>
+                        {% for header in artefact.application_image_header %}
+                            <th class="th-sm">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {# Table Body #}
+            <tbody>
+                {% for row in artefact.application_image_data %}
+                    <tr>
+                        {% for cell_data in row %}
+
+                            {% if context.allow_html %}
+                                <td>{{ cell_data|safe }}</td>
+                            {% else %}
+                                <td>{{ cell_data }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            {# Table Footer #}
+            {% if artefact.application_image_header %}
+                <thead>
+                    <tr>
+                        {% for header in artefact.application_image_header %}
+                            <th class="th-sm">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+
+        </table>
+
+        {% if not loop.last %}
+            <hr class="mt-5 mb-5"/>
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock main_body %}
