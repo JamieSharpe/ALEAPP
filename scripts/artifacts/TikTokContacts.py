@@ -30,33 +30,33 @@ class TikTokContactsPlugin(ArtefactPlugin):
             if file_found.endswith('_im.db'):
                 maindb = file_found
 
-        db = open_sqlite_db_readonly(maindb)
-        cursor = db.cursor()
-        cursor.execute('''
-                    select
-                    UID,
-                    NICK_NAME,
-                    UNIQUE_ID,
-                    INITIAL_LETTER,
-                    json_extract(AVATAR_THUMB, '$.url_list[0]') as avatarURL,
-                    FOLLOW_STATUS 
-                    from SIMPLE_USER
-                    ''')
+            db = open_sqlite_db_readonly(maindb)
+            cursor = db.cursor()
+            cursor.execute('''
+                        select
+                        UID,
+                        NICK_NAME,
+                        UNIQUE_ID,
+                        INITIAL_LETTER,
+                        json_extract(AVATAR_THUMB, '$.url_list[0]') as avatarURL,
+                        FOLLOW_STATUS 
+                        from SIMPLE_USER
+                        ''')
 
-        all_rows = cursor.fetchall()
+            all_rows = cursor.fetchall()
 
-        if len(all_rows) > 0:
-            for row in all_rows:
-                data_list.append((row[0], row[1], row[2], row[3], row[4], row[5]))
+            if len(all_rows) > 0:
+                for row in all_rows:
+                    data_list.append((row[0], row[1], row[2], row[3], row[4], row[5]))
 
-            data_headers = ('UID', 'Nickname', 'Unique ID', 'Initial Letter', 'Avatar URL', 'Follow Status')
-            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
+                data_headers = ('UID', 'Nickname', 'Unique ID', 'Initial Letter', 'Avatar URL', 'Follow Status')
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name())
 
-        else:
-            logfunc('No TikTok Contacts available')
+            else:
+                logfunc('No TikTok Contacts available')
 
-        db.close()
+            db.close()
 
         return True
