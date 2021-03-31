@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from scripts.ilapfuncs import open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
@@ -40,7 +41,7 @@ class ImoMessagesPlugin(ArtefactPlugin):
             try:
                 cursor.execute('''
                              SELECT messages.buid AS buid, imdata, last_message, timestamp/1000000000, 
-                                    case message_type when 1 then "Incoming" else "Outgoing" end message_type, message_read, name
+                                    case message_type when 1 then "Incoming" else "Outgoing" end message_type, message_read
                                FROM messages
                               INNER JOIN friends ON friends.buid = messages.buid
                 ''')
@@ -52,11 +53,29 @@ class ImoMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('build','imdata', 'last_message', 'timestamp', 'message_type', 'message_read', 'name') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('from_id', 'to_id', 'last_message', 'timestamp', 'direction', 'message_read', 'attachment')
                 data_list = []
+
                 for row in all_rows:
+                    from_id = ''
+                    to_id = ''
+                    if row[4] == "Incoming":
+                        from_id = row[0]
+                    else:
+                        to_id = row[0]
+                    if row[1] is not None:
+                        imdata_dict = json.loads(row[1])
+
+                        # set to none if the key doesn't exist in the dict
+                        attachmentOriginalPath = imdata_dict.get('original_path', None)
+                        attachmentLocalPath = imdata_dict.get('local_path', None)
+                        if attachmentOriginalPath:
+                            attachmentPath = attachmentOriginalPath
+                        else:
+                            attachmentPath = attachmentLocalPath
+
                     timestamp = datetime.datetime.fromtimestamp(int(row[3])).strftime('%Y-%m-%d %H:%M:%S')
-                    data_list.append((row[0], row[1], row[2], timestamp, row[4], row[5], row[6]))
+                    data_list.append((from_id, to_id, row[2], timestamp, row[4], row[5], attachmentPath))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
