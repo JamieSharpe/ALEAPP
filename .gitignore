@@ -110,3 +110,6 @@ ENV/
 
 # Sample folder
 Z - Ignore/
+
+# Pycharm build scripts
+*.run.xml
