@@ -1,44 +1,63 @@
-import sqlite3
-import textwrap
-
+from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
+from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.ilapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly
+from scripts.ilapfuncs import logfunc, tsv
 
-def get_smembersEvents(files_found, report_folder, seeker, wrap_text):
+
+class SMembersEventsPlugin(ArtefactPlugin):
+    """
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.author = 'Unknown'
+        self.author_email = ''
+        self.author_url = ''
+
+        self.name = 'App Interaction'
+        self.description = ''
+
+        self.artefact_reference = ''  # Description on what the artefact is.
+        self.path_filters = ['**/com.samsung.oh/databases/com_pocketgeek_sdk.db']  # Collection of regex search filters to locate an artefact.
+        self.icon = ''  # feathricon for report.
+
+    def _processor(self) -> bool:
+
     
-    file_found = str(files_found[0])
-    db = open_sqlite_db_readonly(file_found)
-    cursor = db.cursor()
-    cursor.execute('''
-    select 
-    datetime(created_at /1000, "unixepoch"), 
-    type, 
-    value,
-    in_snapshot
-    FROM device_events
-    ''')
+        file_found = str(self.files_found[0])
+        db = open_sqlite_db_readonly(file_found)
+        cursor = db.cursor()
+        cursor.execute('''
+        select 
+        datetime(created_at /1000, "unixepoch"), 
+        type, 
+        value,
+        in_snapshot
+        FROM device_events
+        ''')
 
-    all_rows = cursor.fetchall()
-    usageentries = len(all_rows)
-    if usageentries > 0:
-        report = ArtifactHtmlReport('Samsung Members - Events')
-        report.start_artifact_report(report_folder, 'Samsung Members - Events')
-        report.add_script()
-        data_headers = ('Created At','Type','Value','Snapshot?' )
-        data_list = []
-        for row in all_rows:
-            data_list.append((row[0],row[1],row[2],row[3]))
+        all_rows = cursor.fetchall()
+        usageentries = len(all_rows)
+        if usageentries > 0:
+            report = ArtifactHtmlReport('Samsung Members - Events')
+            report.start_artifact_report(self.report_folder, 'Samsung Members - Events')
+            report.add_script()
+            data_headers = ('Created At','Type','Value','Snapshot?' )
+            data_list = []
+            for row in all_rows:
+                data_list.append((row[0],row[1],row[2],row[3]))
 
-        report.write_artifact_data_table(data_headers, data_list, file_found)
-        report.end_artifact_report()
-        
-        tsvname = f'samsung members - events'
-        tsv(report_folder, data_headers, data_list, tsvname)
-        
-        tlactivity = f'Samsung Members - Events'
-        timeline(report_folder, tlactivity, data_list, data_headers)
-    else:
-        logfunc('No Samsung Members - Events data available')
-    
-    db.close()
-    return
+            report.write_artifact_data_table(data_headers, data_list, file_found)
+            report.end_artifact_report()
+
+            tsvname = f'samsung members - events'
+            tsv(self.report_folder, data_headers, data_list, tsvname)
+
+            tlactivity = f'Samsung Members - Events'
+            timeline(self.report_folder, tlactivity, data_list, data_headers)
+        else:
+            logfunc('No Samsung Members - Events data available')
+
+        db.close()
+
+        return True

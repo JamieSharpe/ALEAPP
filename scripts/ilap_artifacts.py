@@ -131,7 +131,7 @@ tosearch = {
     # 'smanagerCrash':('App Interaction', '**/com.samsung.android.sm/databases/sm.db'),
     # 'smanagerLow':('App Interaction', '**/com.samsung.android.sm/databases/lowpowercontext-system-db'),
     # 'smembersAppInv':('App Interaction', '**/com.samsung.oh/databases/com_pocketgeek_sdk_app_inventory.db'),
-    'smembersEvents':('App Interaction', '**/com.samsung.oh/databases/com_pocketgeek_sdk.db'),
+    # 'smembersEvents':('App Interaction', '**/com.samsung.oh/databases/com_pocketgeek_sdk.db'),
     'sms_mms':('SMS & MMS', '**/com.android.providers.telephony/databases/mmssms*'), # Get mmssms.db, mms-wal.db
     'smyfilesRecents':('Media Metadata', '**/com.sec.android.app.myfiles/databases/myfiles.db'),
     'smyFiles':('Media Metadata', '**/com.sec.android.app.myfiles/databases/MyFiles*.db*'),
