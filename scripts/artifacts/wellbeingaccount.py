@@ -24,7 +24,7 @@ class WellBeingAccountPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.google.android.apps.wellbeing/files/AccountData.pb']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = False
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -32,12 +32,12 @@ class WellBeingAccountPlugin(ArtefactPlugin):
         content = ParseProto(file_found)
 
         content_json_dump = json.dumps(content, indent=4, sort_keys=True, ensure_ascii=False)
-        parsedContent = str(content_json_dump).encode(encoding='UTF-8',errors='ignore')
+        parsedContent = str(content_json_dump).encode(encoding='UTF-8', errors='ignore')
 
         data_headers = ('Protobuf Parsed Data', 'Protobuf Data')
         data_list = []
         data_list.append(('<pre id=\"json\">'+str(parsedContent).replace("\\n", "<br>")+'</pre>', str(content)))
-        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
+        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
         tsvname = f'wellbeing account'
         tsv(self.report_folder, data_headers, data_list, tsvname)

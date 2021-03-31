@@ -27,7 +27,7 @@ class WalStringsPlugin(ArtefactPlugin):
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        # self.debug_mode = False
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -54,7 +54,7 @@ class WalStringsPlugin(ArtefactPlugin):
             unique_items = set() # For deduplication of strings found
             with open(outputpath, 'w') as g:
                 with open(file_found, errors="ignore") as f:  # Python 3.x
-                    data =  f.read()
+                    data = f.read()
                     #for match in not_control_char_re.finditer(data): # This gets all unicode chars, can include lot of garbage if you only care about English, will miss out other languages
                     for match in ascii_chars_re.finditer(data): # Matches ONLY Ascii (old behavior) , good if you only care about English
                         if match.group() not in unique_items:
@@ -73,14 +73,7 @@ class WalStringsPlugin(ArtefactPlugin):
                     pass
             x = x + 1
 
-        location = ''
-        description = 'ASCII strings extracted from SQLite journal and WAL files.'
-        report = ArtifactHtmlReport('Strings - SQLite Journal & WAL')
-        report.start_artifact_report(self.report_folder, 'Strings - SQLite Journal & WAL', description)
-        report.add_script()
         data_headers = ('Report', 'Location')
-        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
-        report.write_artifact_data_table(data_headers, data_list, location, html_escape=False)
-        report.end_artifact_report()
+        artifact_report.GenerateHtmlReport(self, '', data_headers, data_list, allow_html = True)
 
         return True

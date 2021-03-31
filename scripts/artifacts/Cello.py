@@ -5,6 +5,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows, open_sqlite_db_read
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -20,7 +21,8 @@ class CelloPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Google Docs'
+        self.category = 'Google Docs'
+        self.name = 'Cello'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -28,7 +30,9 @@ class CelloPlugin(ArtefactPlugin):
             '*/com.google.android.apps.docs/app_cello/*/cello.db*',
             '*/com.google.android.apps.docs/files/shiny_blobs/blobs/*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'file'  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         file_found = self.get_cello_db_path(self.files_found)
@@ -88,9 +92,6 @@ class CelloPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Cello')
-            report.start_artifact_report(self.report_folder, 'Cello')
-            report.add_script()
             data_headers = ('Created Date','File Name','Modified Date','Shared with User Date','Modified by User Date','Viewed by User Date','Mime Type', \
                             'Offline','Quota Size','Folder','User is Owner','Deleted')
             data_list = []
@@ -122,8 +123,7 @@ class CelloPlugin(ArtefactPlugin):
                 data_list.append((row[0],doc_name,row[2],row[3],row[4],row[5],row[6],offline_status,row[7],row[8],row[9],row[10]))
                 tsv_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6],offline_status,row[7],row[8],row[9],row[10]))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
             tsvname = f'Google Drive - Cello'
             tsv(self.report_folder, data_headers, tsv_list, tsvname)

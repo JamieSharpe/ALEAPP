@@ -8,6 +8,8 @@ from scripts.ilapfuncs import is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
+
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -23,12 +25,15 @@ class GoogleQuickSearchRecentPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Google Now & QuickSearch'
-        self.description = ''
+        self.category = 'Google Now & QuickSearch'
+        self.name = 'Google Now & Quick Search Recent Events'
+        self.description = 'Recently searched terms from the Google Search widget and webpages read from Google app (previously known as \'Google Now\') appear here.'
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'Recently searched terms from the Google Search widget and webpages read from Google app (previously known as \'Google Now\') appear here.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.googlequicksearchbox/files/recently/*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -83,10 +88,7 @@ class GoogleQuickSearchRecentPlugin(ArtefactPlugin):
             folder_name = os.path.basename(self.report_folder)
         recent_entries = len(recents)
         if recent_entries > 0:
-            description = "Recently searched terms from the Google Search widget and webpages read from Google app (previously known as 'Google Now') appear here."
-            report = ArtifactHtmlReport('Google Now & Quick Search recent events')
-            report.start_artifact_report(self.report_folder, 'Recent Searches & Google Now', description)
-            report.add_script()
+
             data_headers = ('Screenshot', 'Protobuf Data')
             data_list = []
             for file_path, items in recents:
@@ -100,11 +102,9 @@ class GoogleQuickSearchRecentPlugin(ArtefactPlugin):
                     self.recursive_convert_bytes_to_str(item) # convert all 'bytes' to str
                     data_list.append( (img_html, '<pre id="json" style="font-size: 110%">'+ escape(json.dumps(item, indent=4)).replace('\\n', '<br>') +'</pre>') )
 
-            report.write_artifact_data_table(data_headers, data_list, dir_path, html_escape=False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, '', data_headers, data_list, allow_html = True)
 
-            tsvname = f'google quick search box recent'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc('No recent quick search or now data available')
 

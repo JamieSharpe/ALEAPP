@@ -35,19 +35,22 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Google Now & QuickSearch'
-        self.description = ''
+        self.category = 'Google Now & QuickSearch'
+        self.name = 'Google App & Quick Search Queries'
+        self.description = 'Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously known as \'Google Now\') appear here. This can include previously searched items from another device too!'
 
         self.artefact_reference = 'Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously known as \'Google Now\') appear here. This can include previously searched items from another device too!'
         self.path_filters = ['**/com.google.android.googlequicksearchbox/app_session/*.binarypb']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
         sessions = []
         base_folder = ''
         for file_found in self.files_found:
-            file_found = str(file_found)
+
             if file_found.find('{0}mirror{0}'.format(slash)) >= 0:
                 # Skip sbin/.magisk/mirror/data/.. , it should be duplicate data
                 continue
@@ -69,11 +72,6 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
             folder_name = os.path.basename(self.report_folder)
         entries = len(sessions)
         if entries > 0:
-            description = "Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously "\
-                            "known as 'Google Now') appear here. This can include previously searched items from another device too!"
-            report = ArtifactHtmlReport('Google App & Quick Search queries')
-            report.start_artifact_report(self.report_folder, 'Searches & Personal assistant', description)
-            report.add_script()
             data_headers = ('File Timestamp', 'Type', 'Queries', 'Response', 'Source File')
             data_list = []
             for s in sessions:
@@ -83,14 +81,11 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
                     response = f'<audio controls><source src="{folder_name}/{filename}"></audio>'
                 data_list.append( (s.file_last_mod_date, s.session_type, escape(', '.join(s.session_queries)), response, s.source_file) )
 
-            report.write_artifact_data_table(data_headers, data_list, base_folder, html_escape=False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
-            tsvname = f'google quick search box'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Google Quick Search Box'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
         else:
             logfunc('No recent quick search or now data available')
 
