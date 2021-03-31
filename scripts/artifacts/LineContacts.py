@@ -56,8 +56,6 @@ class LineContactsPlugin(ArtefactPlugin):
 
                 tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_msg)
 
-                timeline(self.report_folder, self.full_name(), data_list, data_headers)
-
             else:
                 logfunc('No Line Contact Logs found')
 

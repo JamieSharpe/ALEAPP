@@ -70,7 +70,7 @@ class LineMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('start_time','from_id', 'to_id', 'direction', 'thread_id', 'message', 'attachments')
+                data_headers = ('Start Time', 'From ID', 'To ID', 'Direction', 'Thread ID', 'Message', 'Attachments')
                 data_list = []
                 for row in all_rows:
                     thread_id = None
@@ -97,7 +97,7 @@ class LineMessagesPlugin(ArtefactPlugin):
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
-                logfunc('No Line messages available')
+                logfunc('No Line Messages available')
 
             db.close()
 

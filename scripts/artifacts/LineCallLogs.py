@@ -1,8 +1,7 @@
 import datetime
 
-from scripts.ilapfuncs import open_sqlite_db_readonly
+from scripts.ilapfuncs import open_sqlite_db_readonly, logfunc, tsv, timeline
 from scripts.plugin_base import ArtefactPlugin
-from scripts.ilapfuncs import logfunc, tsv
 from scripts import artifact_report
 
 
@@ -76,7 +75,7 @@ class LineCallLogsPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('start_time', 'end_time', 'to_id', 'from_id', 'direction', 'call_type')
+                data_headers = ('Start Time', 'End Time', 'To ID', 'From ID', 'Direction', 'Call Type')
                 data_list = []
                 for row in all_rows:
                     start_time = datetime.datetime.fromtimestamp(int(row[1])).strftime('%Y-%m-%d %H:%M:%S')
@@ -87,8 +86,10 @@ class LineCallLogsPlugin(ArtefactPlugin):
 
                 tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_call)
 
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
+
             else:
-                logfunc('No Line Calllogs found')
+                logfunc('No Line Call Logs found')
 
             db.close()
 
