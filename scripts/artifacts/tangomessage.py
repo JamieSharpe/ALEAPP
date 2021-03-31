@@ -51,7 +51,7 @@ class TangoMessagesPlugin(ArtefactPlugin):
 
         if usageentries > 0:
 
-            data_headers = ('create_time', 'direction','message')
+            data_headers = ('Create Time', 'Direction', 'Message')
             data_list = []
             for row in all_rows:
                 message = self._decodeMessage(row[0], row[1])
@@ -65,12 +65,12 @@ class TangoMessagesPlugin(ArtefactPlugin):
 
             timeline(self.report_folder, self.full_name(), data_list, data_headers)
         else:
-            logfunc('No tangomessages data available')
+            logfunc('No Tango Messages data available')
 
         db.close()
         return True
 
-    def _decodeMessage(self, wrapper, message):
+    def decodeMessage(self, wrapper, message):
         result = ""
         decoded = base64.b64decode(message)
         try:
