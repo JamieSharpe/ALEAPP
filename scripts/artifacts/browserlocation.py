@@ -16,8 +16,8 @@ class BrowserLocationPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.category = 'Browser'
-        self.name = 'Locations'
+        self.category = 'Geo Location'
+        self.name = 'Browser'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
