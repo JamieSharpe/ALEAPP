@@ -215,8 +215,6 @@ def timeline(report_folder, tlactivity, data_list, data_headers):
     """
     Generates a timeline of events.
 
-    TODO: Wrap the function in a try/catch.
-
     :param report_folder:
     :param tlactivity:
     :param data_list:
@@ -231,29 +229,33 @@ def timeline(report_folder, tlactivity, data_list, data_headers):
     os.makedirs(tl_report_folder, exist_ok = True)
     tldb = os.path.join(tl_report_folder, 'tl.db')
 
-    if os.path.isfile(tldb):
-        db = sqlite3.connect(tldb, isolation_level = 'exclusive')
-        cursor = db.cursor()
-        cursor.execute('''PRAGMA synchronous = EXTRA''')
-        cursor.execute('''PRAGMA journal_mode = WAL''')
-    else:
-        db = sqlite3.connect(tldb, isolation_level = 'exclusive')
-        cursor = db.cursor()
-        cursor.execute(
-            """
-                CREATE TABLE data(key TEXT, activity TEXT, datalist TEXT)
-            """
-        )
-    db.commit()
+    try:
+        if os.path.isfile(tldb):
+            db = sqlite3.connect(tldb, isolation_level = 'exclusive')
+            cursor = db.cursor()
+            cursor.execute('''PRAGMA synchronous = EXTRA''')
+            cursor.execute('''PRAGMA journal_mode = WAL''')
+        else:
+            db = sqlite3.connect(tldb, isolation_level = 'exclusive')
+            cursor = db.cursor()
+            cursor.execute(
+                """
+                    CREATE TABLE data(key TEXT, activity TEXT, datalist TEXT)
+                """
+            )
+        db.commit()
 
-    # TODO: format the data to correctly capitalise on the cursor.executemany method.
-    # In the current state, this section of code is running a single insert query, many times, on a list containing a
-    # single item. It is not taking advantage of the executemany capabilities where a large list can be provided.
-    for data_item in data_list:
-        modifiedList = list(map(lambda x, y: x + ': ' + str(y), data_headers, data_item))
-        cursor.executemany("INSERT INTO data VALUES(?,?,?)", [(str(data_item[0]), tlactivity, str(modifiedList))])
-    db.commit()
-    db.close()
+        # TODO: format the data to correctly capitalise on the cursor.executemany method.
+        # In the current state, this section of code is running a single insert query, many times, on a list containing a
+        # single item. It is not taking advantage of the executemany capabilities where a large list can be provided.
+        for data_item in data_list:
+            modifiedList = list(map(lambda x, y: x + ': ' + str(y), data_headers, data_item))
+            cursor.executemany("INSERT INTO data VALUES(?,?,?)", [(str(data_item[0]), tlactivity, str(modifiedList))])
+        db.commit()
+        db.close()
+    except sqlite3.Error as ex:
+        logfunc(f'Query error, Error={ex}')
+
 
 
 def kmlgen(report_folder, kmlactivity, data_list, data_headers):
@@ -263,38 +265,42 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     
     os.makedirs(kml_report_folder, exist_ok = True)
     latlongdb = os.path.join(kml_report_folder, '_latlong.db')
-
-    if os.path.isfile(latlongdb):
-        db = sqlite3.connect(latlongdb)
-        cursor = db.cursor()
-        cursor.execute('''PRAGMA synchronous = EXTRA''')
-        cursor.execute('''PRAGMA journal_mode = WAL''')
-    else:
-        db = sqlite3.connect(latlongdb)
-        cursor = db.cursor()
-        cursor.execute(
-            """
-                CREATE TABLE data(key TEXT, latitude TEXT, longitude TEXT, activity TEXT)
-            """
-        )
-    db.commit()
-
     kml = simplekml.Kml()
 
-    for data_item in data_list:
-        modifiedDict = dict(zip(data_headers, data_item))
-        times = modifiedDict.get('Timestamp', None)
-        lon = modifiedDict.get('Longitude', 0)
-        lat = modifiedDict.get('Latitude', 0)
-        if (lat == 0 and lon == 0) and (times is not None):
-            pnt = kml.newpoint()
-            pnt.name = times
-            pnt.description = f'Timestamp: {times} - {kmlactivity}'
-            pnt.coords = [(lon, lat)]
-            cursor.execute("INSERT INTO data VALUES(?,?,?,?)", (times, lat, lon, kmlactivity))
+    try:
+        if os.path.isfile(latlongdb):
+            db = sqlite3.connect(latlongdb)
+            cursor = db.cursor()
+            cursor.execute('''PRAGMA synchronous = EXTRA''')
+            cursor.execute('''PRAGMA journal_mode = WAL''')
+        else:
+            db = sqlite3.connect(latlongdb)
+            cursor = db.cursor()
+            cursor.execute(
+                """
+                    CREATE TABLE data(key TEXT, latitude TEXT, longitude TEXT, activity TEXT)
+                """
+            )
+        db.commit()
 
-    db.commit()
-    db.close()
+        for data_item in data_list:
+            modifiedDict = dict(zip(data_headers, data_item))
+            times = modifiedDict.get('Timestamp', None)
+            lon = modifiedDict.get('Longitude', 0)
+            lat = modifiedDict.get('Latitude', 0)
+            if (lat == 0 and lon == 0) and (times is not None):
+                pnt = kml.newpoint()
+                pnt.name = times
+                pnt.description = f'Timestamp: {times} - {kmlactivity}'
+                pnt.coords = [(lon, lat)]
+                cursor.execute("INSERT INTO data VALUES(?,?,?,?)", (times, lat, lon, kmlactivity))
+
+        db.commit()
+        db.close()
+
+    except sqlite3.Error as ex:
+        logfunc(f'Query error, Error={ex}')
+
     kml.save(os.path.join(kml_report_folder, f'{kmlactivity}.kml'))
 
 
