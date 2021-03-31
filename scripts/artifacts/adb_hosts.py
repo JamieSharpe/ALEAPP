@@ -1,7 +1,7 @@
 from scripts.plugin_base import ArtefactPlugin
-from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
 from scripts import artifact_report
+
 
 class AdbHostsPlugin(ArtefactPlugin):
     """

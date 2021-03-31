@@ -195,6 +195,7 @@ def html2csv(reportfolderbase):
 
 
 def tsv(report_folder, data_headers, data_list, tsvname):
+    # TODO: Add the paramter to record the file analysed.
     report_folder = report_folder.rstrip('/\\')
     report_folder_base, tail = os.path.split(report_folder)
     tsv_report_folder = os.path.join(report_folder_base, '_TSV Exports')
