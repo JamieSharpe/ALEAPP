@@ -1,3 +1,4 @@
+import datetime
 from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.ilapfuncs import logfunc, tsv
@@ -29,7 +30,7 @@ class ShareItPlugin(ArtefactPlugin):
             if file_found.endswith('history.db'):
                 break
 
-        # source_file = file_found.replace(seeker.directory, '')
+        source_file = file_found.replace(self.seeker.directory, '')
 
         db = open_sqlite_db_readonly(file_found)
         cursor = db.cursor()
@@ -50,14 +51,14 @@ class ShareItPlugin(ArtefactPlugin):
 
         if usageentries > 0:
 
-            data_headers = ('direction','from_id', 'to_id', 'device_name', 'description', 'timestamp', 'file_path', 'source_file') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+            data_headers = ('direction', 'from_id', 'to_id', 'device_name', 'description', 'timestamp', 'file_path')  #
             data_list = []
             for row in all_rows:
-                data_list.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6], ''))
-
+                timestamp = datetime.datetime.fromtimestamp(int(row[5])).strftime('%Y-%m-%d %H:%M:%S')
+                data_list.append((row[0], row[1], row[2], row[3], row[4], timestamp, row[6]))
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.full_name())
+            tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file)
 
             timeline(self.report_folder, self.full_name(), data_list, data_headers)
         else:

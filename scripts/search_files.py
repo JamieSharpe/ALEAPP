@@ -7,6 +7,7 @@ from scripts.ilapfuncs import *
 from zipfile import ZipFile
 
 class FileSeekerBase:
+    directory = ''
     # This is an abstract base class
     def search(self, filepattern_to_search, return_on_first_hit=False):
         '''Returns a list of paths for files/folders that matched'''
