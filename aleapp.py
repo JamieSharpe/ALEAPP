@@ -121,6 +121,7 @@ def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
     categories_searched = 0
 
     # Process all the artefqcts.
+    # TODO: Make this multithreaded
     for plugin in plugin_manager.plugins:
         plugin.seeker = seeker
         plugin.wrap_text = wrap_text
