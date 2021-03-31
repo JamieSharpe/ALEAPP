@@ -120,7 +120,7 @@ tosearch = {
     # 'package_info': ('Installed Apps', '**/system/packages.xml'),
     # 'quicksearch':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/app_session/*.binarypb'),
     # 'quicksearch_recent':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/files/recently/*'),
-    'recentactivity':('Recent Activity', '**/system_ce/*'),
+    # 'recentactivity':('Recent Activity', '**/system_ce/*'),
     'lgRCS':('RCS Chats', '*/mmssms.db*'),
     'permissions':('Permissions', '*/system/packages.xml'),
     'roles':('App Roles',('*/system/users/*/roles.xml','*/misc_de/*/apexdata/com.android.permission/roles.xml')),
