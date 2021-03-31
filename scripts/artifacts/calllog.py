@@ -20,7 +20,9 @@ class CallLogPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.android.providers.contacts/databases/calllog.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'phone'  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -71,9 +73,9 @@ class CallLogPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Call logs')
-            report.start_artifact_report(self.report_folder, 'Call logs')
-            report.add_script()
+            # report = ArtifactHtmlReport('Call logs')
+            # report.start_artifact_report(self.report_folder, 'Call logs')
+            # report.add_script()
             data_headers = ('Call Date', 'Phone Account Address', 'Partner', 'Type','Duration in Secs','Partner Location','Country ISO','Data','Mime Type','Transcription','Deleted')
             data_list = []
             for row in all_rows:
@@ -91,8 +93,9 @@ class CallLogPlugin(ArtefactPlugin):
 
                 data_list.append((row[0], row[1], row[2], call_type_html, str(row[4]), row[5], row[6], row[7], row[8], row[9], str(row[10])))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
+            # report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
+            # report.end_artifact_report()
 
             tsvname = f'Call Logs'
             tsv(self.report_folder, data_headers, data_list, tsvname)

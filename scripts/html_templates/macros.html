@@ -119,8 +119,11 @@
 
                     {% for cell_data in row %}
 
-                        <td>{{ cell_data }}</td>
-
+                        {% if context.allow_html %}
+                            <td>{{ cell_data|safe }}</td>
+                        {% else %}
+                            <td>{{ cell_data }}</td>
+                        {% endif %}
                     {% endfor %}
 
                     </tr>

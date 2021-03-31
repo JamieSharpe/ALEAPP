@@ -137,7 +137,7 @@ def CompileAllHTMLReports(report_folder):
                     f.write(html_content)
 
 
-def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template='body_artefact.htmll'):
+def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template='body_artefact.htmll', allow_html = False):
 
     resource_base_html = resource_path('scripts\\html_templates', 'base.html')
     template_loader = FileSystemLoader(searchpath = os.path.dirname(resource_base_html))
@@ -162,6 +162,7 @@ def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_tem
             'files_found': artefact.files_found,
             'artefact_file': artefact_file,
             'data': {
+                'allow_html': allow_html,
                 'headers': data_header,
                 'rows': data_rows
             }
