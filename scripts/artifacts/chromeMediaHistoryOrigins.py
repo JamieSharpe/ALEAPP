@@ -59,7 +59,7 @@ class ChromeMediaHistoryOriginsPlugin(ArtefactPlugin):
                     data_list.append((row[0],row[1],row[2],row[3]))
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.name)
+                tsv(self.report_folder, data_headers, data_list, self.full_name())
 
                 timeline(self.report_folder, self.name, data_list, data_headers)
             else:

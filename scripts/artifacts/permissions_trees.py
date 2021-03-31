@@ -63,5 +63,5 @@ class PermissionsPlugin(ArtefactPlugin):
                         data_headers = ('Name', 'Package')
                         artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_permission_trees)
 
-                        tsv(self.report_folder, data_headers, data_list_permission_trees, self.name)
+                        tsv(self.report_folder, data_headers, data_list_permission_trees, self.full_name())
         return True

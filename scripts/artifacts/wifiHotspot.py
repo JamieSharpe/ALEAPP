@@ -67,6 +67,6 @@ class WiFiProfilesPlugin(ArtefactPlugin):
             data_headers = ('SSID', 'Passphrase', 'SecurityType')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
         else:
             logfunc('No Wi-Fi Hotspot data available')

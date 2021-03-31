@@ -67,7 +67,7 @@ class ChromeBookmarksPlugin(ArtefactPlugin):
                 data_headers = ('Added Date', 'URL', 'Name', 'Parent', 'Type')
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.name)
+                tsv(self.report_folder, data_headers, data_list, self.full_name())
 
                 timeline(self.report_folder, self.name, data_list, data_headers)
             else:

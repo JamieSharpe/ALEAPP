@@ -67,7 +67,7 @@ class AccountsCeAuthTokensPlugin(ArtefactPlugin):
                 data_list.append((row[0], row[1], row[2], row[3], row[4]))
             artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
         else:
             logfunc(f'No Authtokens_{uid} data available')
         db.close()

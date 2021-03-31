@@ -102,7 +102,7 @@ class GoogleQuickSearchRecentPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, '', data_headers, data_list, allow_html = True)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
         else:
             logfunc('No recent quick search or now data available')
 

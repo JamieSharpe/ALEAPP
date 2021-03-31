@@ -65,7 +65,7 @@ class AccountsDePlugin(ArtefactPlugin):
                 data_list.append((row[0], row[1], row[2]))
             artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
 
             timeline(self.report_folder, self.name, data_list, data_headers)
         else:

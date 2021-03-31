@@ -71,7 +71,7 @@ class ArtefactPlugin:
             return True
 
         # Setup report folder for HTML files.
-        self.report_folder = os.path.join(report_folder_base, self.name)
+        self.report_folder = os.path.join(report_folder_base, self.full_name())
         os.makedirs(self.report_folder, exist_ok = True)
 
         processor_success_status = False

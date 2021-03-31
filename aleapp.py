@@ -108,7 +108,7 @@ def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
         logfunc(traceback.format_exc())
         return False
 
-    plugin_manager = PluginManager('scripts.artifacts', plugins_in_debug_only = True)
+    plugin_manager = PluginManager('scripts.artifacts', plugins_in_debug_only = False)
 
     # Now ready to run
     logfunc(f'Artifact categories to parse: {len(plugin_manager.plugins)}')

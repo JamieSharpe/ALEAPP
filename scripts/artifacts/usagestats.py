@@ -595,7 +595,7 @@ class UsageStatsPlugin(ArtefactPlugin):
 
         artifact_report.GenerateHtmlReport(self, folder, data_headers, data_list)
 
-        tsv(report_folder, data_headers, data_list, self.name)
+        tsv(report_folder, data_headers, data_list, self.full_name())
 
         timeline(report_folder, self.name, data_list, data_headers)
 

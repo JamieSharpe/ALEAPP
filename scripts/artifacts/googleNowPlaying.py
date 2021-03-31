@@ -115,7 +115,7 @@ class GoogleNowPlayingPlugin(ArtefactPlugin):
                 logfunc("{} entries grouped into {}".format(usageentries, len(data_list)))
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.name)
+                tsv(self.report_folder, data_headers, data_list, self.full_name())
 
                 tlactivity = f'Google Now Playing'
                 timeline(self.report_folder, tlactivity, data_list, data_headers)

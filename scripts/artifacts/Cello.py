@@ -123,7 +123,7 @@ class CelloPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
-            tsv(self.report_folder, data_headers, tsv_list, self.name)
+            tsv(self.report_folder, data_headers, tsv_list, self.full_name())
 
             timeline(self.report_folder, self.name, tsv_list, data_headers)
         else:

@@ -127,7 +127,7 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
 
             tlactivity = f'Gboard Keystroke cache - {file_name}'
             timeline(self.report_folder, tlactivity, data_list, data_headers)
@@ -207,7 +207,7 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
 
             tlactivity = f'Gboard Keystroke cache - {file_name}'
             timeline(self.report_folder, tlactivity, data_list, data_headers)

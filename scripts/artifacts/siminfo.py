@@ -93,7 +93,7 @@ class SimInfoPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, folder, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
         else:
             logfunc(f'No SIM_Info{uid} data available')
         db.close()

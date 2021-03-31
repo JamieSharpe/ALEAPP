@@ -41,7 +41,7 @@ class EtcHostsPlugin(ArtefactPlugin):
             data_headers = ('IP Address', 'Hostname')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
 
         else:
             logfunc(f'No etc hosts file available, or nothing significant found.')

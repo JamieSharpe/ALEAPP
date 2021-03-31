@@ -69,7 +69,7 @@ class SettingsSecurePlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_path, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.name)
+            tsv(self.report_folder, data_headers, data_list, self.full_name())
         else:
             logfunc('No Settings Secure data available')
 
