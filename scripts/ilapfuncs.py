@@ -194,7 +194,7 @@ def html2csv(reportfolderbase):
                     writer.writerows(output_rows)
 
 
-def tsv(report_folder, data_headers, data_list, tsvname):
+def tsv(report_folder, data_headers, data_list, tsvname, source_file = None):
     # TODO: Add the paramter to record the file analysed.
     report_folder = report_folder.rstrip('/\\')
     report_folder_base, tail = os.path.split(report_folder)
@@ -211,6 +211,14 @@ def tsv(report_folder, data_headers, data_list, tsvname):
     with open(tsv_file, mode='a', encoding='utf-8-sig') as tsvfile:
         tsv_writer = csv.writer(tsvfile, delimiter='\t')
         if not tsv_file_exists:
+            if source_file is not None:
+                # append source file to data header and list.
+                data_headers = list(data_headers).append(source_file)
+                data_headers = list(data_headers).append(source_file)
+                for list_item in data_list:
+                    # Todo: append source onto all items in list.
+
+
             tsv_writer.writerow(data_headers)
         tsv_writer.writerows(data_list)
 
