@@ -11,7 +11,7 @@ import traceback
 # from scripts.artifacts.ChessWithFriends import get_ChessWithFriends
 # from scripts.artifacts.WordsWithFriends import get_WordsWithFriends
 # from scripts.artifacts.accounts_ce import get_accounts_ce
-from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
+# from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
 from scripts.artifacts.accounts_de import get_accounts_de
 from scripts.artifacts.appicons import get_appicons
 # from scripts.artifacts.build import get_build
@@ -89,7 +89,7 @@ tosearch = {
     # 'ChessWithFriends':('Chats', ('**/com.zynga.chess.googleplay/databases/wf_database.sqlite', '**/com.zynga.chess.googleplay/db/wf_database.sqlite')),
     # 'WordsWithFriends':('Chats', '**/com.zynga.words/db/wf_database.sqlite'),
     # 'accounts_ce': ('Accounts_ce', '**/system_ce/*/accounts_ce.db'),
-    'accounts_ce_authtokens':('Accounts_ce', '**/accounts_ce.db'),
+    # 'accounts_ce_authtokens':('Accounts_ce', '**/accounts_ce.db'),
     'accounts_de': ('Accounts_de', '**/system_de/*/accounts_de.db'),
     'appicons':('Installed Apps', '**/data/com.google.android.apps.nexuslauncher/databases/app_icons.db*'),
     # 'build':('Device Info', '**/vendor/build.prop'),
