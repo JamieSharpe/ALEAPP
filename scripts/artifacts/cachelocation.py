@@ -1,53 +1,67 @@
-import sqlite3
 import datetime
 import struct
 import os
 
-from scripts.artifact_report import ArtifactHtmlReport
-from scripts.ilapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly
+from scripts.ilapfuncs import timeline
+from scripts.plugin_base import ArtefactPlugin
+from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
-def get_cachelocation(files_found, report_folder, seeker, wrap_text):
 
-    source_file = ''
-    
-    for file_found in files_found:
-        
-        file_name = str(file_found)
-        source_file = file_found.replace(seeker.directory, '')
- 
-        data_list = []
- 
-        # code to parse the cache.wifi and cache.cell taken from https://forensics.spreitzenbarth.de/2011/10/28/decoding-cache-cell-and-cache-wifi-files/
-        cacheFile = open(str(file_name), 'rb')
-        (version, entries) = struct.unpack('>hh', cacheFile.read(4))
-        # Check the number of entries * 32 (entry record size) to see if it is bigger then the file, this is a indication the file is malformed or corrupted
-        cache_file_size = os.stat(file_name).st_size
-        if ((entries * 32) < cache_file_size):            
-            i = 0
-            while i < entries:
-                key = cacheFile.read(struct.unpack('>h', cacheFile.read(2))[0])
-                (accuracy, confidence, latitude, longitude, readtime) = struct.unpack('>iiddQ', cacheFile.read(32))
-                timestamp = readtime/1000
-                i = i + 1
-                
-                starttime = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
-                data_list.append((accuracy, confidence, latitude, longitude, starttime))
-            cacheFile.close()
+class CacheLocationPlugin(ArtefactPlugin):
+    """
+    """
 
-            report = ArtifactHtmlReport('Cache Locations')
-            report.start_artifact_report(report_folder, 'Cache Locations')
-            report.add_script()
-            data_headers = ('accuracy', 'confidence', 'latitude', 'longitude', 'readtime') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+    def __init__(self):
+        super().__init__()
+        self.author = 'Unknown'
+        self.author_email = ''
+        self.author_url = ''
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
-            
-            tsvname = f'Cache Locations'
-            tsv(report_folder, data_headers, data_list, tsvname, source_file)
+        self.category = 'Geo Location'
+        self.name = 'Cache'
+        self.description = ''
 
-            tlactivity = f'Cache Locations'
-            timeline(report_folder, tlactivity, data_list, data_headers)
+        self.artefact_reference = ''  # Description on what the artefact is.
+        self.path_filters = ['**/com.google.android.location/files/cache.cell/cache.cell', '**/com.google.android.location/files/cache.wifi/cache.wifi']  # Collection of regex search filters to locate an artefact.
+        self.icon = 'map-pin'  # feathricon for report.
 
-        else:
-            logfunc('No Cachelocation Logs found')
+    def _processor(self) -> bool:
+
+        source_file = ''
+
+        for file_found in self.files_found:
+
+            file_name = str(file_found)
+            source_file = file_found.replace(self.seeker.directory, '')
+
+            data_list = []
+
+            # code to parse the cache.wifi and cache.cell taken from https://forensics.spreitzenbarth.de/2011/10/28/decoding-cache-cell-and-cache-wifi-files/
+            cacheFile = open(str(file_name), 'rb')
+            (version, entries) = struct.unpack('>hh', cacheFile.read(4))
+            # Check the number of entries * 32 (entry record size) to see if it is bigger then the file, this is a indication the file is malformed or corrupted
+            cache_file_size = os.stat(file_name).st_size
+            if ((entries * 32) < cache_file_size):
+                i = 0
+                while i < entries:
+                    key = cacheFile.read(struct.unpack('>h', cacheFile.read(2))[0])
+                    (accuracy, confidence, latitude, longitude, readtime) = struct.unpack('>iiddQ', cacheFile.read(32))
+                    timestamp = readtime/1000
+                    i = i + 1
+
+                    starttime = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+                    data_list.append((accuracy, confidence, latitude, longitude, starttime))
+                cacheFile.close()
+
+                data_headers = ('accuracy', 'confidence', 'latitude', 'longitude', 'readtime')
+
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
+
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file)
+
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
+
+            else:
+                logfunc('No Cachelocation Logs found')
 
