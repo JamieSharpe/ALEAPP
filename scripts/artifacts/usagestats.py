@@ -70,6 +70,7 @@ class UsageStatsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = 'abrignoni.com & swiftforensics.com'
 
+        self.category = 'Usage Stats'
         self.name = 'Usage Stats'
         self.description = ''
 

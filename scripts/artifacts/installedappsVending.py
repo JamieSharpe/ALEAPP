@@ -15,7 +15,8 @@ class InstalledAppsVendingPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Installed Apps - Vending'
+        self.category = 'Installed Apps'
+        self.name = 'Vending'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

@@ -36,7 +36,8 @@ class InstalledAppsPackagesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Installed Apps - Packages'
+        self.category = 'Installed Apps'
+        self.name = 'Packages'
         self.description = ''
 
         self.artefact_reference = 'All packages (user installed, oem installed and system) appear here. Many of these are not user apps'  # Description on what the artefact is.

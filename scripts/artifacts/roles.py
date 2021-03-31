@@ -16,6 +16,7 @@ class AppRolesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'App Roles'
         self.name = 'App Roles'
         self.description = ''
 

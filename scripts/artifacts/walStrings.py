@@ -17,7 +17,8 @@ class WalStringsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'SQLite Journaling'
+        self.category = 'SQLite Journaling'
+        self.name = 'Strings - SQLite Journal & WAL'
         self.description = ''
 
         self.artefact_reference = 'ASCII strings extracted from SQLite journal and WAL files.'  # Description on what the artefact is.

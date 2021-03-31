@@ -14,7 +14,8 @@ class InstalledAppsGassPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Installed Apps - GMS'
+        self.category = 'Installed Apps'
+        self.name = 'GMS'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

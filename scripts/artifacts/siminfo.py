@@ -14,6 +14,7 @@ class SimInfoPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Device Info'
         self.name = 'SIM Info'
         self.description = ''
 

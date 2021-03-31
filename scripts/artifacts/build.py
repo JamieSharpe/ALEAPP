@@ -14,6 +14,7 @@ class BuildPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Device Info'
         self.name = 'Build Info'
         self.description = 'Parses device build information.'
 

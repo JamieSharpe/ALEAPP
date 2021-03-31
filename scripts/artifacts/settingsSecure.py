@@ -17,6 +17,7 @@ class SettingsSecurePlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Device Info'
         self.name = 'Settings Secure'
         self.description = ''
 

@@ -28,6 +28,7 @@ class SmsMmsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Messaging'
         self.name = 'SMS'
         self.description = ''
 

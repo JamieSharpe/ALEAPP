@@ -14,6 +14,7 @@ class CastPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Cast'
         self.name = 'Cast'
         self.description = ''
 

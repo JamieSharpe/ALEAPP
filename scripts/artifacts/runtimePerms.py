@@ -16,6 +16,7 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Permissions'
         self.name = 'Runtime Permissions'
         self.description = ''
 

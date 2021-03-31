@@ -16,7 +16,8 @@ class PermissionsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Permissions - Package and Shared User'
+        self.category = 'Permissions'
+        self.name = 'Package and Shared User'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

@@ -15,6 +15,7 @@ class CallLogPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Call Logs'
         self.name = 'Call Logs'
         self.description = ''
 

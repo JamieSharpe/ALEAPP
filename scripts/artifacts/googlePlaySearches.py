@@ -14,6 +14,7 @@ class GooglePlaySearchesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Google Play'
         self.name = 'Google Play Searches'
         self.description = ''
 

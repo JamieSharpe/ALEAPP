@@ -19,6 +19,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Wifi Profiles'
         self.name = 'WiFi Profiles'
         self.description = ''
 

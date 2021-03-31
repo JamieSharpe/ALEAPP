@@ -20,6 +20,7 @@ class UsageAppsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'App Interaction'
         self.name = 'Personalisation Services'
         self.description = ''
 
