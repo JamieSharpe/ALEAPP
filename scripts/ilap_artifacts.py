@@ -116,7 +116,7 @@ tosearch = {
     # 'installedappsGass':('Installed Apps', '**/com.google.android.gms/databases/gass.db'),
     # 'installedappsLibrary': ('Installed Apps', '**/com.android.vending/databases/library.db'),
     # 'installedappsVending': ('Installed Apps', '**/com.android.vending/databases/localappstate.db'),
-    'pSettings':('Device Info', '**/com.google.android.gsf/databases/googlesettings.db*'),
+    # 'pSettings':('Device Info', '**/com.google.android.gsf/databases/googlesettings.db*'),
     'package_info': ('Installed Apps', '**/system/packages.xml'),
     'quicksearch':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/app_session/*.binarypb'),
     'quicksearch_recent':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/files/recently/*'),
