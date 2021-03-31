@@ -32,10 +32,12 @@
     </ul>
 
     <div id="artefact_{{ context.unique_id }}">
-    <h6>Reviewing parsed data from:</h6>
-    <ul>
-        <li>{{ context.artefact.artefact_file }}</li>
-    </ul>
+    {% if context.artefact.artefact_file %}
+        <h6>Reviewing parsed data from:</h6>
+        <ul>
+            <li>{{ context.artefact.artefact_file }}</li>
+        </ul>
+    {% endif %}
     </div>
     {# Artefact table of entries #}
     <h6>Total number of entries: {{ context.artefact.data.rows|length }}</h6>

@@ -24,7 +24,12 @@
             {% for artefact in value %}
                 <li class="nav-item">
                         <a id="navbar_{{ artefact.unique_id }}" class="nav-link" href="{{ artefact.file_name }}">
-                            <span data-feather="{{ artefact.icon }}"></span>
+                            {% if artefact.icon %}
+                                <span data-feather="{{ artefact.icon }}"></span>
+                            {% else %}
+                                {# Provide a default icon so Feather doesn't fall over. #}
+                                <span data-feather="chevrons-right"></span>
+                            {% endif %}
                             {{ artefact.name }}
                         </a>
                     </li>
