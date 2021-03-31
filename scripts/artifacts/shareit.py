@@ -20,7 +20,7 @@ class ShareItPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.lenovo.anyshare.gps/databases/history.db*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.lenovo.anyshare.gps/databases/history.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'file-text'  # feathricon for report.
 
     def _processor(self) -> bool:

@@ -76,8 +76,8 @@ class UsageStatsPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
-            '**/system/usagestats/*',
-            '**/system_ce/*/usagestats*'
+            '*/system/usagestats/*',
+            '*/system_ce/*/usagestats*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'bar-chart-2'  # feathricon for report.
 

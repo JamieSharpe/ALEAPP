@@ -19,7 +19,7 @@ class SimInfoPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/user_de/*/com.android.providers.telephony/databases/telephony.db']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/user_de/*/com.android.providers.telephony/databases/telephony.db']  # Collection of regex search filters to locate an artefact.
         self.icon = 'info'  # feathricon for report.
 
     def _processor(self) -> bool:

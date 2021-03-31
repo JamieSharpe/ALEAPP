@@ -20,7 +20,7 @@ class TurboPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.google.android.apps.turbo/databases/turbo.db*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.google.android.apps.turbo/databases/turbo.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'battery-charging'  # feathricon for report.
 
     def _processor(self) -> bool:

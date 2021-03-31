@@ -40,7 +40,7 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
         self.description = 'Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously known as \'Google Now\') appear here. This can include previously searched items from another device too!'
 
         self.artefact_reference = 'Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously known as \'Google Now\') appear here. This can include previously searched items from another device too!'
-        self.path_filters = ['**/com.google.android.googlequicksearchbox/app_session/*.binarypb']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.google.android.googlequicksearchbox/app_session/*.binarypb']  # Collection of regex search filters to locate an artefact.
         self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:

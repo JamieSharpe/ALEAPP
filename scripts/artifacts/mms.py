@@ -33,7 +33,7 @@ class MmsPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.android.providers.telephony/databases/mmssms*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.android.providers.telephony/databases/mmssms*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'message-square'  # feathricon for report.
 
     def _processor(self) -> bool:

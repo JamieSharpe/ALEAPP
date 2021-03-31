@@ -21,7 +21,7 @@ class WhatsAppGroupCallPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.whatsapp/databases/*.db*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.whatsapp/databases/*.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'phone'  # feathricon for report.
 
     def _processor(self) -> bool:

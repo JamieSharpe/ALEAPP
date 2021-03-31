@@ -18,7 +18,7 @@ class SMembersPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.samsung.oh/databases/com_pocketgeek_sdk_app_inventory.db']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.samsung.oh/databases/com_pocketgeek_sdk_app_inventory.db']  # Collection of regex search filters to locate an artefact.
         self.icon = 'package'  # feathricon for report.
 
     def _processor(self) -> bool:

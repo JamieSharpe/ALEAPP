@@ -18,7 +18,7 @@ class AppInteractionPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.samsung.android.providers.context/databases/ContextLog.db']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.samsung.android.providers.context/databases/ContextLog.db']  # Collection of regex search filters to locate an artefact.
         self.icon = 'archive'  # feathricon for report.
 
     def _processor(self) -> bool:
