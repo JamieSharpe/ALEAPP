@@ -19,7 +19,7 @@ class SMyFilesRecentsPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.sec.android.app.myfiles/databases/myfiles.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'file'  # feathricon for report.
 
     def _processor(self) -> bool:
     

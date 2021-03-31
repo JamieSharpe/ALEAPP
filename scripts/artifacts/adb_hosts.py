@@ -13,12 +13,13 @@ class AdbHostsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'ADB Hosts'
         self.name = 'ADB Hosts'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/data/misc/adb/adb_keys']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'terminal'  # feathricon for report.
 
     def _processor(self) -> bool:
         data_list = []

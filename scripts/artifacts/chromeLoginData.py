@@ -29,7 +29,7 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
             '**/app_chrome/Default/Login Data*',
             '**/app_sbrowser/Default/Login Data*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'log-in'  # feathricon for report.
 
     def _processor(self) -> bool:
     

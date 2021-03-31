@@ -19,7 +19,7 @@ class UserDictPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.android.providers.userdictionary/databases/user_dict.db*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'book'  # feathricon for report.
 
     def _processor(self) -> bool:
 

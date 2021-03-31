@@ -27,7 +27,7 @@ class ChromeBookmarksPlugin(ArtefactPlugin):
             '**/app_chrome/Default/Bookmarks*',
             '**/app_sbrowser/Default/Bookmarks*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'bookmark'  # feathricon for report.
 
     def _processor(self) -> bool:
 

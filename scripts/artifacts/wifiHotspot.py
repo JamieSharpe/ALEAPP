@@ -23,7 +23,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
             '**/misc/wifi/softap.conf',
             '**/misc**/apexdata/com.android.wifi/WifiConfigStoreSoftAp.xml'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'wifi'  # feathricon for report.
 
     def _processor(self) -> bool:
 

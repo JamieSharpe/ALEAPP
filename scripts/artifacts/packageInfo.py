@@ -41,7 +41,7 @@ class InstalledAppsPackagesPlugin(ArtefactPlugin):
 
         self.artefact_reference = 'All packages (user installed, oem installed and system) appear here. Many of these are not user apps'  # Description on what the artefact is.
         self.path_filters = ['**/system/packages.xml']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'package'  # feathricon for report.
 
     def _processor(self) -> bool:
         packages = []

@@ -22,7 +22,7 @@ class SettingsSecurePlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system/users/*/settings_secure.xml']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'settings'  # feathricon for report.
 
     def _processor(self) -> bool:
 

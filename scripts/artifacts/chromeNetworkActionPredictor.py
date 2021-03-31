@@ -24,7 +24,7 @@ class ChromeNetworkActionPredictorPlugin(ArtefactPlugin):
             '**/app_Chrome/Default/Network Action Predictor*',
             '**/app_sbrowser/Default/Network Action Predictor*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'type'  # feathricon for report.
 
     def _processor(self) -> bool:
 

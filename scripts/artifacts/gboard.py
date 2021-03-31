@@ -38,7 +38,7 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
 
         self.artefact_reference = 'Keystrokes typed by the user in various input fields of apps, that have been temporarily cached by the Gboard keyboard app are seen here.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.inputmethod.latin/databases/trainingcache*.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'type'  # feathricon for report.
 
     def _processor(self) -> bool:
     

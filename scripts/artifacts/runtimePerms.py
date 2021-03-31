@@ -24,7 +24,7 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
             '*/system/users/*/runtime-permissions.xml',
             '*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'check'  # feathricon for report.
 
     def _processor(self) -> bool:
 

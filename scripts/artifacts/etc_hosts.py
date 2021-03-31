@@ -19,7 +19,7 @@ class EtcHostsPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system/etc/hosts']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'globe'  # feathricon for report.
 
     def _processor(self) -> bool:
         data_list = []

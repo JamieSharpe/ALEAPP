@@ -19,7 +19,7 @@ class BashHistoryPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/.bash_history']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'terminal'  # feathricon for report.
 
     def _processor(self) -> bool:
         data_list = []

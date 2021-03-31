@@ -27,7 +27,7 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
             '**/app_chrome/Default/History*',
             '**/app_sbrowser/Default/History*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:
     

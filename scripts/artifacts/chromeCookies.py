@@ -19,7 +19,7 @@ class ChromeCookiesPlugin(ArtefactPlugin):
 
         self.category = 'Chrome'
         self.name = 'Cookies'
-        self.description = ''
+        self.description = 'chrome'
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [

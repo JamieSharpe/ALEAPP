@@ -31,7 +31,7 @@ class GoogleQuickSearchRecentPlugin(ArtefactPlugin):
 
         self.artefact_reference = 'Recently searched terms from the Google Search widget and webpages read from Google app (previously known as \'Google Now\') appear here.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.googlequicksearchbox/files/recently/*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:
 

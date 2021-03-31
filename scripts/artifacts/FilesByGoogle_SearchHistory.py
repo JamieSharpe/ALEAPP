@@ -21,7 +21,7 @@ class FilesByGoogleSearchHistoryPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.apps.nbu.files/databases/search_history_database*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:
 
@@ -58,5 +58,6 @@ class FilesByGoogleSearchHistoryPlugin(ArtefactPlugin):
             else:
                 logfunc('No Files By Google - Search History data available')
 
-        db.close()
-        return
+            db.close()
+
+        return True

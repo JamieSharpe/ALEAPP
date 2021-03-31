@@ -14,12 +14,13 @@ class AccountsCePlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Accounts CE'
         self.name = 'Accounts_ce'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_ce/*/accounts_ce.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'user'  # feathricon for report.
 
     def _processor(self) -> bool:
 

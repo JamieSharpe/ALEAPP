@@ -15,12 +15,13 @@ class AccountsCeAuthTokensPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Accounts_ce_authtokens'
+        self.category = 'Accounts CE'
+        self.name = 'Auth Tokens'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/accounts_ce.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'user'  # feathricon for report.
 
     def _processor(self) -> bool:
 

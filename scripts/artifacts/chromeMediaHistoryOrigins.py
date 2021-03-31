@@ -24,7 +24,7 @@ class ChromeMediaHistoryOriginsPlugin(ArtefactPlugin):
             '**/app_chrome/Default/Media History*',
              '**/app_sbrowser/Default/Media History*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'video'  # feathricon for report.
 
     def _processor(self) -> bool:
 

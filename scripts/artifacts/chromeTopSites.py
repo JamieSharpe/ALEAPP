@@ -25,7 +25,7 @@ class ChromeTopSitesPlugin(ArtefactPlugin):
             '**/app_chrome/Default/Top Sites*',
             '**/app_sbrowser/Default/Top Sites*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'list'  # feathricon for report.
 
     def _processor(self) -> bool:
     

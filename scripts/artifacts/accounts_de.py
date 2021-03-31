@@ -14,12 +14,13 @@ class AccountsDePlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
+        self.category = 'Accounts DE'
         self.name = 'Accounts_de'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_de/*/accounts_de.db']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'key'  # feathricon for report.
 
     def _processor(self) -> bool:
 

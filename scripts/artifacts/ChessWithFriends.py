@@ -22,7 +22,7 @@ class ChessWithFriendsPlugin(ArtefactPlugin):
             '**/com.zynga.chess.googleplay/databases/wf_database.sqlite',
             '**/com.zynga.chess.googleplay/db/wf_database.sqlite'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'message-square'  # feathricon for report.
 
     def _processor(self) -> bool:
 

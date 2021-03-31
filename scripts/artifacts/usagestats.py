@@ -78,7 +78,7 @@ class UsageStatsPlugin(ArtefactPlugin):
             '**/system/usagestats/*',
             '**/system_ce/*/usagestats*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'bar-chart-2'  # feathricon for report.
 
     def _processor(self) -> bool:
 

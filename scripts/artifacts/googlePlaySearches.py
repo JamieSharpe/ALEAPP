@@ -19,7 +19,7 @@ class GooglePlaySearchesPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.android.vending/databases/suggestions.db*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:
     

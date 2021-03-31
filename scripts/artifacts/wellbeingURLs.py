@@ -20,7 +20,7 @@ class WellbeingUrlsPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.apps.wellbeing/databases/app_usage*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'list'  # feathricon for report.
 
     def _processor(self) -> bool:
 

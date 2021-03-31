@@ -19,7 +19,7 @@ class WordsWithFriendsPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.zynga.words/db/wf_database.sqlite']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'message-circle'  # feathricon for report.
 
     def _processor(self) -> bool:
 

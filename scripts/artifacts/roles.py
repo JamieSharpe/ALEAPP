@@ -24,7 +24,7 @@ class AppRolesPlugin(ArtefactPlugin):
             '*/system/users/*/roles.xml',
             '*/misc_de/*/apexdata/com.android.permission/roles.xml'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'tool'  # feathricon for report.
 
     def _processor(self) -> bool:
     

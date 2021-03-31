@@ -28,7 +28,7 @@ class RecentActivityPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_ce/*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'activity'  # feathricon for report.
 
     def _processor(self) -> bool:
 

@@ -25,7 +25,7 @@ class UsageAppsPlugin(ArtefactPlugin):
 
         self.artefact_reference = 'This is data stored by the reflection_gel_events.db, which shows data usage from apps to included deleted apps.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.as/databases/reflection_gel_events.db*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'package'  # feathricon for report.
 
     def _processor(self) -> bool:
 

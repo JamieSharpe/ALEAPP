@@ -21,7 +21,7 @@ class XenderContactsPlugin(ArtefactPlugin):
         self.path_filters = [
             '**/cn.xender/databases/trans-history-db*'
         ]  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'users'  # feathricon for report.
 
     def _processor(self) -> bool:
 

@@ -20,7 +20,7 @@ class EmulatedSMetaVideosPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.providers.media.module/databases/external.db*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'video'  # feathricon for report.
 
     def _processor(self) -> bool:
 

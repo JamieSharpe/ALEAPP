@@ -29,7 +29,7 @@ class GoogleNowPlayingPlugin(ArtefactPlugin):
                             'shows song data on the lock screen for any music playing nearby. It\'s ' \
                             'part of Pixel Ambient Services (https://play.google.com/store/apps/details?id=com.google.intelligence.sense).'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.intelligence.sense/db/history_db*']  # Collection of regex search filters to locate an artefact.
-        self.icon = ''  # feathricon for report.
+        self.icon = 'headphones'  # feathricon for report.
 
     def _processor(self) -> bool:
         for file_found in self.files_found:
