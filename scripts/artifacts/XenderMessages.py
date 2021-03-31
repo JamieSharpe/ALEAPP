@@ -28,7 +28,6 @@ class XenderMessagesPlugin(ArtefactPlugin):
     def _processor(self) -> bool:
 
         for file_found in self.files_found:
-            file_found = str(file_found)
 
             if file_found.endswith('-db'):
                 continue

@@ -34,6 +34,7 @@ class XenderContactsPlugin(ArtefactPlugin):
 
             db = open_sqlite_db_readonly(file_found)
             cursor = db.cursor()
+
             try:
                 cursor.execute('''
                 SELECT device_id, nick_name FROM profile WHERE connect_times = 0
