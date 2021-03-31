@@ -11,12 +11,13 @@ class PluginManager:
     that contain a class definition that is inheriting from the Plugin class
     """
 
-    def __init__(self, plugin_package: str, plugin_base: ArtefactPlugin = ArtefactPlugin):
+    def __init__(self, plugin_package: str, plugins_in_debug_only = False, plugin_base: ArtefactPlugin = ArtefactPlugin):
         """
         Constructor that initiates the reading of all available plugins
         when an instance of the PluginCollection object is created
 
         :param plugin_package: Python package to look into for plugins.
+        :param plugins_in_debug_only: Bool if only debug plugins are added.
         :param plugin_base: What base class to search for to detect a plugin.
         """
 
@@ -27,7 +28,11 @@ class PluginManager:
         print(f'Loading plugins under package {self.plugin_package}')
         self.load_plugins(self.plugin_package)
 
-    def load_plugins(self, package_name):
+        # Only run plugins in debug mode.
+        if plugins_in_debug_only:
+            self.plugins = [plugin for plugin in self.plugins if plugin.debug_mode]
+
+    def load_plugins(self, package_name: str):
         """
             Recursively walk the supplied package to retrieve all plugins.
 

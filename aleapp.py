@@ -111,7 +111,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
         logfunc(traceback.format_exc())
         return False
 
-    plugin_manager = PluginManager('scripts.artifacts')
+    plugin_manager = PluginManager('scripts.artifacts', plugins_in_debug_only = False)
 
     # Now ready to run
     logfunc(f'Artifact categories to parse: {len(plugin_manager.plugins)}')
@@ -124,7 +124,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
 
     categories_searched = 0
 
-    # Process all the artefqcts
+    # Process all the artefqcts.
     for plugin in plugin_manager.plugins:
         plugin.seeker = seeker
         plugin.wrap_text = wrap_text

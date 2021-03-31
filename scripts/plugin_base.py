@@ -59,7 +59,7 @@ class ArtefactPlugin:
         :return:
         """
         logfunc()
-        logfunc(f'Executing {self.name} artifact parser.')
+        logfunc(f'Processing {self.name} artifact parser.')
 
         if not self.files_found:
             logfunc('No artefacts to parse.')
@@ -102,13 +102,14 @@ class ArtefactPlugin:
         :return:
         """
 
+        logfunc()
+        logfunc(f'Plugin "{self.name}" - Searching for artefacts.')
         for path_filter in self.path_filters:
 
             path_files_found = self.seeker.search(path_filter)
 
             if not path_files_found:
-                logfunc()
-                logfunc(f'No files found for {self.name} -> {path_filter}')
+                logfunc(f'\tPlugin "{self.name}" with regex "{path_filter}" located no files.')
                 continue
 
             self.files_found.extend(path_files_found)
@@ -117,11 +118,10 @@ class ArtefactPlugin:
             for path_located in path_files_found:
                 if path_located.startswith('\\\\?\\'):
                     path_located = path_located[4:]
-                logfunc()
-                logfunc(f'Plugin "{self.name}" with regex "{path_filter}" located file "{path_located}"')
+                logfunc(f'\tPlugin "{self.name}" with regex "{path_filter}" located file "{path_located}"')
 
-        logfunc()
         logfunc(f'Plugin "{self.name}" found {len(self.files_found)} artefact(s).')
+        logfunc(f'Plugin "{self.name}" - Search complete.')
 
     def __str__(self):
         return f'{self.name}'
