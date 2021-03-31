@@ -18,7 +18,7 @@ is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
 
 
-class SmsMmsPlugin(ArtefactPlugin):
+class SmsPlugin(ArtefactPlugin):
     """
     """
 
