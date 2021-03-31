@@ -8,6 +8,7 @@ from scripts.html_parts import *
 from scripts.ilapfuncs import logfunc
 from scripts.version_info import aleapp_version, aleapp_contributors
 
+
 def get_icon_name(category: str, artifact: str) -> str:
     """
     Returns the icon name from the feathericons collection. To add an icon type for
@@ -96,7 +97,8 @@ def get_icon_name(category: str, artifact: str) -> str:
                 return icon_set
 
     return default_icon
-    
+
+
 def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path):
 
     control = None
@@ -152,10 +154,9 @@ def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, i
             artifact_data = get_file_content(path)
 
             # Now write out entire html page for artifact
-            f = open(os.path.join(reportfolderbase, filename), 'w', encoding='utf8')
             artifact_data = insert_sidebar_code(artifact_data, active_nav_list_data, path)
-            f.write(artifact_data)
-            f.close()
+            with open(os.path.join(reportfolderbase, filename), 'w', encoding='utf8') as f:
+                f.write(artifact_data)
             
             # Now delete .temphtml
             os.remove(path)
@@ -185,17 +186,30 @@ def get_file_content(path):
 
 
 def create_index_html(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path, nav_list_data):
-    '''Write out the index.html page to the report folder'''
+    """
+    Write out the index.html page to the report folder.
+
+    :param reportfolderbase:
+    :param time_in_secs:
+    :param time_HMS:
+    :param extraction_type:
+    :param image_input_path:
+    :param nav_list_data:
+    :return: None
+    """
+
     content = '<br />'
     content += """
     <div class="card bg-white" style="padding: 20px;">
         <h2 class="card-title">Case Information</h2>
     """ # CARD start
     
-    case_list = [   ['Extraction location', image_input_path],
-                    ['Extraction type', extraction_type],
-                    ['Report directory', reportfolderbase],
-                    ['Processing time', f'{time_HMS} (Total {time_in_secs} seconds)']  ]
+    case_list = [
+        ['Extraction location', image_input_path],
+        ['Extraction type', extraction_type],
+        ['Report directory', reportfolderbase],
+        ['Processing time', f'{time_HMS} (Total {time_in_secs} seconds)']
+    ]
 
     tab1_content = generate_key_val_table_without_headings('', case_list) + \
     """         <p class="note note-primary mb-4">
@@ -225,18 +239,23 @@ def create_index_html(reportfolderbase, time_in_secs, time_HMS, extraction_type,
     body_description = 'ALEAPP is an open source project that aims to parse every known Android artifact for the purpose of forensic analysis.'
     active_nav_list_data = mark_item_active(nav_list_data, filename) + nav_bar_script
 
-    f = open(os.path.join(reportfolderbase, filename), 'w', encoding='utf8')
-    f.write(page_header.format(page_title))
-    f.write(body_start.format(f"ALEAPP {aleapp_version}"))
-    f.write(body_sidebar_setup + active_nav_list_data + body_sidebar_trailer)
-    f.write(body_main_header + body_main_data_title.format(body_heading, body_description))
-    f.write(content)
-    f.write(thank_you_note)
-    f.write(credits_code)
-    f.write(body_main_trailer + body_end + nav_bar_script_footer + page_footer)
-    f.close()
+    with open(os.path.join(reportfolderbase, filename), 'w', encoding='utf8') as f:
+        f.write(page_header.format(page_title))
+        f.write(body_start.format(f"ALEAPP {aleapp_version}"))
+        f.write(body_sidebar_setup + active_nav_list_data + body_sidebar_trailer)
+        f.write(body_main_header + body_main_data_title.format(body_heading, body_description))
+        f.write(content)
+        f.write(thank_you_note)
+        f.write(credits_code)
+        f.write(body_main_trailer + body_end + nav_bar_script_footer + page_footer)
 
 def generate_authors_table_code(aleapp_contributors):
+    """
+
+    :param aleapp_contributors:
+    :return:
+    """
+
     authors_data = ''
     for author_name, blog, tweet_handle, git in aleapp_contributors:
         author_data = ''
@@ -257,7 +276,16 @@ def generate_authors_table_code(aleapp_contributors):
     return authors_data
 
 def generate_key_val_table_without_headings(title, data_list, html_escape=True, width="70%"):
-    '''Returns the html code for a key-value table (2 cols) without col names'''
+    """
+    Returns the html code for a key-value table (2 cols) without col names
+
+    :param title:
+    :param data_list:
+    :param html_escape:
+    :param width:
+    :return: String
+    """
+
     code = ''
     if title:
         code += f'<h2>{title}</h2>'
@@ -288,7 +316,16 @@ def generate_key_val_table_without_headings(title, data_list, html_escape=True, 
 
     return code
 
+
 def insert_sidebar_code(data, sidebar_code, filename):
+    """
+
+    :param data:
+    :param sidebar_code:
+    :param filename:
+    :return: String
+    """
+
     pos = data.find(body_sidebar_dynamic_data_placeholder)
     if pos < 0:
         logfunc(f'Error, could not find {body_sidebar_dynamic_data_placeholder} in file {filename}')
@@ -297,8 +334,16 @@ def insert_sidebar_code(data, sidebar_code, filename):
         ret = data[0 : pos] + sidebar_code + data[pos + len(body_sidebar_dynamic_data_placeholder):]
         return ret
 
+
 def mark_item_active(data, itemname):
-    '''Finds itemname in data, then marks that node as active. Return value is changed data'''
+    """
+    Finds itemname in data, then marks that node as active. Return value is changed data
+
+    :param data:
+    :param itemname:
+    :return: String
+    """
+
     pos = data.find(f'" href="{itemname}"')
     if pos < 0:
         logfunc(f'Error, could not find {itemname} in {data}')
