@@ -1,6 +1,8 @@
 import inspect
 import os
 import pkgutil
+
+from scripts.ilapfuncs import logfunc
 from scripts.plugin_base import ArtefactPlugin
 from typing import List
 
@@ -25,7 +27,7 @@ class PluginManager:
         self.plugin_base = plugin_base
         self.plugins: List[ArtefactPlugin] = []
         self.seen_paths = []
-        print(f'Loading plugins under package {self.plugin_package}')
+        logfunc(f'Loading plugins under package {self.plugin_package}')
         self.load_plugins(self.plugin_package)
 
         # Only run plugins in debug mode.
@@ -51,12 +53,12 @@ class PluginManager:
                         # Only add classes that inherit plugin_base, but NOT the plugin_base itself
                         if issubclass(c, self.plugin_base) and (c is not self.plugin_base):
                             plugin = c()
-                            print(f'\tLoaded plugin: {plugin.full_name()} [{plugin.__class__.__module__}.{plugin.__class__.__name__}]')
+                            logfunc(f'\tLoaded plugin: {plugin.full_name()} [{plugin.__class__.__module__}.{plugin.__class__.__name__}]')
                             self.plugins.append(plugin)
 
                 except Exception as ex:
-                    # print(f'Failed to import module: {pluginname}')
-                    # print(f'\t{ex}')
+                    logfunc(f'Failed to import module: {pluginname}')
+                    logfunc(f'\t{ex}')
                     pass
 
         # Now that we have looked at all the modules in the current package, start looking
