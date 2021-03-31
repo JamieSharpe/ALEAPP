@@ -109,7 +109,7 @@ class ArtefactPlugin:
         """
 
         logfunc()
-        logfunc(f'Plugin "{self.name}" - Searching for artefacts.')
+        logfunc(f'Plugin "{self.category} - {self.name}" - Searching for artefacts.')
         for path_filter in self.path_filters:
 
             path_files_found = self.seeker.search(path_filter)
