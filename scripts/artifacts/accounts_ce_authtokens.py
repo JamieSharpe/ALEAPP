@@ -2,6 +2,7 @@ from scripts.ilapfuncs import is_platform_windows, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 
 class AccountsCeAuthTokensPlugin(ArtefactPlugin):
@@ -14,12 +15,14 @@ class AccountsCeAuthTokensPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Accounts_ce'
+        self.name = 'Accounts_ce_authtokens'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/accounts_ce.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -60,15 +63,16 @@ class AccountsCeAuthTokensPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Authokens')
-            report.start_artifact_report(self.report_folder, f'Authtokens_{uid}')
-            report.add_script()
+            #report = ArtifactHtmlReport('Authokens')
+            #report.start_artifact_report(self.report_folder, f'Authtokens_{uid}')
+            #report.add_script()
             data_headers = ('ID', 'Name', 'Account Type','Authtoken Type', 'Authtoken')
             data_list = []
             for row in all_rows:
                 data_list.append((row[0], row[1], row[2], row[3], row[4]))
-            report.write_artifact_data_table(data_headers, data_list, folder)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
+            #report.write_artifact_data_table(data_headers, data_list, folder)
+            #report.end_artifact_report()
 
             tsvname = f'authtokens {uid}'
             tsv(self.report_folder, data_headers, data_list, tsvname)
