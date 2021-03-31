@@ -17,12 +17,15 @@ class ChromeOfflinePagesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.category = 'Chrome'
+        self.category = 'Chromium'
         self.name = 'Offline Pages'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = [
+            '*/app_chrome/Default/Offline Pages/metadata/OfflinePages.db*',
+            '*/app_sbrowser/Default/Offline Pages/metadata/OfflinePages.db*'
+        ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'cloud-off'  # feathricon for report.
 
     def _processor(self) -> bool:

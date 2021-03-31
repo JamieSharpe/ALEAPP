@@ -15,7 +15,7 @@ class ChromeNetworkActionPredictorPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.category = 'Chrome'
+        self.category = 'Chromium'
         self.name = 'Network Action Predictor'
         self.description = ''
 

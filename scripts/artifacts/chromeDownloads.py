@@ -16,7 +16,7 @@ class ChromeDownloadsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.category = 'Chrome'
+        self.category = 'Chromium'
         self.name = 'Downloads'
         self.description = ''
 
