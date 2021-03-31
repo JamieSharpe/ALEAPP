@@ -24,7 +24,8 @@ class ChromeHistoryPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
             '**/app_chrome/Default/History*',
-            '**/app_sbrowser/Default/History*'
+            '**/app_sbrowser/Default/History*',
+            '**/app_opera/History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'list'  # feathricon for report.
 

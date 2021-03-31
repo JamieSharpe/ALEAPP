@@ -27,7 +27,8 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
             '**/app_chrome/Default/Login Data*',
-            '**/app_sbrowser/Default/Login Data*'
+            '**/app_sbrowser/Default/Login Data*',
+            '**/app_opera/Login Data*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'log-in'  # feathricon for report.
 

@@ -23,7 +23,8 @@ class ChromeTopSitesPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
             '**/app_chrome/Default/Top Sites*',
-            '**/app_sbrowser/Default/Top Sites*'
+            '**/app_sbrowser/Default/Top Sites*',
+            '**/app_opera/Top Sites*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'list'  # feathricon for report.
 

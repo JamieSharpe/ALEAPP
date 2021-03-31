@@ -22,7 +22,8 @@ class ChromeMediaHistoryPlaybacksPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
             '**/app_chrome/Default/Media History*',
-             '**/app_sbrowser/Default/Media History*'
+             '**/app_sbrowser/Default/Media History*',
+            '**/app_opera/Media History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'video'  # feathricon for report.
 

@@ -22,7 +22,8 @@ class ChromeNetworkActionPredictorPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
             '**/app_Chrome/Default/Network Action Predictor*',
-            '**/app_sbrowser/Default/Network Action Predictor*'
+            '**/app_sbrowser/Default/Network Action Predictor*',
+            '**/app_opera/Network Action Predicator*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = 'type'  # feathricon for report.
 
