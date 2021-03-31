@@ -10,11 +10,11 @@ from time import process_time, gmtime, strftime
 
 def main():
     parser = argparse.ArgumentParser(description='ALEAPP: Android Logs, Events, and Protobuf Parser.')
-    parser.add_argument('-t', choices=['fs', 'tar', 'zip', 'gz'], required=False, type=str.lower, action='store', help='Input type (fs = extracted to file system folder)')
-    parser.add_argument('-o', '--output_path', required=False, action='store', help='Output folder path')
-    parser.add_argument('-i', '--input_path', required=False, action='store', help='Path to input file/folder')
-    parser.add_argument('-p', '--artifact_paths', required=False, action='store_true', help='Text file list of artifact paths')
-    parser.add_argument('-w', '--wrap_text', required=False, action='store_false', help='do not wrap text for output of data files')
+    parser.add_argument('-t', choices=['fs', 'tar', 'zip', 'gz'], required=False, type=str.lower, action='store', help='Input type (fs = extracted to file system folder).')
+    parser.add_argument('-o', '--output_path', required=False, action='store', help='Output folder path.')
+    parser.add_argument('-i', '--input_path', required=False, action='store', help='Path to input file/folder.')
+    parser.add_argument('-p', '--artifact_paths', required=False, action='store_true', help='Text file list of artifact paths.')
+    parser.add_argument('-w', '--wrap_text', required=False, action='store_false', help='Do not wrap text for output of data files.')
 
     args = parser.parse_args()
     
@@ -31,7 +31,7 @@ def main():
                     paths.write(value[1]+'\n')
                     print(value[1])
         print('')
-        print('Artifact path list generation completed')    
+        print('Artifact path list generation completed.')
         return
 
     else:
@@ -44,7 +44,7 @@ def main():
             wrap_text = args.wrap_text 
     
         if args.output_path is None:
-            parser.error('No OUTPUT folder path provided')
+            parser.error('No OUTPUT folder path provided.')
             return
         else:
             output_path = os.path.abspath(args.output_path)
@@ -87,7 +87,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     logfunc('Processing started. Please wait. This may take a few minutes...')
 
     logfunc('\n--------------------------------------------------------------------------------------')
-    logfunc(f'ALEAPP v{aleapp_version}: Android Logs, Events, and Protobuf Parser')
+    logfunc(f'ALEAPP v{aleapp_version}: Android Logs, Events, and Protobuf Parser.')
     logfunc('Objective: Triage Android Full System Extractions.')
     logfunc('By: Alexis Brignoni | @AlexisBrignoni | abrignoni.com')
     logfunc('By: Yogesh Khatri   | @SwiftForensics | swiftforensics.com')
@@ -104,7 +104,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
             seeker = FileSeekerZip(input_path, out_params.temp_folder)
 
         else:
-            logfunc('Error on argument -o (input type)')
+            logfunc('Error on argument -o (input type).')
             return False
     except Exception as ex:
         logfunc('Had an exception in Seeker - see details below. Terminating Program!')
