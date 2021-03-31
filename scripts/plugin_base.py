@@ -47,7 +47,7 @@ class ArtefactPlugin:
         self.seeker: search_files.FileSeekerBase = None  # Seeker object to search for additional files in the evidence.
         self.wrap_text: bool = True  # Determine if text should be wrapped on a new line.
 
-        self.debug_mode: bool = False
+        self.debug_mode: bool = False  # Determine if only this plugin should run. See plugin_manager.py[.plugins_in_debug_only]
 
     def process_artefact(self, report_folder_base: str) -> bool:
         """
