@@ -101,7 +101,7 @@ tosearch = {
     # 'chromeCookies':('Chrome', ('**/app_chrome/Default/Cookies*', '**/app_sbrowser/Default/Cookies*')),
     # 'chromeDownloads':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
     # 'chromeLoginData':('Chrome', ('**/app_chrome/Default/Login Data*', '**/app_sbrowser/Default/Login Data*')),
-    'chromeMediaHistory':('Chrome', ('**/app_chrome/Default/Media History*','**/app_sbrowser/Default/Media History*')),
+    # 'chromeMediaHistory':('Chrome', ('**/app_chrome/Default/Media History*','**/app_sbrowser/Default/Media History*')),
     'chromeNetworkActionPredictor':('Chrome', ('**/app_Chrome/Default/Network Action Predictor*','**/app_sbrowser/Default/Network Action Predictor*')),
     'chromeOfflinePages':('Chrome', ('**/app_chrome/Default/Offline Pages/metadata/OfflinePages.db*', '**/app_sbrowser/Default/Offline Pages/metadata/OfflinePages.db*')),
     'chromeSearchTerms':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
