@@ -47,13 +47,13 @@
         </ul>
 
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="case" role="tabpanel" aria-labelledby="case-tab">
+            <div class="tab-pane fade show active border border-top-0 p-3" id="case" role="tabpanel" aria-labelledby="case-tab">
                 {{ macros.case_information(context.case_information) }}
             </div>
-            <div class="tab-pane fade text-monospace" id="run" role="tabpanel" aria-labelledby="script-run-tab">
+            <div class="tab-pane fade text-monospace border border-top-0 p-3" id="run" role="tabpanel" aria-labelledby="script-run-tab">
                 {{ macros.file_content(context.run_log) }}
             </div>
-            <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade border border-top-0 p-3" id="files" role="tabpanel" aria-labelledby="profile-tab">
                 {{ macros.file_content(context.file_log) }}
             </div>
         </div>
