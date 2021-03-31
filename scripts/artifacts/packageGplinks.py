@@ -27,6 +27,7 @@ class PackageGplinksPlugin(ArtefactPlugin):
         for file_found in self.files_found:
             if 'sbin' not in file_found:
                 file_found = str(file_found)
+                source_file = file_found.replace(self.seeker.directory, '')
 
             with open(file_found) as data:
                 values = data.readlines()
@@ -42,7 +43,7 @@ class PackageGplinksPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
-                tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file)
 
             else:
                 logfunc('No Google Play Links for Apps data available')
