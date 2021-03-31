@@ -23,11 +23,9 @@ def main():
     if args.artifact_paths:
         print('Artifact path list generation started.')
         print('')
-        with open('path_list.txt', 'a') as paths:
-            for plugin in PluginManager('scripts.artifacts').plugins:
-                for path_filter in plugin.path_filters:
-                    paths.write(f'{path_filter}\n')
-                    print(path_filter)
+        for plugin in PluginManager('scripts.artifacts').plugins:
+            for path_filter in plugin.path_filters:
+                print(path_filter)
         print('')
         print('Artifact path list generation completed.')
         return
