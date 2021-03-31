@@ -2,7 +2,7 @@ from scripts.ilapfuncs import is_platform_windows, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class AccountsCePlugin(ArtefactPlugin):
     """
@@ -20,6 +20,7 @@ class AccountsCePlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_ce/*/accounts_ce.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -59,15 +60,11 @@ class AccountsCePlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Accounts_ce')
-            report.start_artifact_report(self.report_folder, f'accounts_ce_{uid}')
-            report.add_script()
             data_headers = ('Name', 'Type', 'Password')
             data_list = []
             for row in all_rows:
                 data_list.append((row[0], row[1], row[2]))
-            report.write_artifact_data_table(data_headers, data_list, folder)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
 
             tsvname = f'accounts ce {uid}'
             tsv(self.report_folder, data_headers, data_list, tsvname)

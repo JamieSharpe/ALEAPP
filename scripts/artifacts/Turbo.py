@@ -65,7 +65,7 @@ class TurboPlugin(ArtefactPlugin):
                 for row in all_rows:
                     data_list.append((row[0],row[1],row[2],row[3],row[4]))
 
-                artifact_report.GenerateHtmlReport(self.report_folder, self, file_found, data_headers, data_list)
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsv(self.report_folder, data_headers, data_list, self.name)
 

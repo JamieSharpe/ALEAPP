@@ -137,7 +137,7 @@ def CompileAllHTMLReports(report_folder):
                     f.write(html_content)
 
 
-def GenerateHtmlReport(report_folder, artefact, artefact_file, data_header, data_rows, html_template='body_artefact.htmll'):
+def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template='body_artefact.htmll'):
 
     resource_base_html = resource_path('scripts\\html_templates', 'base.html')
     template_loader = FileSystemLoader(searchpath = os.path.dirname(resource_base_html))
@@ -158,7 +158,7 @@ def GenerateHtmlReport(report_folder, artefact, artefact_file, data_header, data
         'artefact': {
             'category': artefact.category,
             'name': artefact.name,
-            'reference': 'Whats App provides call communication functionality.',
+            'reference': artefact.artefact_reference,
             'files_found': artefact.files_found,
             'artefact_file': artefact_file,
             'data': {
@@ -172,7 +172,7 @@ def GenerateHtmlReport(report_folder, artefact, artefact_file, data_header, data
     html_content = template.render(context = context)
 
     # Create HTML Temp folder
-    temp_html_folder = os.path.join(report_folder, 'HTML Reports - Temp')
+    temp_html_folder = os.path.join(artefact.report_folder, 'HTML Reports - Temp')
     os.makedirs(temp_html_folder, exist_ok = True)
 
     output_path = os.path.join(temp_html_folder, f'artefact_{artefact.name}.temphtml')
