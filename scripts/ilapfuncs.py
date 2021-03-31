@@ -105,7 +105,7 @@ def does_table_exist(db, table_name):
 
     try:
         cursor = db.execute(query)
-        row_count = cursor.rowcount()
+        row_count = cursor.rowcount
     except sqlite3.Error as ex:
         logfunc(f'Query error, query={query} Error={ex}')
 
