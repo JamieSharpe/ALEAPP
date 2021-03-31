@@ -148,6 +148,8 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
             for path_located in found_matching_paths:
                 if path_located.startswith('\\\\?\\'):
                     path_located = path_located[4:]
+                logfunc()
+                logfunc(f'Files for regex {artifact_search_regex} located at {path_located}')
                 log.write(f'Files for regex {artifact_search_regex} located at {path_located}<br><br>')
 
         if files_found:
