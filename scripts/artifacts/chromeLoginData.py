@@ -65,7 +65,7 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                data_headers = ('Created Time','Username','Password','Origin URL','Blacklisted by User')
+                data_headers = ('Created Time','Username','Password','Origin URL','Blacklisted by User', 'Browser Name')
                 data_list = []
                 for row in all_rows:
                     password = ''
@@ -73,7 +73,7 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
                     if password_enc:
                         password = self.decrypt(password_enc).decode("utf-8", 'replace')
                     valid_date = self.get_valid_date(row[2], row[3])
-                    data_list.append( (valid_date, row[0], password, row[4], row[5]) )
+                    data_list.append( (valid_date, row[0], password, row[4], row[5], browser_name))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
