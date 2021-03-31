@@ -1,80 +1,93 @@
 import os
-import sqlite3
 import datetime
 
-from scripts.artifact_report import ArtifactHtmlReport
-from scripts.ilapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly, does_table_exist
+from scripts.ilapfuncs import timeline, open_sqlite_db_readonly, does_table_exist, logfunc, tsv
+from scripts.plugin_base import ArtefactPlugin
+from scripts import artifact_report
 
-def get_calllogs(files_found, report_folder, seeker, wrap_text):
 
-    source_file = ''
-    for file_found in files_found:
-        
-        file_name = str(file_found)
-        if not os.path.basename(file_name) == 'contacts2.db' and \
-           not os.path.basename(file_name) == 'contacts.db'  and \
-           not os.path.basename(file_name) == 'logs.db': # skip -journal and other files
-            continue
-        source_file = file_found.replace(seeker.directory, '')
+class CallLogPlugin(ArtefactPlugin):
+    """
+    """
 
-        db = open_sqlite_db_readonly(file_name)
-        calls_table_exists = does_table_exist(db, 'calls')
-        cursor = db.cursor()
-        try:
-            if calls_table_exists:
-                cursor.execute('''
-                    SELECT number, date/1000, (date/1000 + duration) as duration, 
-                           case type when 1 then "Incoming"
-                                     when 3 then "Incoming"
-                                     when 2 then "Outgoing"
-                                     when 5 then "Outgoing"
-                                     else "Unknown" end as direction,
-                            name FROM calls ORDER BY date DESC;''')
-            else:
-                cursor.execute('''
-                    SELECT number, date/1000, (date/1000 + duration) as duration, 
-                           case type when 1 then "Incoming"
-                                     when 3 then "Incoming"
-                                     when 2 then "Outgoing"
-                                     when 5 then "Outgoing"
-                                     else "Unknown" end as direction,
-                           name FROM logs ORDER BY date DESC;''')
-            all_rows = cursor.fetchall()
-            usageentries = len(all_rows)
-        except Exception as e:
-            print (e)
-            usageentries = 0
-            
-        if usageentries > 0:
-            report = ArtifactHtmlReport('Call Logs2')
-            report.start_artifact_report(report_folder, 'Call Logs2')
-            report.add_script()
-            data_headers = ('from_id', 'to_id','start_date', 'end_date', 'direction', 'name') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
-            data_list = []
-            for row in all_rows:
-                callerId = None
-                calleeId = None
-                if row[3] == "Incoming":
-                    callerId = row[0]                                   
+    def __init__(self):
+        super().__init__()
+        self.author = 'Unknown'
+        self.author_email = ''
+        self.author_url = ''
+
+        self.category = 'Call Logs'
+        self.name = 'Call Logs (Alternative DBs)'
+        self.description = ''
+
+        self.artefact_reference = ''  # Description on what the artefact is.
+        self.path_filters = ['**/com.android.providers.contacts/databases/contact*', '**/com.sec.android.provider.logsprovider/databases/logs.db*']  # Collection of regex search filters to locate an artefact.
+        self.icon = 'phone'  # feathricon for report.
+
+    def _processor(self) -> bool:
+
+        source_file = ''
+        for file_found in self.files_found:
+
+            file_name = str(file_found)
+            if not os.path.basename(file_name) == 'contacts2.db' and \
+               not os.path.basename(file_name) == 'contacts.db' and \
+               not os.path.basename(file_name) == 'logs.db':
+                continue
+            source_file = file_found.replace(self.seeker.directory, '')
+
+            db = open_sqlite_db_readonly(file_name)
+            calls_table_exists = does_table_exist(db, 'calls')
+            cursor = db.cursor()
+            try:
+                if calls_table_exists:
+                    cursor.execute('''
+                        SELECT number, date/1000, (date/1000 + duration) as duration, 
+                               case type when 1 then "Incoming"
+                                         when 3 then "Incoming"
+                                         when 2 then "Outgoing"
+                                         when 5 then "Outgoing"
+                                         else "Unknown" end as direction,
+                                name FROM calls ORDER BY date DESC;''')
                 else:
-                    calleeId = row[0]
-                starttime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
-                endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
-                data_list.append((callerId, calleeId, starttime, endtime, row[3], row[4]))
+                    cursor.execute('''
+                        SELECT number, date/1000, (date/1000 + duration) as duration, 
+                               case type when 1 then "Incoming"
+                                         when 3 then "Incoming"
+                                         when 2 then "Outgoing"
+                                         when 5 then "Outgoing"
+                                         else "Unknown" end as direction,
+                               name FROM logs ORDER BY date DESC;''')
+                all_rows = cursor.fetchall()
+                usageentries = len(all_rows)
+            except Exception as e:
+                print(e)
+                usageentries = 0
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
-            
-            tsvname = f'Call Logs2'
-            tsv(report_folder, data_headers, data_list, tsvname, source_file)
+            if usageentries > 0:
 
-            tlactivity = f'Call Logs2'
-            timeline(report_folder, tlactivity, data_list, data_headers)
-            
-        else:
-            logfunc('No Call Logs found')
-            
+                data_headers = ('from_id', 'to_id','start_date', 'end_date', 'direction', 'name')
+                data_list = []
+                for row in all_rows:
+                    callerId = None
+                    calleeId = None
+                    if row[3] == "Incoming":
+                        callerId = row[0]
+                    else:
+                        calleeId = row[0]
+                    starttime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
+                    endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
+                    data_list.append((callerId, calleeId, starttime, endtime, row[3], row[4]))
 
-        db.close
-    
-    return
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
+
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file)
+
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
+
+            else:
+                logfunc('No Call Logs found')
+
+            db.close()
+
+        return True
