@@ -63,16 +63,11 @@ class AccountsCeAuthTokensPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            #report = ArtifactHtmlReport('Authokens')
-            #report.start_artifact_report(self.report_folder, f'Authtokens_{uid}')
-            #report.add_script()
             data_headers = ('ID', 'Name', 'Account Type','Authtoken Type', 'Authtoken')
             data_list = []
             for row in all_rows:
                 data_list.append((row[0], row[1], row[2], row[3], row[4]))
             artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
-            #report.write_artifact_data_table(data_headers, data_list, folder)
-            #report.end_artifact_report()
 
             tsvname = f'authtokens {uid}'
             tsv(self.report_folder, data_headers, data_list, tsvname)
