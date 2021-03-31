@@ -73,7 +73,7 @@ class SkypeMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('thread_id', 'send_time', 'content', 'direction', 'from_id', 'to_id', 'attachment') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Send Time', 'Thread ID', 'Content', 'Direction', 'From ID', 'To ID', 'Attachment')
                 data_list = []
                 for row in all_rows:
                     thread_id = None
@@ -89,7 +89,7 @@ class SkypeMessagesPlugin(ArtefactPlugin):
                             to_id = row[0]
                     sendtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
 
-                    data_list.append((thread_id, sendtime, row[3], row[5], row[6], to_id, row[4]))
+                    data_list.append((sendtime, thread_id, row[3], row[5], row[6], to_id, row[4]))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 

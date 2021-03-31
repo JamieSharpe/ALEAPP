@@ -61,7 +61,7 @@ class SkypeContactsPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('entry_id','name') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Entry ID', 'Name')
                 data_list = []
                 for row in all_rows:
                     data_list.append((row[0], row[1]))

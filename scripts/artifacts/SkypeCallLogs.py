@@ -72,7 +72,7 @@ class SkypeCallLogsPlugin(ArtefactPlugin):
                 usageentries = 0
 
             if usageentries > 0:
-                data_headers = ('start_time', 'end_time', 'from_id', 'to_id', 'call_direction') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Start Time', 'End Time', 'From ID', 'To ID', 'Call Direction')
                 data_list = []
                 for row in all_rows:
                     to_id = None
@@ -92,7 +92,7 @@ class SkypeCallLogsPlugin(ArtefactPlugin):
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
-                logfunc('No Skype Calllog available')
+                logfunc('No Skype Call Log available')
 
             db.close()
 
