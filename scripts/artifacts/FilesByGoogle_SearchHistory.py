@@ -20,7 +20,7 @@ class FilesByGoogleSearchHistoryPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.google.android.apps.nbu.files/databases/search_history_database*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.google.android.apps.nbu.files/databases/search_history_database*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'search'  # feathricon for report.
 
     def _processor(self) -> bool:

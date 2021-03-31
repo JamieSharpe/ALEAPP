@@ -19,7 +19,7 @@ class AccountsDePlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/system_de/*/accounts_de.db']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/system_de/*/accounts_de.db']  # Collection of regex search filters to locate an artefact.
         self.icon = 'key'  # feathricon for report.
 
     def _processor(self) -> bool:

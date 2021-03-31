@@ -23,10 +23,10 @@ class ChromeCookiesPlugin(ArtefactPlugin):
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = [
-            '**/app_chrome/Default/Cookies*',
-            '**/app_sbrowser/Default/Cookies*',
-            '**/app_opera/Cookies*',
-            '**/app_opera/History*'
+            '*/app_chrome/Default/Cookies*',
+            '*/app_sbrowser/Default/Cookies*',
+            '*/app_opera/Cookies*',
+            '*/app_opera/History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 

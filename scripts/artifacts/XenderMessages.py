@@ -20,9 +20,7 @@ class XenderMessagesPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = [
-            '**/cn.xender/databases/trans-history-db*'
-        ]  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/cn.xender/databases/trans-history-db*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'message-circle'  # feathricon for report.
 
     def _processor(self) -> bool:

@@ -20,7 +20,7 @@ class FacebookMessengerContactsPlugin(ArtefactPlugin):
         self.description = 'Facebook messenger contacts'
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/threads_db2*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/threads_db2*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'facebook'  # feathricon for report.
 
     def _processor(self) -> bool:

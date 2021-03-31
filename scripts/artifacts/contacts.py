@@ -24,7 +24,7 @@ class PhoneContactsPlugin(ArtefactPlugin):
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
-        self.path_filters = ['**/com.android.providers.contacts/databases/contacts*.db*']  # Collection of regex search filters to locate an artefact.
+        self.path_filters = ['*/com.android.providers.contacts/databases/contacts*.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = 'user'  # feathricon for report.
 
     def _processor(self) -> bool:
