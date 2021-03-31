@@ -211,15 +211,15 @@ def tsv(report_folder, data_headers, data_list, tsvname, source_file = None):
     with open(tsv_file, mode='a', encoding='utf-8-sig') as tsvfile:
         tsv_writer = csv.writer(tsvfile, delimiter='\t')
         if not tsv_file_exists:
+
             if source_file is not None:
                 # append source file to data header and list.
                 data_headers = list(data_headers).append(source_file)
-                data_headers = list(data_headers).append(source_file)
                 for list_item in data_list:
-                    # Todo: append source onto all items in list.
-
+                    list_item.append(source_file)
 
             tsv_writer.writerow(data_headers)
+
         tsv_writer.writerows(data_list)
 
 
