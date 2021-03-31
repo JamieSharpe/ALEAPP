@@ -8,7 +8,7 @@ import traceback
 # from scripts.artifacts.adb_hosts import get_adb_hosts
 # from scripts.artifacts.etc_hosts import get_etc_hosts
 # from scripts.artifacts.BashHistory import get_BashHistory
-from scripts.artifacts.ChessWithFriends import get_ChessWithFriends
+# from scripts.artifacts.ChessWithFriends import get_ChessWithFriends
 from scripts.artifacts.WordsWithFriends import get_WordsWithFriends
 from scripts.artifacts.accounts_ce import get_accounts_ce
 from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
@@ -85,8 +85,8 @@ from scripts.ilapfuncs import *
 tosearch = {
     # 'adb_hosts':('ADB Hosts', '**/data/misc/adb/adb_keys'),
     # 'etc_hosts':('Etc Hosts', '**/system/etc/hosts'),
-    'BashHistory':('Bash History', '**/.bash_history'),
-    'ChessWithFriends':('Chats', ('**/com.zynga.chess.googleplay/databases/wf_database.sqlite', '**/com.zynga.chess.googleplay/db/wf_database.sqlite')),
+    # 'BashHistory':('Bash History', '**/.bash_history'),
+    # 'ChessWithFriends':('Chats', ('**/com.zynga.chess.googleplay/databases/wf_database.sqlite', '**/com.zynga.chess.googleplay/db/wf_database.sqlite')),
     'WordsWithFriends':('Chats', '**/com.zynga.words/db/wf_database.sqlite'),
     'accounts_ce': ('Accounts_ce', '**/system_ce/*/accounts_ce.db'),
     'accounts_ce_authtokens':('Accounts_ce', '**/accounts_ce.db'),
