@@ -166,7 +166,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     end = process_time()
     run_time_secs = end - start
     run_time_HMS = strftime('%H:%M:%S', gmtime(run_time_secs))
-    logfunc('Processing time = {}'.format(run_time_HMS))
+    logfunc(f'Processing time = {run_time_HMS}')
 
     logfunc('')
     logfunc('Report generation started.')
