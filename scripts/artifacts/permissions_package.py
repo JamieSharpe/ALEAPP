@@ -16,7 +16,7 @@ class PermissionsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Permissions'
+        self.name = 'Permissions - Package and Shared User'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -32,7 +32,7 @@ class PermissionsPlugin(ArtefactPlugin):
         for file_found in self.files_found:
             file_found = str(file_found)
 
-            data_list_permissions = []
+            data_list_packages_su = []
             err = 0
             user = ''
 
@@ -54,17 +54,20 @@ class PermissionsPlugin(ArtefactPlugin):
                     root = tree.getroot()
 
                     for elem in root:
-
-                        if elem.tag == 'permissions':
+                        if not elem.tag == 'permissions' and not elem.tag == 'permission-trees':
                             for subelem in elem:
-                                data_list_permissions.append((subelem.attrib.get('name', ''), subelem.attrib.get('package', ''), subelem.attrib.get('protection', '')))
-                                #print(elem.tag +' '+ subelem.tag, subelem.attrib)
+                                if subelem.tag == 'perms':
+                                    for sub_subelem in subelem:
+                                        #print(elem.tag, elem.attrib['name'], sub_subelem.attrib['name'], sub_subelem.attrib['granted'] )
+                                        data_list_packages_su.append((elem.tag, elem.attrib.get('name', ''), sub_subelem.attrib.get('name', ''), sub_subelem.attrib.get('granted', '')))
 
-                    if len(data_list_permissions) > 0:
+                    if len(data_list_packages_su) > 0:
+                        report = ArtifactHtmlReport('Package and Shared User')
+                        report.start_artifact_report(self.report_folder, f'Package and Shared User')
+                        report.add_script()
+                        data_headers = ('Type', 'Package', 'Permission', 'Granted?')
+                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_packages_su)
 
-                        data_headers = ('Name', 'Package', 'Protection')
-                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_permissions)
-
-                        tsv(self.report_folder, data_headers, data_list_permissions, self.name)
+                        tsv(self.report_folder, data_headers, data_list_packages_su, self.name)
 
         return True

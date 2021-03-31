@@ -16,7 +16,7 @@ class PermissionsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Permissions'
+        self.name = 'Permissions - Trees'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -32,7 +32,7 @@ class PermissionsPlugin(ArtefactPlugin):
         for file_found in self.files_found:
             file_found = str(file_found)
 
-            data_list_permissions = []
+            data_list_permission_trees = []
             err = 0
             user = ''
 
@@ -55,16 +55,15 @@ class PermissionsPlugin(ArtefactPlugin):
 
                     for elem in root:
 
-                        if elem.tag == 'permissions':
+                        if elem.tag == 'permission-trees':
                             for subelem in elem:
-                                data_list_permissions.append((subelem.attrib.get('name', ''), subelem.attrib.get('package', ''), subelem.attrib.get('protection', '')))
                                 #print(elem.tag +' '+ subelem.tag, subelem.attrib)
+                                data_list_permission_trees.append((subelem.attrib.get('name', ''), subelem.attrib.get('package', '')))
 
-                    if len(data_list_permissions) > 0:
+                    if len(data_list_permission_trees) > 0:
 
-                        data_headers = ('Name', 'Package', 'Protection')
-                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_permissions)
+                        data_headers = ('Name', 'Package')
+                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_permission_trees)
 
-                        tsv(self.report_folder, data_headers, data_list_permissions, self.name)
-
+                        tsv(self.report_folder, data_headers, data_list_permission_trees, self.name)
         return True
