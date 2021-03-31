@@ -265,3 +265,20 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     db.commit()
     db.close()
     kml.save(os.path.join(kml_report_folder, f'{kmlactivity}.kml'))
+
+
+def convert_to_long_path(windows_path: str):
+    """
+    In Windows, path lengths have a limitation of 260 characters.
+    This can be expanded to 32,767 characters by prepending the path with "\\?\"
+
+    Reference: https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
+
+    :param windows_path:
+    :return str: Long version of the file path suitable for Windows.
+    """
+
+    if is_platform_windows():
+        return '\\\\?\\' + windows_path.replace('/', '\\')
+
+    return windows_path

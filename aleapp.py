@@ -10,24 +10,25 @@ from scripts.ilap_artifacts import *
 from scripts.version_info import aleapp_version
 from time import process_time, gmtime, strftime
 
+
 def main():
     parser = argparse.ArgumentParser(description='ALEAPP: Android Logs, Events, and Protobuf Parser.')
-    parser.add_argument('-t', choices=['fs','tar','zip', 'gz'], required=False, type=str.lower, action="store", help="Input type (fs = extracted to file system folder)")
-    parser.add_argument('-o', '--output_path', required=False, action="store", help='Output folder path')
-    parser.add_argument('-i', '--input_path', required=False, action="store", help='Path to input file/folder')
-    parser.add_argument('-p', '--artifact_paths', required=False, action="store_true", help='Text file list of artifact paths')
-    parser.add_argument('-w', '--wrap_text', required=False, action="store_false", help='do not wrap text for output of data files')
-        
+    parser.add_argument('-t', choices=['fs', 'tar', 'zip', 'gz'], required=False, type=str.lower, action='store', help='Input type (fs = extracted to file system folder)')
+    parser.add_argument('-o', '--output_path', required=False, action='store', help='Output folder path')
+    parser.add_argument('-i', '--input_path', required=False, action='store', help='Path to input file/folder')
+    parser.add_argument('-p', '--artifact_paths', required=False, action='store_true', help='Text file list of artifact paths')
+    parser.add_argument('-w', '--wrap_text', required=False, action='store_false', help='do not wrap text for output of data files')
+
     args = parser.parse_args()
     
-    if args.artifact_paths == True:
+    if args.artifact_paths:
         print('Artifact path list generation started.')
         print('')
         with open('path_list.txt', 'a') as paths:
             for key, value in tosearch.items():
                 if type(value[1]) is tuple:
                     for x in value[1]:
-                        paths.write(x+'\n')
+                        paths.write(x + '\n')
                         print(x)
                 else:
                     paths.write(value[1]+'\n')
@@ -71,20 +72,22 @@ def main():
             parser.error('OUTPUT folder does not exist! Run the program again.')
             return  
 
-        # File system extractions can contain paths > 260 char, which causes problems
-        # This fixes the problem by prefixing \\?\ on each windows path.
+        # Long (260 chars) file path names cause issues in Windows: Fixed with a conversion.
         if is_platform_windows():
-            if input_path[1] == ':' and extracttype =='fs': input_path = '\\\\?\\' + input_path.replace('/', '\\')
-            if output_path[1] == ':': output_path = '\\\\?\\' + output_path.replace('/', '\\')
+            if input_path[1] == ':' and extracttype == 'fs':
+                input_path = convert_to_long_path(input_path)
+            if output_path[1] == ':':
+                output_path = convert_to_long_path(output_path)
 
         out_params = OutputParameters(output_path)
 
         crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text)
 
+
 def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text):
     start = process_time()
 
-    logfunc('Procesing started. Please wait. This may take a few minutes...')
+    logfunc('Processing started. Please wait. This may take a few minutes...')
 
     logfunc('\n--------------------------------------------------------------------------------------')
     logfunc(f'ALEAPP v{aleapp_version}: Android Logs, Events, and Protobuf Parser')
@@ -108,19 +111,15 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
             return False
     except Exception as ex:
         logfunc('Had an exception in Seeker - see details below. Terminating Program!')
-        temp_file = io.StringIO()
-        traceback.print_exc(file=temp_file)
-        logfunc(temp_file.getvalue())
-        temp_file.close()
+        logfunc(traceback.format_exc())
         return False
 
     # Now ready to run
-    logfunc(f'Artifact categories to parse: {str(len(search_list))}')
+    logfunc(f'Artifact categories to parse: {len(search_list)}')
     logfunc(f'File/Directory selected: {input_path}')
     logfunc('\n--------------------------------------------------------------------------------------')
 
     log = open(os.path.join(out_params.report_folder_base, 'Script Logs', 'ProcessedFilesLog.html'), 'w+', encoding='utf8')
-    nl = '\n' #literal in order to have new lines in fstrings that create text files
     log.write(f'Extraction/Path selected: {input_path}<br><br>')
     
     categories_searched = 0
@@ -155,9 +154,9 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     logfunc('')
     logfunc('Processes completed.')
     end = process_time()
-    run_time_secs =  end - start
+    run_time_secs = end - start
     run_time_HMS = strftime('%H:%M:%S', gmtime(run_time_secs))
-    logfunc("Processing time = {}".format(run_time_HMS))
+    logfunc('Processing time = {}'.format(run_time_HMS))
 
     logfunc('')
     logfunc('Report generation started.')
@@ -168,10 +167,11 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
         if input_path.startswith('\\\\?\\'):
             input_path = input_path[4:]
     report.generate_report(out_params.report_folder_base, run_time_secs, run_time_HMS, extracttype, input_path)
-    logfunc('Report generation Completed.')
+    logfunc('Report Generation Completed.')
     logfunc('')
     logfunc(f'Report location: {out_params.report_folder_base}')
     return True
+
 
 if __name__ == '__main__':
     main()
