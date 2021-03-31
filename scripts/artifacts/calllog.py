@@ -106,4 +106,4 @@ class CallLogPlugin(ArtefactPlugin):
             logfunc('No Call Log data available')
 
         db.close()
-        return
+        return True

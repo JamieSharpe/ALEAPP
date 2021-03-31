@@ -118,4 +118,4 @@ class AppIconsPlugin(ArtefactPlugin):
                     data_list.append(( escape(app.name), escape(app.package), main_icon_html, other_icons_html ))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
-        return
+        return True
