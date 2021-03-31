@@ -20,7 +20,7 @@ class AccountsCePlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system_ce/*/accounts_ce.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
-        self.debug_mode = True
+        self.debug_mode = False
 
     def _processor(self) -> bool:
 

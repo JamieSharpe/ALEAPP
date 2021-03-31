@@ -21,7 +21,7 @@ class BuildPlugin(ArtefactPlugin):
         self.path_filters = ['**/vendor/build.prop']  # Collection of regex search filters to locate an artefact.
         self.icon = 'terminal'  # feathricon for report.
 
-        self.debug_mode = True
+        self.debug_mode = False
 
     def _processor(self) -> bool:
         data_list = []

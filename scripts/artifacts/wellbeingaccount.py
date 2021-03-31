@@ -24,7 +24,7 @@ class WellBeingAccountPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.google.android.apps.wellbeing/files/AccountData.pb']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
+        self.debug_mode = False
 
     def _processor(self) -> bool:
 

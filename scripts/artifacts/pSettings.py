@@ -21,7 +21,7 @@ class DeviceInfoPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.google.android.gsf/databases/googlesettings.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
+        self.debug_mode = False
 
     def _processor(self) -> bool:
     
