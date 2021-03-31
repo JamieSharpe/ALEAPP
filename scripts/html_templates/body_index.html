@@ -1,0 +1,108 @@
+{#
+    index.html page.
+
+    Expected context:
+        context:
+        {
+            case_information: - See macros.table_generator
+            run_log: - file content of the run log in arrays.
+            file_log: - file content of the file log in arrays.
+            contributors:
+            [
+                {
+                    name: - A contributors name.
+                    blog: - A contributors blog URL.
+                    twitter: - A contributors Twitter handle.
+                    git: - A contributors git URL.
+                }
+            ]
+        }
+#}
+{% extends "base.html" %}
+
+{% import "macros.html" as macros %}
+
+{% block index_body %}
+
+    {# Header #}
+    <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="display-5">Android Logs Events And Protobuf Parser</h1>
+        <h6 class="animated fadeIn mb-3">ALEAPP is an open source project that aims to parse every known Android artifact for the purpose of forensic analysis.</h6>
+    </div>
+
+    {# Case inforamtion panel #}
+    <div class="card bg-white mt-5" style="padding: 20px;">
+        <h2 class="card-title">Case Information</h2>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="case-tab" data-toggle="tab" href="#case" role="tab" aria-controls="case" aria-selected="true">Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="run-log-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false">Script run log</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="files-list-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Processed files list</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="case" role="tabpanel" aria-labelledby="case-tab">
+                {{ macros.case_information(context.case_information) }}
+            </div>
+            <div class="tab-pane fade text-monospace" id="run" role="tabpanel" aria-labelledby="script-run-tab">
+                {{ macros.file_content(context.run_log) }}
+            </div>
+            <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="profile-tab">
+                {{ macros.file_content(context.file_log) }}
+            </div>
+        </div>
+    </div>
+
+    {# Project thank you #}
+     <div class="text-center">
+        <div class="card bg-white mt-5 mb-3" style="max-width: 500px; margin:auto">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="static/logo.jpg" class="card-img" alt="DFIR">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Thank you for using ALEAPP</h5>
+                        <p class="card-text">
+                            Support open source and report any bugs!
+                        </p>
+                        <!--Github-->
+                        <a class="btn-floating btn-git" type="button" role="button" href="https://github.com/abrignoni/aleapp" target="_blank"><i class="fab fa-github"></i> Project Home </a>
+                        <p class="card-text fadeIn"><small class="text-muted">ALEAPP Team</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Credits/Contributors #}
+    <div class="alert alert-light mt-3 mb-4 bg-white" style="border-style: none">
+        <h4 class="text-center">Aleapp contributors</h4>
+        <ul class="list-group" style="max-width: 500px; margin:auto">
+            {% for contributor in context.contributors %}
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-white">
+                    <i class="fas fa-medal"></i>
+                    {{ contributor.name }}
+                    <span>
+                        {% if contributor.blog %}
+                            <a class="mx-1" href="{{ contributor.blog }}" target="_blank"><i class="fab fa-blogger-b fa-fw"></i></a>
+                        {% endif %}
+                        {% if contributor.twitter %}
+                            <a class="mx-1" href="https://twitter.com/{{ contributor.twitter }}" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+                        {% endif %}
+                        {% if contributor.git %}
+                            <a class="mx-1" href="{{ contributor.git }}" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock index_body %}

@@ -1,0 +1,158 @@
+{#
+    TODO: Convert this into a macro
+
+    Writes the content of a file into HTML
+
+    contect.file_title - Title to be given for the file content.
+    context.file_lines - array of all the file lines.
+#}
+{% macro file_content(context) %}
+
+    {% if context.file_title %}
+        <h2>{{ context.file_title }}</h2>
+    {% endif %}
+
+    <div class="table-responsive">
+        {# TODO: Use the table line numbering in main.css #}
+        <table class="table table-bordered table-hover table-sm" style="width: 70%">
+            <tbody>
+                {% for line in context.file_lines %}
+                    <tr>
+                        <td>{{ line }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endmacro %}
+
+{#
+    table_generator
+
+    context.title - Title to display above the table.
+    context.headers - Table header and footer data.
+    context.rows - list of rows. Each list contains a sublist of cell data.
+
+#}
+{% macro table_generator(context) %}
+    {% if context.title %}
+        <h2>{{ context.title }}</h2>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-sm" style="width: 70%">
+
+            {# Table Header #}
+            {% if context.headers %}
+                <thead>
+                    <tr>
+                        {% for header in context.headers %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {# Table Body #}
+            <tbody>
+                {% for row in context.rows %}
+                    <tr>
+
+                    {% for cell_data in row %}
+
+                        <td>{{ cell_data }}</td>
+
+                    {% endfor %}
+
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+
+            {# Table Footer #}
+            {% if context.headers %}
+                <tfoot>
+                    <tr>
+                        {% for header in context.headers %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
+            {% endif %}
+        </table>
+    </div>
+{% endmacro %}
+
+
+{#
+    table_generator
+
+    context.title - Title to display above the table.
+    context.headers - Table header and footer data.
+    context.rows - list of rows. Each list contains a sublist of cell data.
+
+#}
+{% macro artefact_table_generator(context) %}
+    {% if context.title %}
+        <h2>{{ context.title }}</h2>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-xsm" cellspacing="0" id="dtBasicExample" style="width: 70%">
+
+            {# Table Header #}
+            {% if context.headers %}
+                <thead>
+                    <tr>
+                        {% for header in context.headers %}
+                            <th class="th-sm">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {# Table Body #}
+            <tbody>
+                {% for row in context.rows %}
+                    <tr>
+
+                    {% for cell_data in row %}
+
+                        <td>{{ cell_data }}</td>
+
+                    {% endfor %}
+
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+
+            {# Table Footer #}
+            {% if context.headers %}
+                <tfoot>
+                    <tr>
+                        {% for header in context.headers %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
+            {% endif %}
+        </table>
+    </div>
+{% endmacro %}
+
+
+{#
+    case_information
+
+    context - See macros.table_generator
+#}
+{% macro case_information(context) %}
+    {{ table_generator(context) }}
+
+    <p class="note note-primary mb-4">
+        All dates and times are in UTC unless noted otherwise!
+    </p>
+{% endmacro %}
+

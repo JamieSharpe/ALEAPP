@@ -35,6 +35,7 @@ class ArtefactPlugin:
 
         # Artefact Details
         self.name: str = 'Unknown Plugin'  # Friendly plugin name.
+        self.category: str = 'Generic'  # Artefact category.
         self.description: str = ''  # What does the plugin do.
         self.artefact_reference: str = ''  # Description on what the artefact is.
         self.path_filters: list = []  # Collection of regex search filters to locate an artefact.
@@ -43,7 +44,8 @@ class ArtefactPlugin:
         # Artefact Processing Details
         # Do not alter these in your plugin implementation. They are purely for reference in your processing implementation.
         self.files_found: list = []  # Collection of all the file paths that match self.path_filters.
-        self.report_folder: str = ''  # Artefact report folder.
+        self.report_folder: str = ''  # Artefact HTML report folder.
+        self.export_folder: str = ''  # Artefact export folder.
         self.seeker: search_files.FileSeekerBase = None  # Seeker object to search for additional files in the evidence.
         self.wrap_text: bool = True  # Determine if text should be wrapped on a new line.
 
@@ -65,10 +67,14 @@ class ArtefactPlugin:
             logfunc('No artefacts to parse.')
             return True
 
-        slash = '\\' if is_platform_windows() else '/'
-
-        self.report_folder = os.path.join(report_folder_base, self.name) + slash
+        # Setup report folder for HTML files.
+        self.report_folder = os.path.join(report_folder_base, 'HTML Reports - Temp', self.name)
+        self.report_folder = os.path.join(report_folder_base, self.name)
         os.makedirs(self.report_folder, exist_ok = True)
+
+        # Setup export folder for extracted artefact data.
+        self.export_folder = os.path.join(report_folder_base, self.name)
+        # os.makedirs(self.export_folder, exist_ok = True)
 
         processor_success_status = False
         try:

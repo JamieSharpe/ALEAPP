@@ -7,6 +7,7 @@ from scripts.ilapfuncs import *
 from scripts.version_info import aleapp_version
 from time import process_time, gmtime, strftime
 from scripts.plugin_manager import PluginManager
+from scripts.artifact_report import CompileAllHTMLReports, CompileIndex, CopyStaticFiles
 
 
 def main():
@@ -107,7 +108,7 @@ def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
         logfunc(traceback.format_exc())
         return False
 
-    plugin_manager = PluginManager('scripts.artifacts', plugins_in_debug_only = False)
+    plugin_manager = PluginManager('scripts.artifacts', plugins_in_debug_only = True)
 
     # Now ready to run
     logfunc(f'Artifact categories to parse: {len(plugin_manager.plugins)}')
@@ -115,7 +116,7 @@ def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
     logfunc('\n--------------------------------------------------------------------------------------')
 
     log = open(os.path.join(out_params.report_folder_base, 'Script Logs', 'ProcessedFilesLog.html'), 'w+', encoding='utf8')
-    log.write(f'Extraction/Path selected: {input_path}<br><br>')
+    log.write(f'Extraction/Path selected: {input_path}')
     log.close()
 
     categories_searched = 0
@@ -140,13 +141,18 @@ def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
 
     logfunc('')
     logfunc('Report generation started.')
+
+    CompileAllHTMLReports(out_params.report_folder_base)
+    CompileIndex(out_params.report_folder_base, input_path, extracttype, run_time_HMS)
+    CopyStaticFiles(out_params.report_folder_base)
+
     # remove the \\?\ prefix we added to input and output paths, so it does not reflect in report
     if is_platform_windows(): 
         if out_params.report_folder_base.startswith('\\\\?\\'):
             out_params.report_folder_base = out_params.report_folder_base[4:]
         if input_path.startswith('\\\\?\\'):
             input_path = input_path[4:]
-    report.generate_report(out_params.report_folder_base, run_time_secs, run_time_HMS, extracttype, input_path)
+    # report.generate_report(out_params.report_folder_base, run_time_secs, run_time_HMS, extracttype, input_path)
     logfunc('Report Generation Completed.')
     logfunc('')
     logfunc(f'Report location: {out_params.report_folder_base}')

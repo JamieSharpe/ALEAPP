@@ -135,7 +135,7 @@ def logfunc(message: str = ''):
     """
     print(message)
     with open(OutputParameters.screen_output_file_path, 'a', encoding='utf8') as a:
-        a.write(message + '<br>' + OutputParameters.nl)
+        a.write(message + OutputParameters.nl)
 
     if GuiWindow.window_handle:
         GuiWindow.window_handle.refresh()
@@ -201,7 +201,10 @@ def tsv(report_folder, data_headers, data_list, tsvname):
 
     os.makedirs(tsv_report_folder, exist_ok = True)
 
-    with open(os.path.join(tsv_report_folder, tsvname + '.tsv'), mode='a', encoding='utf-8-sig') as tsvfile:
+    tsv_file = os.path.join(tsv_report_folder, f'{tsvname}.tsv')
+    tsv_file = get_next_unused_name(tsv_file)
+
+    with open(tsv_file, mode='a', encoding='utf-8-sig') as tsvfile:
         tsv_writer = csv.writer(tsvfile, delimiter='\t')
         tsv_writer.writerow(data_headers)
         tsv_writer.writerows(data_list)

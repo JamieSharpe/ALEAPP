@@ -1,0 +1,101 @@
+{% import "macros.html" as macros %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>
+            ALEAPP
+            {% if context.title %}
+                - {{ context.title }}
+            {% endif %}
+        </title>
+        <!-- Dark mode -->
+         <link rel="stylesheet" href="static/dark-mode.css">
+{#        <style>#}
+{#            {% include "static/dark-mode.css" %}#}
+{#        </style>#}
+        <!-- Font Awesome -->
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+{#         <link rel="stylesheet" href="static/fontawesome-v5.11.2-all.css">#}
+{#        <style>#}
+{#            {% include "static/fontawesome-v5.11.2-all.css" %}#}
+{#        </style>#}
+        <!-- Google Fonts Roboto -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="static/MDB-Free_4.19.2/css/bootstrap.min.css">
+
+        <!-- Material Design Bootstrap - TOGGLE THIS FOR ALTERNATE DESIGN!-->
+        <link rel="stylesheet" href="static/MDB-Free_4.19.2/css/mdb.min.css">
+
+        <!-- MDBootstrap Datatables  -->
+{#        <link rel="stylesheet" href="static/MDB-Free_4.13.0/css/addons/datatables.min.css">#}
+        <link rel="stylesheet" href="static/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="static/MDB-Free_4.19.2/css/addons/datatables-select.min.css">
+
+        <!-- Your custom styles (optional) -->
+        <link rel="stylesheet" href="static/dashboard.css">
+
+    </head>
+    <body>
+        {# Top row header #}
+        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">ALEAPP - {{ context.version }}</a>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="darkSwitch" />
+                <label class="custom-control-label mr-2" for="darkSwitch" style="color:white">Dark Switch</label>
+            </div>
+            <script src="static/dark-mode-switch.js"></script>
+        </nav>
+
+        {# Left navigation panel. #}
+{#        {% include "navbar.html" %}#}
+
+        {{ context.navbar|safe }}
+
+        {# Main page body #}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            {% block index_body %}
+            {% endblock index_body %}
+
+            {{ context.main_body|safe }}
+        </main>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="static/MDB-Free_4.13.0/js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="static/MDB-Free_4.13.0/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="static/MDB-Free_4.13.0/js/bootstrap.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="static/MDB-Free_4.13.0/js/mdb.min.js"></script>
+    <!-- Your custom scripts -->
+    <!-- MDBootstrap Datatables  -->
+    <script type="text/javascript" src="static/jquery.dataTables.min.,js"></script>
+    <!-- Icons -->
+    <!--script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script-->
+    <script src="static/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+
+    <script>
+        var elemScrollTop = document.getElementById("sidebar_id").scrollTop.toString();
+        document.addEventListener("DOMContentLoaded", function() {
+            var element = document.getElementById("sidebar_id");
+            element.addEventListener("scroll", function() {
+                elemScrollTop = document.getElementById("sidebar_id").scrollTop.toString();
+            });
+        });
+        $('a.nav-link').click(function(e) {
+            e.preventDefault();
+            location.href = $(this).attr('href') + "?navpos=" + elemScrollTop;
+        });
+    </script>
+
+    <script src="static/main.js"></script>
+    </body>
+</html>

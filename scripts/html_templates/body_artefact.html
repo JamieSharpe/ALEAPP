@@ -1,0 +1,45 @@
+{#
+    Artefact base page.
+
+    Provides a basic structure for an artefact.
+
+    Expected context:
+        context:
+        {
+
+        }
+#}
+
+{% import "macros.html" as macros %}
+{% block main_body %}
+    {# Header #}
+    <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div id="{{ context.unique_id }}"></div>
+        <h1 class="display-5">{{ context.artefact.category }} - {{ context.artefact.name }}</h1>
+        <h6 class="animated fadeIn mb-3">{{ context.artefact.artefact_reference }}</h6>
+    </div>
+
+    <div id="mySpinner" class="spinner-border text-info float-right" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    {# Artefact files found #}
+    <h6>Located {{ context.artefact.files_found|length }} artefact files:</h6>
+    <ul>
+        {% for file in context.artefact.files_found %}
+            <li>{{ file }}</li>
+        {% endfor %}
+    </ul>
+
+    <div id="artefact_{{ context.unique_id }}">
+    <h6>Reviewing parsed data from:</h6>
+    <ul>
+        <li>{{ context.artefact.artefact_file }}</li>
+    </ul>
+    </div>
+    {# Artefact table of entries #}
+    <h6>Total number of entries: {{ context.artefact.data.rows|length }}</h6>
+
+    {{ macros.artefact_table_generator(context.artefact.data) }}
+
+{% endblock main_body %}

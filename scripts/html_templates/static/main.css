@@ -1,0 +1,24 @@
+
+/*
+Table Row Numbers
+Enables a table to have a row number:
+https://stackoverflow.com/questions/17012421/auto-number-table-rows
+*/
+
+table {
+    counter-reset: rowNumber;
+}
+
+table tr {
+    counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}
+
+/*
+End Table Row Numbers
+*/
