@@ -178,11 +178,11 @@ def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, i
     shutil.copy2(os.path.join(__location__,"dark-mode-switch.js"), elements_folder)
     shutil.copytree(os.path.join(__location__,"MDB-Free_4.13.0"), os.path.join(elements_folder, 'MDB-Free_4.13.0'))
 
+
 def get_file_content(path):
-    f = open(path, 'r', encoding='utf8')
-    data = f.read()
-    f.close()
-    return data
+    with open(path, mode = 'r', encoding = 'utf8') as f:
+        return f.read()
+
 
 def create_index_html(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path, nav_list_data):
     '''Write out the index.html page to the report folder'''
