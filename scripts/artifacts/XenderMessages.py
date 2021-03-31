@@ -1,3 +1,5 @@
+import datetime
+
 from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
@@ -35,10 +37,10 @@ class XenderMessagesPlugin(ArtefactPlugin):
 
             try:
                 cursor.execute('''
-                SELECT f_path, f_display_name, f_size_str, c_start_time, case c_direction when 1 then "Outgoing" else "Incoming" end direction, 
-                       c_session_id, s_name, s_device_id, r_name, r_device_id
-                  FROM new_history
-                ''')
+                        SELECT f_path, f_display_name, f_size_str, c_start_time/1000, c_direction, c_session_id, s_name, 
+                               s_device_id, r_name, r_device_id
+                          FROM new_history
+                        ''')
 
                 all_rows = cursor.fetchall()
                 usageentries = len(all_rows)
@@ -47,10 +49,27 @@ class XenderMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('file_path','file_display_name','file_size','timestamp','direction', 'session_id', 'sender_name', 'sender_device_id', 'recipient_name', 'recipient_device_id' ) # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = (
+                'file_path', 'file_display_name', 'file_size', 'timestamp', 'direction', 'to_id', 'from_id',
+                'session_id', 'sender_name', 'sender_device_id', 'recipient_name',
+                'recipient_device_id')
+
                 data_list = []
                 for row in all_rows:
-                    data_list.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
+                    from_id = ''
+                    to_id = ''
+                    if (row[4] == 1):
+                        direction = 'Outgoing'
+                        to_id = row[6]
+                    else:
+                        direction = 'Incoming'
+                        from_id = row[6]
+
+                    createtime = datetime.datetime.fromtimestamp(int(row[3])).strftime('%Y-%m-%d %H:%M:%S')
+
+                    data_list.append((row[0], row[1], row[2], createtime, direction, to_id, from_id, row[5], row[6],
+                                      row[7], row[8], row[9]))
+
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsv(self.report_folder, data_headers, data_list, self.full_name())
