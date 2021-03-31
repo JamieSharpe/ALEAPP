@@ -1,9 +1,8 @@
 import datetime
 import json
 
-from scripts.ilapfuncs import open_sqlite_db_readonly
+from scripts.ilapfuncs import open_sqlite_db_readonly, logfunc, tsv, timeline
 from scripts.plugin_base import ArtefactPlugin
-from scripts.ilapfuncs import logfunc, tsv
 from scripts import artifact_report
 
 
@@ -34,7 +33,7 @@ class ImoMessagesPlugin(ArtefactPlugin):
 
             if file_name.endswith('imofriends.db'):
                imo_friends_db = str(file_found)
-               # source_file_friends = file_found.replace(self.seeker.directory, '')
+               source_file_friends = file_found.replace(self.seeker.directory, '')
 
             db = open_sqlite_db_readonly(imo_friends_db)
             cursor = db.cursor()
@@ -53,7 +52,7 @@ class ImoMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('from_id', 'to_id', 'last_message', 'timestamp', 'direction', 'message_read', 'attachment')
+                data_headers = ('Timestamp', 'From ID', 'To ID', 'Last Message', 'Direction', 'Message Read', 'Attachment')
                 data_list = []
 
                 for row in all_rows:
@@ -75,11 +74,13 @@ class ImoMessagesPlugin(ArtefactPlugin):
                             attachmentPath = attachmentLocalPath
 
                     timestamp = datetime.datetime.fromtimestamp(int(row[3])).strftime('%Y-%m-%d %H:%M:%S')
-                    data_list.append((from_id, to_id, row[2], timestamp, row[4], row[5], attachmentPath))
+                    data_list.append((timestamp, from_id, to_id, row[2], row[4], row[5], attachmentPath))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_friends)
+
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
                 logfunc('No IMO Messages found')

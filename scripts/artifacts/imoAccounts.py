@@ -30,7 +30,7 @@ class ImoAccountsPlugin(ArtefactPlugin):
             file_name = str(file_found)
             if file_name.endswith('accountdb.db'):
                imo_account_db = str(file_found)
-               # source_file_account = file_found.replace(self.seeker.directory, '')
+               source_file_account = file_found.replace(self.seeker.directory, '')
 
             db = open_sqlite_db_readonly(imo_account_db)
             cursor = db.cursor()
@@ -46,16 +46,14 @@ class ImoAccountsPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('account_id','name') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Account ID', 'Name')
                 data_list = []
                 for row in all_rows:
                     data_list.append((row[0], row[1]))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.full_name())
-
-                timeline(self.report_folder, self.full_name(), data_list, data_headers)
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_account)
 
             else:
                 logfunc('No IMO AccountId found')
