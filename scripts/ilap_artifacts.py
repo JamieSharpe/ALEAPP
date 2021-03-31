@@ -129,7 +129,7 @@ tosearch = {
     # 'settingsSecure':('Device Info', '**/system/users/*/settings_secure.xml'),
     # 'siminfo':('Device Info', '**/user_de/*/com.android.providers.telephony/databases/telephony.db'),
     # 'smanagerCrash':('App Interaction', '**/com.samsung.android.sm/databases/sm.db'),
-    'smanagerLow':('App Interaction', '**/com.samsung.android.sm/databases/lowpowercontext-system-db'),
+    # 'smanagerLow':('App Interaction', '**/com.samsung.android.sm/databases/lowpowercontext-system-db'),
     'smembersAppInv':('App Interaction', '**/com.samsung.oh/databases/com_pocketgeek_sdk_app_inventory.db'),
     'smembersEvents':('App Interaction', '**/com.samsung.oh/databases/com_pocketgeek_sdk.db'),
     'sms_mms':('SMS & MMS', '**/com.android.providers.telephony/databases/mmssms*'), # Get mmssms.db, mms-wal.db
