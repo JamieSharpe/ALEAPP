@@ -135,7 +135,7 @@ tosearch = {
     # 'sms_mms':('SMS & MMS', '**/com.android.providers.telephony/databases/mmssms*'), # Get mmssms.db, mms-wal.db
     # 'smyfilesRecents':('Media Metadata', '**/com.sec.android.app.myfiles/databases/myfiles.db'),
     # 'smyFiles':('Media Metadata', '**/com.sec.android.app.myfiles/databases/MyFiles*.db*'),
-    'smyfilesStored':('Media Metadata', '**/com.sec.android.app.myfiles/databases/FileCache.db'),
+    # 'smyfilesStored':('Media Metadata', '**/com.sec.android.app.myfiles/databases/FileCache.db'),
     'swellbeing': ('Wellbeing', '**/com.samsung.android.forest/databases/dwbCommon.db*'),
     'Turbo': ('Battery', '**/com.google.android.apps.turbo/databases/turbo.db*'),
     'usageapps': ('App Interaction', '**/com.google.android.as/databases/reflection_gel_events.db*'),
