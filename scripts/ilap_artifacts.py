@@ -98,7 +98,7 @@ tosearch = {
     # 'Cello': ('Google Docs', ('*/com.google.android.apps.docs/app_cello/*/cello.db*', '*/com.google.android.apps.docs/files/shiny_blobs/blobs/*')),
     # 'chrome':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
     # 'chromeBookmarks':('Chrome', ('**/app_chrome/Default/Bookmarks*', '**/app_sbrowser/Default/Bookmarks*')),
-    'chromeCookies':('Chrome', ('**/app_chrome/Default/Cookies*', '**/app_sbrowser/Default/Cookies*')),
+    # 'chromeCookies':('Chrome', ('**/app_chrome/Default/Cookies*', '**/app_sbrowser/Default/Cookies*')),
     'chromeDownloads':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
     'chromeLoginData':('Chrome', ('**/app_chrome/Default/Login Data*', '**/app_sbrowser/Default/Login Data*')),
     'chromeMediaHistory':('Chrome', ('**/app_chrome/Default/Media History*','**/app_sbrowser/Default/Media History*')),
