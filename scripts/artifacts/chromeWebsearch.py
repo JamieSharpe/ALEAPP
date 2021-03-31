@@ -35,7 +35,7 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
             file_found = str(file_found)
             if not os.path.basename(file_found) == 'History': # skip -journal and other files
                 continue
-            browser_name = 'Chrome'
+            browser_name = self.get_browser_name(file_found)
             if file_found.find('app_sbrowser') >= 0:
                 browser_name = 'Browser'
             elif file_found.find('.magisk') >= 0 and file_found.find('mirror') >= 0:
@@ -76,3 +76,12 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
 
             db.close()
         return True
+
+    def get_browser_name(self, file_name):
+
+        if 'microsoft' in file_name.lower():
+            return 'Edge'
+        elif 'chrome' in file_name.lower():
+            return 'Chrome'
+        else:
+            return 'Unknown'

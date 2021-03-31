@@ -204,9 +204,13 @@ def tsv(report_folder, data_headers, data_list, tsvname):
     tsv_file = os.path.join(tsv_report_folder, f'{tsvname}.tsv')
     tsv_file = get_next_unused_name(tsv_file)
 
+    # Note: this shouldn't happen anyway due to the 'get unused name' call above.
+    tsv_file_exists = os.path.exists(tsv_file)
+
     with open(tsv_file, mode='a', encoding='utf-8-sig') as tsvfile:
         tsv_writer = csv.writer(tsvfile, delimiter='\t')
-        tsv_writer.writerow(data_headers)
+        if not tsv_file_exists:
+            tsv_writer.writerow(data_headers)
         tsv_writer.writerows(data_list)
 
 
