@@ -193,7 +193,7 @@ def GenerateHtmlReport(artefact, artefact_file = '', data_header = None, data_ro
     temp_html_folder = os.path.join(artefact.report_folder, 'HTML Reports - Temp')
     os.makedirs(temp_html_folder, exist_ok = True)
 
-    output_path = os.path.join(temp_html_folder, f'artefact_{artefact.name}.temphtml')
+    output_path = os.path.join(temp_html_folder, f'artefact_{artefact.full_name()}.temphtml')
     report_path = get_next_unused_name(output_path)
     with open(report_path, mode = 'w', encoding = 'utf-8') as f:
         f.write(html_content)
@@ -203,7 +203,7 @@ def GenerateHtmlReport(artefact, artefact_file = '', data_header = None, data_ro
 
     # Append to a list for the navigation bar generation.
     GeneratedHtmlReports.setdefault(artefact.category, []).append({
-        'name': generated_file.replace('artefact_',''),
+        'name': generated_file.replace(f'artefact_{artefact.category} - ',''),
         'unique_id': unique_id,
         'icon': artefact.icon,
         'file_name': f'{generated_file}.html',
