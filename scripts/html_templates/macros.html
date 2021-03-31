@@ -93,7 +93,7 @@
     context.rows - list of rows. Each list contains a sublist of cell data.
 
 #}
-{% macro artefact_table_generator(context) %}
+{% macro artefact_table_generator(context, custom_context) %}
     {% if context.title %}
         <h2>{{ context.title }}</h2>
     {% endif %}

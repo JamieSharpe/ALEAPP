@@ -40,6 +40,6 @@
     {# Artefact table of entries #}
     <h6>Total number of entries: {{ context.artefact.data.rows|length }}</h6>
 
-    {{ macros.artefact_table_generator(context.artefact.data) }}
+    {{ macros.artefact_table_generator(context.artefact.data, context.custom_context) }}
 
 {% endblock main_body %}

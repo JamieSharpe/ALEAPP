@@ -7,6 +7,7 @@ from scripts.ilapfuncs import is_platform_windows, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -30,12 +31,15 @@ class AppIconsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Installed Apps'
+        self.category = 'Installed Apps'
+        self.name = 'App Icons'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/data/com.google.android.apps.nexuslauncher/databases/app_icons.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         sessions = []
@@ -61,9 +65,6 @@ class AppIconsPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                report = ArtifactHtmlReport('App Icons')
-                report.start_artifact_report(self.report_folder, 'App Icons')
-                report.add_script()
                 data_headers = ('App name', 'Package name', 'Main icon', 'Icons')
                 data_list = []
                 app = None
@@ -115,6 +116,6 @@ class AppIconsPlugin(ArtefactPlugin):
                             icon_data = base64.b64encode(v[1]).decode("utf-8")
                             other_icons_html += f'<img title="{v[0]}" src="data:image/png;base64,{icon_data}"> '
                     data_list.append(( escape(app.name), escape(app.package), main_icon_html, other_icons_html ))
-                report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
-                report.end_artifact_report()
-                return
+
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
+        return

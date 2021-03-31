@@ -137,7 +137,18 @@ def CompileAllHTMLReports(report_folder):
                     f.write(html_content)
 
 
-def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template='body_artefact.htmll', allow_html = False):
+def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template = 'body_artefact.html', allow_html = False, custom_context = None):
+    """
+    WARNING - When allow_html is True, be sure to manually escape any data that may be injected outside your parsing.
+    :param artefact:
+    :param artefact_file:
+    :param data_header:
+    :param data_rows:
+    :param html_template:
+    :param allow_html:
+    :param custom_context: Dictionary of elemets for use in a custom html template.
+    :return:
+    """
 
     resource_base_html = resource_path('scripts\\html_templates', 'base.html')
     template_loader = FileSystemLoader(searchpath = os.path.dirname(resource_base_html))
@@ -155,6 +166,7 @@ def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_tem
         'version': aleapp_version,
         'title': f'{artefact.name} report',
         'unique_id': unique_id,
+        'custom_context': custom_context,
         'artefact': {
             'category': artefact.category,
             'name': artefact.name,
@@ -169,7 +181,7 @@ def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_tem
         }
     }
 
-    template = env.get_template('body_artefact.html')
+    template = env.get_template(html_template)
     html_content = template.render(context = context)
 
     # Create HTML Temp folder
