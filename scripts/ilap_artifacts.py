@@ -121,7 +121,7 @@ tosearch = {
     # 'quicksearch':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/app_session/*.binarypb'),
     # 'quicksearch_recent':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/files/recently/*'),
     # 'recentactivity':('Recent Activity', '**/system_ce/*'),
-    'lgRCS':('RCS Chats', '*/mmssms.db*'),
+    # 'lgRCS':('RCS Chats', '*/mmssms.db*'),
     'permissions':('Permissions', '*/system/packages.xml'),
     'roles':('App Roles',('*/system/users/*/roles.xml','*/misc_de/*/apexdata/com.android.permission/roles.xml')),
     'runtimePerms':('Permissions',('*/system/users/*/runtime-permissions.xml','*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml')),
