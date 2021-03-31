@@ -19,59 +19,59 @@ import traceback
 # from scripts.artifacts.Cast import get_Cast
 # from scripts.artifacts.Cello import get_Cello
 # from scripts.artifacts.chrome import get_chrome
-from scripts.artifacts.chromeBookmarks import get_chromeBookmarks
-from scripts.artifacts.chromeCookies import get_chromeCookies
-from scripts.artifacts.chromeDownloads import get_chromeDownloads
-from scripts.artifacts.chromeLoginData import get_chromeLoginData
-from scripts.artifacts.chromeMediaHistory import get_chromeMediaHistory
-from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
-from scripts.artifacts.chromeOfflinePages import get_chromeOfflinePages
-from scripts.artifacts.chromeSearchTerms import get_chromeSearchTerms
-from scripts.artifacts.chromeTopSites import get_chromeTopSites
-from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
-from scripts.artifacts.cmh import get_cmh
-from scripts.artifacts.DocList import get_DocList
-from scripts.artifacts.emulatedSmeta import get_emulatedSmeta
-from scripts.artifacts.gboard import get_gboardCache
-from scripts.artifacts.googleNowPlaying import get_googleNowPlaying
-from scripts.artifacts.googlePlaySearches import get_googlePlaySearches
-from scripts.artifacts.googleQuickSearchbox import get_quicksearch
-from scripts.artifacts.googleQuickSearchboxRecent import get_quicksearch_recent
-from scripts.artifacts.installedappsGass import get_installedappsGass
-from scripts.artifacts.installedappsLibrary import get_installedappsLibrary
-from scripts.artifacts.installedappsVending import get_installedappsVending 
-from scripts.artifacts.pSettings import get_pSettings
-from scripts.artifacts.packageInfo import get_package_info
-from scripts.artifacts.permissions import get_permissions
-from scripts.artifacts.recentactivity import get_recentactivity
-from scripts.artifacts.lgRCS import get_lgRCS
-from scripts.artifacts.roles import get_roles
-from scripts.artifacts.runtimePerms import get_runtimePerms
-from scripts.artifacts.scontextLog import get_scontextLog
-from scripts.artifacts.settingsSecure import get_settingsSecure
-from scripts.artifacts.siminfo import get_siminfo
-from scripts.artifacts.smanagerCrash import get_smanagerCrash
-from scripts.artifacts.smanagerLow import get_smanagerLow
-from scripts.artifacts.smembersAppInv import get_smembersAppInv
-from scripts.artifacts.smembersEvents import get_smembersEvents
-from scripts.artifacts.smsmms import get_sms_mms
-from scripts.artifacts.smyfilesRecents import get_smyfilesRecents
-from scripts.artifacts.smyFiles import get_smyFiles
-from scripts.artifacts.smyfilesStored import get_smyfilesStored
-from scripts.artifacts.swellbeing import get_swellbeing
-from scripts.artifacts.Turbo import get_Turbo
-from scripts.artifacts.usageapps import get_usageapps
-from scripts.artifacts.usagestats import get_usagestats
-from scripts.artifacts.userDict import get_userDict
-from scripts.artifacts.Viber import get_Viber
-from scripts.artifacts.walStrings import get_walStrings
-from scripts.artifacts.wellbeing import get_wellbeing
-from scripts.artifacts.wellbeingURLs import get_wellbeingURLs
-from scripts.artifacts.wellbeingaccount import get_wellbeingaccount
-from scripts.artifacts.wifiHotspot import get_wifiHotspot
-from scripts.artifacts.wifiProfiles import get_wifiProfiles
-from scripts.artifacts.Xender import get_Xender
-from scripts.artifacts.Zapya import get_Zapya
+# from scripts.artifacts.chromeBookmarks import get_chromeBookmarks
+# from scripts.artifacts.chromeCookies import get_chromeCookies
+# from scripts.artifacts.chromeDownloads import get_chromeDownloads
+# from scripts.artifacts.chromeLoginData import get_chromeLoginData
+# from scripts.artifacts.chromeMediaHistory import get_chromeMediaHistory
+# from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
+# from scripts.artifacts.chromeOfflinePages import get_chromeOfflinePages
+# from scripts.artifacts.chromeSearchTerms import get_chromeSearchTerms
+# from scripts.artifacts.chromeTopSites import get_chromeTopSites
+# from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
+# from scripts.artifacts.cmh import get_cmh
+# from scripts.artifacts.DocList import get_DocList
+# from scripts.artifacts.emulatedSmeta import get_emulatedSmeta
+# from scripts.artifacts.gboard import get_gboardCache
+# from scripts.artifacts.googleNowPlaying import get_googleNowPlaying
+# from scripts.artifacts.googlePlaySearches import get_googlePlaySearches
+# from scripts.artifacts.googleQuickSearchbox import get_quicksearch
+# from scripts.artifacts.googleQuickSearchboxRecent import get_quicksearch_recent
+# from scripts.artifacts.installedappsGass import get_installedappsGass
+# from scripts.artifacts.installedappsLibrary import get_installedappsLibrary
+# from scripts.artifacts.installedappsVending import get_installedappsVending
+# from scripts.artifacts.pSettings import get_pSettings
+# from scripts.artifacts.packageInfo import get_package_info
+# from scripts.artifacts.permissions import get_permissions
+# from scripts.artifacts.recentactivity import get_recentactivity
+# from scripts.artifacts.lgRCS import get_lgRCS
+# from scripts.artifacts.roles import get_roles
+# from scripts.artifacts.runtimePerms import get_runtimePerms
+# from scripts.artifacts.scontextLog import get_scontextLog
+# from scripts.artifacts.settingsSecure import get_settingsSecure
+# from scripts.artifacts.siminfo import get_siminfo
+# from scripts.artifacts.smanagerCrash import get_smanagerCrash
+# from scripts.artifacts.smanagerLow import get_smanagerLow
+# from scripts.artifacts.smembersAppInv import get_smembersAppInv
+# from scripts.artifacts.smembersEvents import get_smembersEvents
+# from scripts.artifacts.smsmms import get_sms_mms
+# from scripts.artifacts.smyfilesRecents import get_smyfilesRecents
+# from scripts.artifacts.smyFiles import get_smyFiles
+# from scripts.artifacts.smyfilesStored import get_smyfilesStored
+# from scripts.artifacts.swellbeing import get_swellbeing
+# from scripts.artifacts.Turbo import get_Turbo
+# from scripts.artifacts.usageapps import get_usageapps
+# from scripts.artifacts.usagestats import get_usagestats
+# from scripts.artifacts.userDict import get_userDict
+# from scripts.artifacts.Viber import get_Viber
+# from scripts.artifacts.walStrings import get_walStrings
+# from scripts.artifacts.wellbeing import get_wellbeing
+# from scripts.artifacts.wellbeingURLs import get_wellbeingURLs
+# from scripts.artifacts.wellbeingaccount import get_wellbeingaccount
+# from scripts.artifacts.wifiHotspot import get_wifiHotspot
+# from scripts.artifacts.wifiProfiles import get_wifiProfiles
+# from scripts.artifacts.Xender import get_Xender
+# from scripts.artifacts.Zapya import get_Zapya
 
 from scripts.ilapfuncs import *
 
