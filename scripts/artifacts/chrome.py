@@ -80,5 +80,7 @@ class ChromeHistoryPlugin(ArtefactPlugin):
             return 'Edge'
         elif 'chrome' in file_name.lower():
             return 'Chrome'
+        elif 'opera' in file_name.lower():
+            return 'Opera'
         else:
             return 'Unknown'
