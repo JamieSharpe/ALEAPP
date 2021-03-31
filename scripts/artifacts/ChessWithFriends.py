@@ -6,7 +6,6 @@ from scripts.ilapfuncs import logfunc, tsv
 
 class ChessWithFriendsPlugin(ArtefactPlugin):
     """
-    This plugin gets the build information.
     """
 
     def __init__(self):

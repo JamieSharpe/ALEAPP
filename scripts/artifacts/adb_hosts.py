@@ -5,7 +5,6 @@ from scripts.ilapfuncs import logfunc, tsv
 
 class AdbHostsPlugin(ArtefactPlugin):
     """
-    This plugin gets the build information.
     """
 
     def __init__(self):
