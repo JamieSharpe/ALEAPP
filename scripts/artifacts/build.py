@@ -65,8 +65,7 @@ class BuildPlugin(ArtefactPlugin):
             data_headers = ('Key', 'Value')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'Build Info'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc(f'No Build Info data available')
 

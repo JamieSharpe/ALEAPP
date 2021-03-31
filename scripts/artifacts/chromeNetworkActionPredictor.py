@@ -60,11 +60,9 @@ class ChromeNetworkActionPredictorPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsvname = f'{browser_name} Network Action Predictor'
-                tsv(self.report_folder, data_headers, data_list, tsvname)
+                tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tlactivity = f'{browser_name} Network Action Predictor'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc('No Browser Network Action Predictor data available')
 

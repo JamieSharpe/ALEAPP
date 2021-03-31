@@ -52,11 +52,9 @@ class FilesByGoogleSearchHistoryPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsvname = f'Files By Google - Search History'
-                tsv(self.report_folder, data_headers, data_list, tsvname)
+                tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tlactivity = f'Files By Google - Search History'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc('No Files By Google - Search History data available')
 

@@ -67,8 +67,7 @@ class TurboPlugin(ArtefactPlugin):
 
                 tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tlactivity = f'Turbo'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc('No Turbo data available')
 

@@ -65,8 +65,7 @@ class AccountsCePlugin(ArtefactPlugin):
                 data_list.append((row[0], row[1], row[2]))
             artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
 
-            tsvname = f'accounts ce {uid}'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc(f'No accounts_ce_{uid} data available')
         db.close()

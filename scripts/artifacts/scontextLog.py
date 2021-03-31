@@ -54,11 +54,9 @@ class AppInteractionPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'samsung contextlog'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Samsung Context Log'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
         else:
             logfunc('No Samsung Context Log data available')
 

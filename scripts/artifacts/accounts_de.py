@@ -65,11 +65,9 @@ class AccountsDePlugin(ArtefactPlugin):
                 data_list.append((row[0], row[1], row[2]))
             artifact_report.GenerateHtmlReport(self, f'{folder} - {uid}', data_headers, data_list)
 
-            tsvname = f'accounts de {uid}'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Accounts DE {uid}'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
         else:
             logfunc(f'No accounts_de_{uid} data available')
         db.close()

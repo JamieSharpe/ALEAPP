@@ -123,11 +123,9 @@ class CelloPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
-            tsvname = f'Google Drive - Cello'
-            tsv(self.report_folder, data_headers, tsv_list, tsvname)
+            tsv(self.report_folder, data_headers, tsv_list, self.name)
 
-            tlactivity = f'Google Drive - Cello'
-            timeline(self.report_folder, tlactivity, tsv_list, data_headers)
+            timeline(self.report_folder, self.name, tsv_list, data_headers)
         else:
             logfunc('No Google Drive - Cello data available')
 

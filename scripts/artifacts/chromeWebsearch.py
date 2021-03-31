@@ -68,11 +68,9 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsvname = f'{browser_name} search terms'
-                tsv(self.report_folder, data_headers, data_list, tsvname)
+                tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tlactivity = f'{browser_name} Search Terms'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc(f'No {browser_name} web search terms data available')
 

@@ -76,6 +76,5 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
                         data_headers = ('Type', 'Name', 'Permission', 'Granted?','Flag')
                         artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                        tsvname = f'Runtime Permissions_{user}'
-                        tsv(self.report_folder, data_headers, data_list, tsvname)
+                        tsv(self.report_folder, data_headers, data_list, self.name)
         return True

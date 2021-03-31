@@ -34,8 +34,7 @@ class BashHistoryPlugin(ArtefactPlugin):
             data_headers = ('Order', 'Command')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'Bash History'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
         else:
             logfunc(f'No Bash History file available')

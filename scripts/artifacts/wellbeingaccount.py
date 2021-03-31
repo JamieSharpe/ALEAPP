@@ -37,7 +37,6 @@ class WellBeingAccountPlugin(ArtefactPlugin):
         data_list.append(('<pre id=\"json\">'+str(parsedContent).replace("\\n", "<br>")+'</pre>', str(content)))
         artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list, allow_html = True)
 
-        tsvname = f'wellbeing account'
-        tsv(self.report_folder, data_headers, data_list, tsvname)
+        tsv(self.report_folder, data_headers, data_list, self.name)
 
         return True

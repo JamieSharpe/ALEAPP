@@ -54,14 +54,11 @@ class CmhPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'Samsung CMH Geodata'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Samsung CMH Geodata'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
 
-            kmlactivity = 'Samsung CMH Geodata'
-            kmlgen(self.report_folder, kmlactivity, data_list, data_headers)
+            kmlgen(self.report_folder, self.name, data_list, data_headers)
 
         else:
             logfunc(f'No Samsung_CMH_GeoData available')

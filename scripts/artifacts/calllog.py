@@ -95,8 +95,7 @@ class CallLogPlugin(ArtefactPlugin):
             # report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
             # report.end_artifact_report()
 
-            tsvname = f'Call Logs'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
             tlactivity = 'Call Logs'
             timeline(self.report_folder, tlactivity, data_list, data_headers)

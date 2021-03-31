@@ -46,8 +46,7 @@ class UserDictPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'user dictionary'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc('No User Dictionary data available')
 

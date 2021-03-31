@@ -64,12 +64,9 @@ class ChromeOfflinePagesPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
+                tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tsvname = f'{browser_name} offline pages'
-                tsv(self.report_folder, data_headers, data_list, tsvname)
-
-                tlactivity = f'{browser_name} Offline Pages'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc(f'No {browser_name} Offline Pages data available')
 

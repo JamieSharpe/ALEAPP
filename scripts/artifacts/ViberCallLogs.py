@@ -62,11 +62,9 @@ class ViberCallLogsPlugin(ArtefactPlugin):
 
                     artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                    tsvname = f'Viber - Call Logs'
-                    tsv(self.report_folder, data_headers, data_list, tsvname)
+                    tsv(self.report_folder, data_headers, data_list, self.name)
 
-                    tlactivity = f'Viber - Call Logs'
-                    timeline(self.report_folder, tlactivity, data_list, data_headers)
+                    timeline(self.report_folder, self.name, data_list, data_headers)
 
                 else:
                     logfunc('No Viber Call Logs found')

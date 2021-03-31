@@ -14,7 +14,7 @@ class ChessWithFriendsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chats'
+        self.name = 'Chess with Friends Chat'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -55,8 +55,7 @@ class ChessWithFriendsPlugin(ArtefactPlugin):
                 data_list.append((row[0],row[1],row[2],row[3],row[4]))
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'Chess With Friends Chats'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc('No Chess With Friends data available')
 
