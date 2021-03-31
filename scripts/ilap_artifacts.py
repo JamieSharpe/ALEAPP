@@ -160,7 +160,7 @@ tosearch = {
 slash = '\\' if is_platform_windows() else '/'
 
 def process_artifact(files_found, artifact_func, artifact_name, seeker, report_folder_base, wrap_text):
-    ''' Perform the common setup for each artifact, ie,
+    ''' Perform the common setup for each artifact, ie, 
         1. Create the report folder for it
         2. Fetch the method (function) and call it
         3. Wrap processing function in a try..except block
@@ -173,7 +173,7 @@ def process_artifact(files_found, artifact_func, artifact_name, seeker, report_f
             artifact_name: Pretty name of artifact
 
             seeker: FileSeeker object to pass to method
-
+            
             wrap_text: whether the text data will be wrapped or not using textwrap.  Useful for tools that want to parse the data.
     '''
     logfunc('{} [{}] artifact executing'.format(artifact_name, artifact_func))

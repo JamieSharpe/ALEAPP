@@ -1,4 +1,4 @@
-aleapp_version = '1.7.3'
+aleapp_version = '1.7.4'
 
 # Contributors List
 # Leave blank if not available
