@@ -105,7 +105,7 @@ tosearch = {
     # 'chromeNetworkActionPredictor':('Chrome', ('**/app_Chrome/Default/Network Action Predictor*','**/app_sbrowser/Default/Network Action Predictor*')),
     # 'chromeOfflinePages':('Chrome', ('**/app_chrome/Default/Offline Pages/metadata/OfflinePages.db*', '**/app_sbrowser/Default/Offline Pages/metadata/OfflinePages.db*')),
     # 'chromeSearchTerms':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
-    'chromeTopSites':('Chrome', ('**/app_chrome/Default/Top Sites*', '**/app_sbrowser/Default/Top Sites*')),
+    # 'chromeTopSites':('Chrome', ('**/app_chrome/Default/Top Sites*', '**/app_sbrowser/Default/Top Sites*')),
     'chromeWebsearch':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
     'cmh':('Samsung_CMH', '**/cmh.db'),
     'DocList':('Google Docs', '**/com.google.android.apps.docs/databases/DocList.db*'),
