@@ -2,8 +2,6 @@ import html
 import os
 import pathlib
 import shutil
-import sqlite3
-import sys
 
 from collections import OrderedDict
 from scripts.html_parts import *
