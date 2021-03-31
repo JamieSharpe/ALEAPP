@@ -21,8 +21,6 @@ class EmulatedSMetaPlugin(ArtefactPlugin):
         self.path_filters = ['**/com.google.android.providers.media.module/databases/external.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
-        self.debug_mode = True
-
     def _processor(self) -> bool:
 
         for file_found in self.files_found:

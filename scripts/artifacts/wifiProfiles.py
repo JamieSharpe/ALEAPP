@@ -179,9 +179,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
         db.close()
 
         if hit == 1:
-            report = ArtifactHtmlReport('Wi-Fi Profiles')
-            report.start_artifact_report(self.report_folder, 'Wi-Fi Profiles')
-            report.add_script()
+
             data_headers = ('SecurityMode', 'SSID', 'PreSharedKey', 'WEPKeys', 'Password', 'Identity', 'DefaultGwMacAddress', 'semCreationTime', 'semUpdateTime', 'LastConnectedTime', 'CaptivePortal', 'LoginUrl', 'IpAssignment', 'Path')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 

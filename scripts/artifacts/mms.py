@@ -96,9 +96,7 @@ class SmsMmsPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         entries = len(all_rows)
         if entries > 0:
-            report = ArtifactHtmlReport('MMS messages')
-            report.start_artifact_report(self.report_folder, 'MMS messages')
-            report.add_script()
+
             data_headers = ('Date', 'MSG ID', 'Thread ID', 'Date sent', 'Read',
                             'From', 'To', 'Cc', 'Bcc', 'Body')
             data_list = []

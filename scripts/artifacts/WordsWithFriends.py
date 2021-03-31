@@ -14,7 +14,7 @@ class WordsWithFriendsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chats'
+        self.name = 'Words With Friends - Chats'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -48,23 +48,16 @@ class WordsWithFriendsPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Chats')
-            report.start_artifact_report(self.report_folder, 'Words With Friends')
-            report.add_script()
             data_headers = ('Chat_Message_Creation','Message_ID','User_Name','User_Email','Chat_Message' ) # Don't remove the comma, that is required to make this a tuple as there is only 1 element
             data_list = []
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2],row[3],row[4]))
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
 
-            tsvname = f'Words With Friends Chats'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Words with Friends Chats'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
         else:
             logfunc('No Words With Friends data available')
 

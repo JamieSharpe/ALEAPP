@@ -62,9 +62,7 @@ class PermissionsPlugin(ArtefactPlugin):
                                         data_list_packages_su.append((elem.tag, elem.attrib.get('name', ''), sub_subelem.attrib.get('name', ''), sub_subelem.attrib.get('granted', '')))
 
                     if len(data_list_packages_su) > 0:
-                        report = ArtifactHtmlReport('Package and Shared User')
-                        report.start_artifact_report(self.report_folder, f'Package and Shared User')
-                        report.add_script()
+
                         data_headers = ('Type', 'Package', 'Permission', 'Granted?')
                         artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list_packages_su)
 
