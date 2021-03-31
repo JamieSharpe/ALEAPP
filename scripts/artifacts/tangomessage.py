@@ -1,6 +1,5 @@
-import sqlite3
 import base64
-
+import datetime
 from scripts.ilapfuncs import logfunc, tsv, timeline, open_sqlite_db_readonly
 
 from scripts.plugin_base import ArtefactPlugin
@@ -52,11 +51,13 @@ class TangoMessagesPlugin(ArtefactPlugin):
 
         if usageentries > 0:
 
-            data_headers = ('create_time', 'direction','message') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+            data_headers = ('create_time', 'direction','message')
             data_list = []
             for row in all_rows:
                 message = self._decodeMessage(row[0], row[1])
-                data_list.append((row[2], row[3], message))
+                timestamp = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
+
+                data_list.append((timestamp, row[3], message))
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
