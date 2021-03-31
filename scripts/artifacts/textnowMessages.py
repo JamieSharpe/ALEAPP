@@ -84,12 +84,12 @@ class TextNowMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('message_id','from_id', 'to_id', 'direction', 'message', 'read', 'send_timestamp', 'attachment')
+                data_headers = ('Send Timestamp', 'Message ID', 'From ID', 'To ID', 'Direction', 'Message', 'Read', 'Attachment')
                 data_list = []
                 for row in all_rows:
                     sendtime = datetime.datetime.fromtimestamp(int(row[5])).strftime('%Y-%m-%d %H:%M:%S')
 
-                    data_list.append((row[7], row[0], row[1], row[2], row[3], row[4], sendtime, row[6]))
+                    data_list.append((sendtime, row[7], row[0], row[1], row[2], row[3], row[4], row[6]))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
@@ -98,7 +98,7 @@ class TextNowMessagesPlugin(ArtefactPlugin):
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
-                logfunc('No Textnow messages data available')
+                logfunc('No Text Now messages data available')
 
             db.close()
 

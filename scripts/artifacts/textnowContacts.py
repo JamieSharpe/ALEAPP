@@ -53,7 +53,7 @@ class TextNowContactsPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('number','name')
+                data_headers = ('Number', 'Name')
                 data_list = []
                 for row in all_rows:
                     data_list.append((row[0], row[1]))
@@ -63,7 +63,7 @@ class TextNowContactsPlugin(ArtefactPlugin):
                 tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_msg)
 
             else:
-                logfunc('No Textnow Contacts found')
+                logfunc('No Text Now Contacts found')
 
             db.close()
 

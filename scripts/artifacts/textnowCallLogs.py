@@ -54,7 +54,7 @@ class TextNowCallLogsPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('start_time', 'end_time', 'from_id', 'to_id', 'call_direction')
+                data_headers = ('Start Time', 'End Time', 'From ID', 'To ID', 'Call Direction')
                 data_list = []
                 for row in all_rows:
                     phone_number_from = None
@@ -74,7 +74,7 @@ class TextNowCallLogsPlugin(ArtefactPlugin):
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
-                logfunc('No textnow Call Logs found')
+                logfunc('No Text Now Call Logs found')
 
             db.close()
 
