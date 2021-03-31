@@ -3,7 +3,7 @@ from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
 
 
-class Plugin(ArtefactPlugin):
+class AdbHostsPlugin(ArtefactPlugin):
     """
     This plugin gets the build information.
     """

@@ -7,7 +7,7 @@ import traceback
 
 # from scripts.artifacts.adb_hosts import get_adb_hosts
 # from scripts.artifacts.etc_hosts import get_etc_hosts
-from scripts.artifacts.BashHistory import get_BashHistory
+# from scripts.artifacts.BashHistory import get_BashHistory
 from scripts.artifacts.ChessWithFriends import get_ChessWithFriends
 from scripts.artifacts.WordsWithFriends import get_WordsWithFriends
 from scripts.artifacts.accounts_ce import get_accounts_ce
