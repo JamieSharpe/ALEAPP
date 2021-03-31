@@ -14,7 +14,8 @@ class ViberMessagesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Viber - Messages'
+        self.category = 'Viber'
+        self.name = 'Messages'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

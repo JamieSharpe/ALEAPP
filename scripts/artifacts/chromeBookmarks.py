@@ -18,7 +18,8 @@ class ChromeBookmarksPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Bookmarks'
+        self.category = 'Chrome'
+        self.name = 'Bookmarks'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

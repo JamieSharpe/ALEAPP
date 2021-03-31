@@ -15,7 +15,8 @@ class ChromeMediaHistoryOriginsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Media History - Origins'
+        self.category = 'Chrome'
+        self.name = 'Media History - Origins'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

@@ -17,7 +17,8 @@ class ChromeCookiesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Cookies'
+        self.category = 'Chrome'
+        self.name = 'Cookies'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

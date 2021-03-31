@@ -14,7 +14,8 @@ class ViberCallLogsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Viber - Call Logs'
+        self.category = 'Viber'
+        self.name = 'Call Logs'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

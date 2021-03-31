@@ -16,7 +16,8 @@ class ChromeTopSitesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Top sites'
+        self.category = 'Chrome'
+        self.name = 'Top sites'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

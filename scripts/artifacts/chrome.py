@@ -7,7 +7,7 @@ from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
 from scripts import artifact_report
 
-class ChromePlugin(ArtefactPlugin):
+class ChromeHistoryPlugin(ArtefactPlugin):
     """
     """
 
@@ -17,7 +17,8 @@ class ChromePlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome'
+        self.category = 'Chrome'
+        self.name = 'History'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

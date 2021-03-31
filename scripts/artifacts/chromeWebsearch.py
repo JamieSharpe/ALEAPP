@@ -18,7 +18,8 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Web Search'
+        self.category = 'Chrome'
+        self.name = 'Web Search'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

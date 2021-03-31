@@ -16,7 +16,8 @@ class WellBeingAccountPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Wellbeing - Account'
+        self.category = 'Wellbeing'
+        self.name = 'Account'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

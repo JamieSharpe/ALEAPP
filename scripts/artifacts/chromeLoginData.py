@@ -20,7 +20,8 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Login Data'
+        self.category = 'Chrome'
+        self.name = 'Login Data'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

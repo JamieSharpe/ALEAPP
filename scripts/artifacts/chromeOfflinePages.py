@@ -17,7 +17,8 @@ class ChromeOfflinePagesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = ''
+        self.category = 'Chrome'
+        self.name = 'Offline Pages'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

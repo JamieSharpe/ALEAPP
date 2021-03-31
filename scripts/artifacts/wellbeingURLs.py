@@ -14,7 +14,8 @@ class WellbeingUrlsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Wellbeing - URL Events'
+        self.category = 'Wellbeing'
+        self.name = 'URL Events'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.

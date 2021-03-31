@@ -15,7 +15,8 @@ class ChromeMediaHistoryPlaybacksPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Chrome Media History - Playbacks'
+        self.category = 'Chrome'
+        self.name = 'Media History - Playbacks'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
