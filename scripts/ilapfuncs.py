@@ -52,7 +52,7 @@ def get_next_unused_name(path):
 
     basename, ext = os.path.splitext(path)
 
-    num = 1
+    num = 2
     while os.path.exists(path):
         path = f'{basename}-{num:02}{ext}'
         num += 1
