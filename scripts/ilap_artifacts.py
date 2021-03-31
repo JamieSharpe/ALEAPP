@@ -18,7 +18,7 @@ import traceback
 # from scripts.artifacts.calllog import get_calllog
 # from scripts.artifacts.Cast import get_Cast
 # from scripts.artifacts.Cello import get_Cello
-from scripts.artifacts.chrome import get_chrome 
+# from scripts.artifacts.chrome import get_chrome
 from scripts.artifacts.chromeBookmarks import get_chromeBookmarks
 from scripts.artifacts.chromeCookies import get_chromeCookies
 from scripts.artifacts.chromeDownloads import get_chromeDownloads
@@ -96,7 +96,7 @@ tosearch = {
     # 'calllog': ('Call Logs', '**/com.android.providers.contacts/databases/calllog.db'),
     # 'Cast':('Cast', '**/com.google.android.gms/databases/cast.db'),
     # 'Cello': ('Google Docs', ('*/com.google.android.apps.docs/app_cello/*/cello.db*', '*/com.google.android.apps.docs/files/shiny_blobs/blobs/*')),
-    'chrome':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
+    # 'chrome':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
     'chromeBookmarks':('Chrome', ('**/app_chrome/Default/Bookmarks*', '**/app_sbrowser/Default/Bookmarks*')),
     'chromeCookies':('Chrome', ('**/app_chrome/Default/Cookies*', '**/app_sbrowser/Default/Cookies*')),
     'chromeDownloads':('Chrome', ('**/app_chrome/Default/History*', '**/app_sbrowser/Default/History*')),
