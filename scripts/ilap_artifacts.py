@@ -14,7 +14,7 @@ from scripts.artifacts.accounts_ce import get_accounts_ce
 from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
 from scripts.artifacts.accounts_de import get_accounts_de
 from scripts.artifacts.appicons import get_appicons
-from scripts.artifacts.build import get_build
+# from scripts.artifacts.build import get_build
 from scripts.artifacts.calllog import get_calllog
 from scripts.artifacts.Cast import get_Cast
 from scripts.artifacts.Cello import get_Cello
@@ -92,7 +92,7 @@ tosearch = {
     'accounts_ce_authtokens':('Accounts_ce', '**/accounts_ce.db'),
     'accounts_de': ('Accounts_de', '**/system_de/*/accounts_de.db'),
     'appicons':('Installed Apps', '**/data/com.google.android.apps.nexuslauncher/databases/app_icons.db*'),
-    'build':('Device Info', '**/vendor/build.prop'),
+    # 'build':('Device Info', '**/vendor/build.prop'),
     'calllog': ('Call Logs', '**/com.android.providers.contacts/databases/calllog.db'),
     'Cast':('Cast', '**/com.google.android.gms/databases/cast.db'),
     'Cello': ('Google Docs', ('*/com.google.android.apps.docs/app_cello/*/cello.db*', '*/com.google.android.apps.docs/files/shiny_blobs/blobs/*')),
@@ -155,7 +155,7 @@ tosearch = {
 slash = '\\' if is_platform_windows() else '/'
 
 def process_artifact(files_found, artifact_func, artifact_name, seeker, report_folder_base, wrap_text):
-    ''' Perform the common setup for each artifact, ie, 
+    ''' Perform the common setup for each artifact, ie,
         1. Create the report folder for it
         2. Fetch the method (function) and call it
         3. Wrap processing function in a try..except block
@@ -168,7 +168,7 @@ def process_artifact(files_found, artifact_func, artifact_name, seeker, report_f
             artifact_name: Pretty name of artifact
 
             seeker: FileSeeker object to pass to method
-            
+
             wrap_text: whether the text data will be wrapped or not using textwrap.  Useful for tools that want to parse the data.
     '''
     logfunc('{} [{}] artifact executing'.format(artifact_name, artifact_func))

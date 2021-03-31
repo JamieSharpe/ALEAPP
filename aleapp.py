@@ -6,6 +6,7 @@ from scripts.ilapfuncs import *
 from scripts.ilap_artifacts import *
 from scripts.version_info import aleapp_version
 from time import process_time, gmtime, strftime
+from scripts.plugin_manager import PluginManager
 
 
 def main():
@@ -110,54 +111,28 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
         logfunc(traceback.format_exc())
         return False
 
+    plugin_manager = PluginManager('scripts.artifacts')
+
     # Now ready to run
-    logfunc(f'Artifact categories to parse: {len(search_list)}')
+    logfunc(f'Artifact categories to parse: {len(plugin_manager.plugins)}')
     logfunc(f'File/Directory selected: {input_path}')
     logfunc('\n--------------------------------------------------------------------------------------')
 
     log = open(os.path.join(out_params.report_folder_base, 'Script Logs', 'ProcessedFilesLog.html'), 'w+', encoding='utf8')
     log.write(f'Extraction/Path selected: {input_path}<br><br>')
-    
+    log.close()
+
     categories_searched = 0
-    # Search for the files per the arguments
-    for key, val in search_list.items():
 
-        search_regexes = []
-        artifact_pretty_name = val[0]
-
-        if isinstance(val[1], list) or isinstance(val[1], tuple):
-            search_regexes = val[1]
-        else:
-            search_regexes.append(val[1])
-
-        files_found = []
-
-        for artifact_search_regex in search_regexes:
-
-            found_matching_paths = seeker.search(artifact_search_regex)
-
-            if not found_matching_paths:
-                logfunc()
-                logfunc(f'No files found for {key} -> {artifact_search_regex}')
-                log.write(f'No files found for {key} -> {artifact_search_regex}<br><br>')
-                continue
-
-            files_found.extend(found_matching_paths)
-
-            for path_located in found_matching_paths:
-                if path_located.startswith('\\\\?\\'):
-                    path_located = path_located[4:]
-                logfunc()
-                logfunc(f'Files for regex {artifact_search_regex} located at {path_located}')
-                log.write(f'Files for regex {artifact_search_regex} located at {path_located}<br><br>')
-
-        if files_found:
-            logfunc()
-            process_artifact(files_found, key, artifact_pretty_name, seeker, out_params.report_folder_base, wrap_text)
+    # Process all the artefqcts
+    for plugin in plugin_manager.plugins:
+        plugin.seeker = seeker
+        plugin.wrap_text = wrap_text
+        plugin.search_for_artefacts()
+        plugin.process_artefact(out_params.report_folder_base)
 
         categories_searched += 1
         GuiWindow.SetProgressBar(categories_searched * ratio)
-    log.close()
 
     logfunc('')
     logfunc('Processes completed.')
