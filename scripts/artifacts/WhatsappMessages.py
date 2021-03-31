@@ -27,7 +27,6 @@ class WhatsAppMessagesPlugin(ArtefactPlugin):
     def _processor(self) -> bool:
 
         source_file_msg = ''
-        source_file_wa = ''
         whatsapp_msgstore_db = ''
         whatsapp_wa_db = ''
 
@@ -40,7 +39,6 @@ class WhatsAppMessagesPlugin(ArtefactPlugin):
 
             if file_name.endswith('wa.db'):
                whatsapp_wa_db = str(file_found)
-               # source_file_wa = file_found.replace(seeker.directory, '')
 
             db = open_sqlite_db_readonly(whatsapp_msgstore_db)
             cursor = db.cursor()
@@ -96,7 +94,7 @@ class WhatsAppMessagesPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_msg)
 
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
