@@ -6,6 +6,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows, open_sqlite_db_read
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 # Reference for flag values for mms:
 # ----------------------------------
@@ -27,12 +28,14 @@ class SmsMmsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'SMS & MMS'
+        self.name = 'MMS'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.android.providers.telephony/databases/mmssms*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -51,62 +54,10 @@ class SmsMmsPlugin(ArtefactPlugin):
             db = open_sqlite_db_readonly(file_found)
             db.row_factory = sqlite3.Row # For fetching columns by name
 
-            got_messages = self.read_sms_messages(db, file_found)
             self.read_mms_messages(db, file_found)
 
             db.close()
-            if got_messages:
-                return
 
-        return True
-        
-    def read_sms_messages(self, db, file_found):
-        sms_query = \
-            '''
-                SELECT _id as msg_id, thread_id, address, person, 
-                    CASE WHEN date>0 THEN datetime(date/1000, 'UNIXEPOCH')
-                         ELSE ""
-                    END as date,
-                    CASE WHEN date_sent>0 THEN datetime(date_sent/1000, 'UNIXEPOCH')
-                         ELSE ""
-                    END as date_sent,
-                    read,
-                    CASE WHEN type=1 THEN "Received"
-                         WHEN type=2 THEN "Sent"
-                         ELSE type 
-                    END as type,
-                    body, service_center, error_code
-                FROM sms
-                ORDER BY date
-            '''
-
-        cursor = db.cursor()
-        cursor.execute(sms_query)
-        all_rows = cursor.fetchall()
-        entries = len(all_rows)
-        if entries > 0:
-            report = ArtifactHtmlReport('SMS messages')
-            report.start_artifact_report(self.report_folder, 'SMS messages')
-            report.add_script()
-            data_headers = ('Date','MSG ID', 'Thread ID', 'Address', 'Contact ID',
-                'Date sent', 'Read', 'Type', 'Body', 'Service Center', 'Error code')
-            data_list = []
-            for row in all_rows:
-                data_list.append((row['date'],row['msg_id'], row['thread_id'], row['address'],
-                    row['person'],row['date_sent'], row['read'],
-                    row['type'], row['body'], row['service_center'], row['error_code']))
-
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
-
-            tsvname = f'sms messages'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
-
-            tlactivity = f'SMS Messages'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
-        else:
-            logfunc('No SMS messages found!')
-            return False
         return True
 
     def read_mms_messages(self, db, file_found):
@@ -202,8 +153,7 @@ class SmsMmsPlugin(ArtefactPlugin):
             # add last msg to list
             self.add_mms_to_data_list(data_list, temp_mms_list, folder_name)
 
-            report.write_artifact_data_table(data_headers, data_list, file_found, html_escape = False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'mms messages'
             tsv(self.report_folder, data_headers, data_list, tsvname)
