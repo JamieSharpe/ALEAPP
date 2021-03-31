@@ -111,7 +111,7 @@ tosearch = {
     # 'DocList':('Google Docs', '**/com.google.android.apps.docs/databases/DocList.db*'),
     # 'emulatedSmeta':('Emulated Storage Metadata', '**/com.google.android.providers.media.module/databases/external.db*'),
     # 'gboardCache':('Gboard Keyboard', '**/com.google.android.inputmethod.latin/databases/trainingcache*.db'),
-    'googleNowPlaying':('Now Playing', '**/com.google.intelligence.sense/db/history_db*'),
+    # 'googleNowPlaying':('Now Playing', '**/com.google.intelligence.sense/db/history_db*'),
     'googlePlaySearches':('Google Play', '**/com.android.vending/databases/suggestions.db*'),
     'installedappsGass':('Installed Apps', '**/com.google.android.gms/databases/gass.db'),
     'installedappsLibrary': ('Installed Apps', '**/com.android.vending/databases/library.db'),
