@@ -24,6 +24,8 @@ class ViberCallLogsPlugin(ArtefactPlugin):
 
     def _processor(self) -> bool:
 
+        viber_data_db = ''
+
         for file_found in self.files_found:
 
             if file_found.endswith('_data'):

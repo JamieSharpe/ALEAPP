@@ -24,6 +24,8 @@ class ViberMessagesPlugin(ArtefactPlugin):
 
     def _processor(self) -> bool:
 
+        viber_messages_db = ''
+
         for file_found in self.files_found:
 
             if file_found.endswith('_messages'):
