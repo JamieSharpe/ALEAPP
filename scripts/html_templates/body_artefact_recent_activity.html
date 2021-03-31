@@ -12,9 +12,10 @@
 
 {% import "macros.html" as macros %}
 {% block main_body %}
+    {# ALL artefact template must constain this artefact ID #}
+    <div id="artefact_id" data-artefact="{{ context.unique_id }}"></div>
     {# Header #}
     <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <div id="{{ context.unique_id }}"></div>
         <h1 class="display-5">{{ context.artefact.category }} - {{ context.artefact.name }}</h1>
         <h6 class="animated fadeIn mb-3">{{ context.artefact.artefact_reference }}</h6>
     </div>

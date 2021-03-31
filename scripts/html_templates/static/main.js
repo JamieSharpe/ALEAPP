@@ -16,3 +16,20 @@ $(document).ready(function() {
     $('#mySpinner').remove();
     //$('#infiniteLoading').remove();
 });
+
+
+/*
+Set the navigation link to active from the current page.
+*/
+$(document).ready(function() {
+
+    var current_artefact = $('#artefact_id').data("artefact");
+
+    $('#sidebar_id').find('a').each(function () {
+
+        if ($(this).data("artefact") == current_artefact)
+        {
+            $(this).addClass("active");
+        }
+    });
+});

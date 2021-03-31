@@ -22,8 +22,8 @@
             </h6>
             <ul class="nav flex-column">
             {% for artefact in value %}
-                <li class="nav-item">
-                        <a id="navbar_{{ artefact.unique_id }}" class="nav-link" href="{{ artefact.file_name }}">
+                <li class="nav-item" id="navbar_list">
+                        <a data-artefact="{{ artefact.unique_id }}" class="nav-link" href="{{ artefact.file_name }}">
                             {% if artefact.icon %}
                                 <span data-feather="{{ artefact.icon }}"></span>
                             {% else %}
