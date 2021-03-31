@@ -149,7 +149,7 @@ tosearch = {
     # 'wifiHotspot':('WiFi Profiles', ('**/misc/wifi/softap.conf', '**/misc**/apexdata/com.android.wifi/WifiConfigStoreSoftAp.xml')),
     # 'wifiProfiles':('WiFi Profiles', ('**/misc/wifi/WifiConfigStore.xml', '**/misc**/apexdata/com.android.wifi/WifiConfigStore.xml')),
     # 'Xender':('File Transfer', '**/cn.xender/databases/trans-history-db*'), # Get trans-history-db and trans-history-db-wal
-    'Zapya':('File Transfer', '**/com.dewmobile.kuaiya.play/databases/transfer20.db'),
+    # 'Zapya':('File Transfer', '**/com.dewmobile.kuaiya.play/databases/transfer20.db'),
     }
 
 slash = '\\' if is_platform_windows() else '/'
