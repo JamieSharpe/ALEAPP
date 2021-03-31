@@ -107,6 +107,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+.DS_Store
 
 # Sample folder
 Z - Ignore/
