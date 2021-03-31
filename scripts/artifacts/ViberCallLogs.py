@@ -40,7 +40,7 @@ class ViberCallLogsPlugin(ArtefactPlugin):
                         when 2 then "Outgoing"
                         else "Incoming"
                     end AS direction,
-                    strftime('%H:%M:%S',duration, 'unixepoch') as duration,
+                    datetime((date + (duration * 1000))/1000, 'unixepoch') as end_time,
                     case viber_call_type
                         when 1 then "Audio Call"
                         when 4 then "Video Call"
@@ -55,7 +55,7 @@ class ViberCallLogsPlugin(ArtefactPlugin):
                     usageentries = 0
 
                 if usageentries > 0:
-                    data_headers = ('Call Start Time', 'Phone Number','Call Direction', 'Call Duration', 'Call Type') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                    data_headers = ('Call Start Time', 'Phone Number','Call Direction', 'Call End Time', 'Call Type') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
                     data_list = []
                     for row in all_rows:
                         data_list.append((row[0], row[1], row[2], row[3], row[4]))
@@ -64,7 +64,7 @@ class ViberCallLogsPlugin(ArtefactPlugin):
 
                     tsv(self.report_folder, data_headers, data_list, self.full_name())
 
-                    timeline(self.report_folder, self.name, data_list, data_headers)
+                    timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
                 else:
                     logfunc('No Viber Call Logs found')

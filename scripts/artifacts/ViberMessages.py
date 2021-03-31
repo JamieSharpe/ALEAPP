@@ -43,10 +43,7 @@ class ViberMessagesPlugin(ArtefactPlugin):
                         when 1 then "Outgoing" 
                         else "Incoming"
                     end AS direction, 
-                    case M.unread 
-                        when 0 then "Read" 
-                        else "Unread" 
-                    end AS read_status,
+                    M.unread read_status,
                     M.extra_uri AS file_attachment                            
                     FROM   (SELECT *, 
                                     group_concat(TO_RESULT.number) AS recipients 
