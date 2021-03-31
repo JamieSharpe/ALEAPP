@@ -49,9 +49,9 @@ class PluginManager:
                     class_members = inspect.getmembers(plugin_module, inspect.isclass)
                     for (_, c) in class_members:
                         # Only add classes that inherit plugin_base, but NOT the plugin_base itself
-                        if issubclass(c, self.plugin_base) & (c is not self.plugin_base):
+                        if issubclass(c, self.plugin_base) and (c is not self.plugin_base):
                             plugin = c()
-                            print(f'\tLoaded plugin: {plugin.name} [{plugin.__class__.__module__}.{plugin.__class__.__name__}]')
+                            print(f'\tLoaded plugin: {plugin.full_name()} [{plugin.__class__.__module__}.{plugin.__class__.__name__}]')
                             self.plugins.append(plugin)
 
                 except Exception as ex:

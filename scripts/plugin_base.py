@@ -13,13 +13,14 @@ class ArtefactPlugin:
 
     Each plugin must:
 
+        * Provide a category.
         * Provide a name.
         * Provide a description.
         * Provide a path filter list.
         * Provide a feathericon for HTML report - https://feathericons.com/
-        * Implement the process_artefact method.
+        * Implement the _process_artefact method.
 
-    Addition classes/methods/modules may be added by the plugin author to further support the process_artefact.
+    Addition classes/methods/modules may be added by the plugin author to further support their parsings.
     """
 
     def __init__(self):
@@ -42,14 +43,16 @@ class ArtefactPlugin:
         self.icon: str = ''  # feathricon for report.
 
         # Artefact Processing Details
-        # Do not alter these in your plugin implementation. They are purely for reference in your processing implementation.
+        # Do not alter these in your plugin implementation. They are purely for referencing.
         self.files_found: list = []  # Collection of all the file paths that match self.path_filters.
-        self.report_folder: str = ''  # Artefact HTML report folder.
-        self.export_folder: str = ''  # Artefact export folder.
+        self.report_folder: str = ''  # Artefact report folder.
         self.seeker: search_files.FileSeekerBase = None  # Seeker object to search for additional files in the evidence.
         self.wrap_text: bool = True  # Determine if text should be wrapped on a new line.
 
         self.debug_mode: bool = False  # Determine if only this plugin should run. See plugin_manager.py[.plugins_in_debug_only]
+
+    def full_name(self):
+        return f'{self.category} - {self.name}'
 
     def process_artefact(self, report_folder_base: str) -> bool:
         """
@@ -61,20 +64,15 @@ class ArtefactPlugin:
         :return:
         """
         logfunc()
-        logfunc(f'Processing {self.name} artifact parser.')
+        logfunc(f'Processing {self.full_name()} artifact parser.')
 
         if not self.files_found:
             logfunc('No artefacts to parse.')
             return True
 
         # Setup report folder for HTML files.
-        self.report_folder = os.path.join(report_folder_base, 'HTML Reports - Temp', self.name)
         self.report_folder = os.path.join(report_folder_base, self.name)
         os.makedirs(self.report_folder, exist_ok = True)
-
-        # Setup export folder for extracted artefact data.
-        self.export_folder = os.path.join(report_folder_base, self.name)
-        # os.makedirs(self.export_folder, exist_ok = True)
 
         processor_success_status = False
         try:
@@ -85,7 +83,7 @@ class ArtefactPlugin:
             logfunc(f'Exception Traceback: {traceback.format_exc()}')
             processor_success_status = False
 
-        logfunc(f'{self.name} artifact completed {("successfully" if processor_success_status else "unsuccessfully")}.')
+        logfunc(f'{self.full_name()} artifact completed {("successfully" if processor_success_status else "unsuccessfully")}.')
 
         return processor_success_status
 
@@ -99,7 +97,7 @@ class ArtefactPlugin:
         :return: Bool - True on successful parse, False if errors occurred.
         """
 
-        raise NotImplementedError(f'The plugin "{self.name}" ({__name__}) has not been implemented.')
+        raise NotImplementedError(f'The plugin "{self.full_name()}" ({__name__}) has not been implemented.')
 
     def search_for_artefacts(self):
         """
@@ -109,13 +107,13 @@ class ArtefactPlugin:
         """
 
         logfunc()
-        logfunc(f'Plugin "{self.category} - {self.name}" - Searching for artefacts.')
+        logfunc(f'Plugin "{self.full_name()}" - Searching for artefacts.')
         for path_filter in self.path_filters:
 
             path_files_found = self.seeker.search(path_filter)
 
             if not path_files_found:
-                logfunc(f'\tPlugin "{self.name}" with regex "{path_filter}" located no files.')
+                logfunc(f'\tPlugin "{self.full_name()}" with regex "{path_filter}" located no files.')
                 continue
 
             self.files_found.extend(path_files_found)
@@ -124,10 +122,10 @@ class ArtefactPlugin:
             for path_located in path_files_found:
                 if path_located.startswith('\\\\?\\'):
                     path_located = path_located[4:]
-                logfunc(f'\tPlugin "{self.name}" with regex "{path_filter}" located file "{path_located}"')
+                logfunc(f'\tPlugin "{self.full_name()}" with regex "{path_filter}" located file "{path_located}"')
 
-        logfunc(f'Plugin "{self.name}" found {len(self.files_found)} artefact(s).')
-        logfunc(f'Plugin "{self.name}" - Search complete.')
+        logfunc(f'Plugin "{self.full_name()}" found {len(self.files_found)} artefact(s).')
+        logfunc(f'Plugin "{self.full_name()}" - Search complete.')
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.full_name()} - {__name__}'
