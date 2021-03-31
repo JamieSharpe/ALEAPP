@@ -28,6 +28,9 @@ class WhatsAppGroupCallPlugin(ArtefactPlugin):
 
         source_file_msg = ''
         source_file_wa = ''
+        whatsapp_msgstore_db = ''
+        whatsapp_wa_db = ''
+
         for file_found in self.files_found:
 
             file_name = str(file_found)

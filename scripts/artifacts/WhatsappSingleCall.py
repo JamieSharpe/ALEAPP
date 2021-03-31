@@ -28,6 +28,9 @@ class WhatsAppSingleCallPlugin(ArtefactPlugin):
 
         source_file_msg = ''
         source_file_wa = ''
+        whatsapp_msgstore_db = ''
+        whatsapp_wa_db = ''
+
         for file_found in self.files_found:
 
             file_name = str(file_found)
@@ -35,45 +38,45 @@ class WhatsAppSingleCallPlugin(ArtefactPlugin):
                whatsapp_msgstore_db = str(file_found)
                # source_file_msg = file_found.replace(seeker.directory, '')
 
-        db = open_sqlite_db_readonly(whatsapp_msgstore_db)
-        cursor = db.cursor()
+            db = open_sqlite_db_readonly(whatsapp_msgstore_db)
+            cursor = db.cursor()
 
-        try:
-            cursor.execute('''
-                         SELECT CL.timestamp/1000 as start_time, 
-                                case CL.video_call when 1 then "Video Call" else "Audio Call" end as call_type, 
-                                ((CL.timestamp/1000) + CL.duration) as end_time, 
-                                J.raw_string AS num, 
-                                case CL.from_me when 0 then "Incoming" else "Outgoing" end as call_direction
-                         FROM   call_log AS CL 
-                                JOIN jid AS J 
-                                  ON J._id = CL.jid_row_id 
-                         WHERE  CL._id NOT IN (SELECT DISTINCT call_log_row_id 
-                                               FROM   call_log_participant_v2) 
-            ''')
+            try:
+                cursor.execute('''
+                             SELECT CL.timestamp/1000 as start_time, 
+                                    case CL.video_call when 1 then "Video Call" else "Audio Call" end as call_type, 
+                                    ((CL.timestamp/1000) + CL.duration) as end_time, 
+                                    J.raw_string AS num, 
+                                    case CL.from_me when 0 then "Incoming" else "Outgoing" end as call_direction
+                             FROM   call_log AS CL 
+                                    JOIN jid AS J 
+                                      ON J._id = CL.jid_row_id 
+                             WHERE  CL._id NOT IN (SELECT DISTINCT call_log_row_id 
+                                                   FROM   call_log_participant_v2) 
+                ''')
 
-            all_rows = cursor.fetchall()
-            usageentries = len(all_rows)
-        except:
-            usageentries = 0
+                all_rows = cursor.fetchall()
+                usageentries = len(all_rows)
+            except:
+                usageentries = 0
 
-        if usageentries > 0:
-            data_headers = ('start_time','call_type', 'end_time', 'num', 'call_direction') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
-            data_list = []
-            for row in all_rows:
-                starttime = datetime.datetime.fromtimestamp(int(row[0])).strftime('%Y-%m-%d %H:%M:%S')
-                endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
-                data_list.append((starttime, row[1], endtime, row[3], row[4]))
+            if usageentries > 0:
+                data_headers = ('start_time','call_type', 'end_time', 'num', 'call_direction') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_list = []
+                for row in all_rows:
+                    starttime = datetime.datetime.fromtimestamp(int(row[0])).strftime('%Y-%m-%d %H:%M:%S')
+                    endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
+                    data_list.append((starttime, row[1], endtime, row[3], row[4]))
 
-            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name())
 
-            timeline(self.report_folder, self.full_name(), data_list, data_headers)
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
-        else:
-            logfunc('No Whatsapp Single Calllog available')
+            else:
+                logfunc('No Whatsapp Single Calllog available')
 
-        db.close()
+            db.close()
 
-        return True
+            return True
