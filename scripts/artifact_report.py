@@ -137,7 +137,7 @@ def CompileAllHTMLReports(report_folder):
                     f.write(html_content)
 
 
-def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_template = 'body_artefact.html', allow_html = False, custom_context = None):
+def GenerateHtmlReport(artefact, artefact_file = '', data_header = None, data_rows = None, html_template = 'body_artefact.html', allow_html = False, custom_context = None):
     """
     WARNING - When allow_html is True, be sure to manually escape any data that may be injected outside your parsing.
     :param artefact:
@@ -149,6 +149,10 @@ def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_tem
     :param custom_context: Dictionary of elemets for use in a custom html template.
     :return:
     """
+
+    data_header = [] if data_header is None else data_header
+    data_rows = [] if data_rows is None else data_rows
+    custom_context = {} if custom_context is None else custom_context
 
     resource_base_html = resource_path('scripts\\html_templates', 'base.html')
     template_loader = FileSystemLoader(searchpath = os.path.dirname(resource_base_html))
@@ -167,6 +171,7 @@ def GenerateHtmlReport(artefact, artefact_file, data_header, data_rows, html_tem
         'title': f'{artefact.name} report',
         'unique_id': unique_id,
         'custom_context': custom_context,
+        'allow_html': allow_html,
         'artefact': {
             'category': artefact.category,
             'name': artefact.name,
