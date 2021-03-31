@@ -53,11 +53,11 @@ def get_next_unused_name(path):
         basename, ext = os.path.splitext(basename)
     num = 1
     new_name = basename
-    if ext != None:
+    if ext is not None:
         new_name += f"{ext}"
     while os.path.exists(os.path.join(folder, new_name)):
         new_name = basename + "-{:02}".format(num)
-        if ext != None:
+        if ext is not None:
             new_name += f"{ext}"
         num += 1
     return os.path.join(folder, new_name)

@@ -40,26 +40,26 @@ def main():
         input_path = args.input_path
         extracttype = args.t
 
-        if args.wrap_text == None:
+        if args.wrap_text is None:
             wrap_text = True
         else:
             wrap_text = args.wrap_text 
     
-        if args.output_path == None:
+        if args.output_path is None:
             parser.error('No OUTPUT folder path provided')
             return
         else:
             output_path = os.path.abspath(args.output_path)
         
-        if output_path == None:
+        if output_path is None:
             parser.error('No OUTPUT folder selected. Run the program again.')
             return
             
-        if input_path == None:
+        if input_path is None:
             parser.error('No INPUT file or folder selected. Run the program again.')
             return
         
-        if args.t == None:
+        if args.t is None:
             parser.error('No INPUT file or folder selected. Run the program again.')
             return
 

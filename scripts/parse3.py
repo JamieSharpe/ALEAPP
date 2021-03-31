@@ -422,7 +422,7 @@ def ParseData(data, start, end, messages, depth = 0):
     ordinary = 0
     while start < end:
         (start, wire_type, field_number) = GetDynamicWireFormat(data, start, end)
-        if start == None:
+        if start is None:
             return False
 
         if wire_type == 0x00:#Varint
@@ -458,7 +458,7 @@ def ParseData(data, start, end, messages, depth = 0):
                 
             if depth != 0:
                 strings.append('\t'*depth)
-            if floatNum != None:
+            if floatNum is not None:
                 strings.append("(%d) 64-bit: 0x%x / %f\n" % (field_number, num, floatNum))
                 messages['%02d:%02d:64-bit' % (field_number,ordinary)] = floatNum
             else:
@@ -543,7 +543,7 @@ def ParseData(data, start, end, messages, depth = 0):
                 
             if depth != 0:
                 strings.append('\t'*depth)
-            if floatNum != None:
+            if floatNum is not None:
                 strings.append("(%d) 32-bit: 0x%x / %f\n" % (field_number, num, floatNum))
                 messages['%02d:%02d:32-bit' % (field_number,ordinary)] = floatNum
             else:
