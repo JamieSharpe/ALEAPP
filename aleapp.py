@@ -23,14 +23,10 @@ def main():
         print('Artifact path list generation started.')
         print('')
         with open('path_list.txt', 'a') as paths:
-            for key, value in tosearch.items():
-                if isinstance(value[1], tuple):
-                    for x in value[1]:
-                        paths.write(x + '\n')
-                        print(x)
-                else:
-                    paths.write(value[1]+'\n')
-                    print(value[1])
+            for plugin in PluginManager('scripts.artifacts').plugins:
+                for path_filter in plugin.path_filters:
+                    paths.write(f'{path_filter}\n')
+                    print(path_filter)
         print('')
         print('Artifact path list generation completed.')
         return
@@ -78,10 +74,10 @@ def main():
 
     out_params = OutputParameters(output_path)
 
-    crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text)
+    crunch_artifacts(extracttype, input_path, out_params, 1, wrap_text)
 
 
-def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text):
+def crunch_artifacts( extracttype, input_path, out_params, ratio, wrap_text):
     start = process_time()
 
     logfunc('Processing started. Please wait. This may take a few minutes...')
