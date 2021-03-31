@@ -124,7 +124,7 @@ tosearch = {
     # 'lgRCS':('RCS Chats', '*/mmssms.db*'),
     # 'permissions':('Permissions', '*/system/packages.xml'),
     # 'roles':('App Roles',('*/system/users/*/roles.xml','*/misc_de/*/apexdata/com.android.permission/roles.xml')),
-    'runtimePerms':('Permissions',('*/system/users/*/runtime-permissions.xml','*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml')),
+    # 'runtimePerms':('Permissions',('*/system/users/*/runtime-permissions.xml','*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml')),
     'scontextLog':('App Interaction', '**/com.samsung.android.providers.context/databases/ContextLog.db'),
     'settingsSecure':('Device Info', '**/system/users/*/settings_secure.xml'),
     'siminfo':('Device Info', '**/user_de/*/com.android.providers.telephony/databases/telephony.db'),
