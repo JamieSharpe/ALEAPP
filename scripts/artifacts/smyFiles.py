@@ -14,7 +14,7 @@ class SMyFilesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Media Metadata'
+        self.name = 'My Files DB - Download History'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
