@@ -53,15 +53,11 @@ def get_next_unused_name(path):
     basename, ext = os.path.splitext(path)
 
     num = 1
-    found_new_file_name = False
-
-    while not found_new_file_name:
-        new_file_path = f'{basename}-{num:02}{ext}'
-        if not os.path.exists(new_file_path):
-            found_new_file_name = True
+    while os.path.exists(path):
+        path = f'{basename}-{num:02}{ext}'
         num += 1
 
-    return new_file_path
+    return path
 
 
 def open_sqlite_db_readonly(path):
