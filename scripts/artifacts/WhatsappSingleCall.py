@@ -36,7 +36,7 @@ class WhatsAppSingleCallPlugin(ArtefactPlugin):
             file_name = str(file_found)
             if file_name.endswith('msgstore.db'):
                whatsapp_msgstore_db = str(file_found)
-               # source_file_msg = file_found.replace(seeker.directory, '')
+               source_file_msg = file_found.replace(self.seeker.directory, '')
 
             db = open_sqlite_db_readonly(whatsapp_msgstore_db)
             cursor = db.cursor()
@@ -61,7 +61,7 @@ class WhatsAppSingleCallPlugin(ArtefactPlugin):
                 usageentries = 0
 
             if usageentries > 0:
-                data_headers = ('start_time','call_type', 'end_time', 'num', 'call_direction') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Start Time', 'Call Type', 'End Time', 'Number', 'Call Direction')
                 data_list = []
                 for row in all_rows:
                     starttime = datetime.datetime.fromtimestamp(int(row[0])).strftime('%Y-%m-%d %H:%M:%S')
@@ -70,12 +70,12 @@ class WhatsAppSingleCallPlugin(ArtefactPlugin):
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_msg)
 
                 timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
             else:
-                logfunc('No Whatsapp Single Calllog available')
+                logfunc('No Whatsapp Single Call Log available')
 
             db.close()
 

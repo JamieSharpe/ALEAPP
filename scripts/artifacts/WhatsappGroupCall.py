@@ -36,50 +36,50 @@ class WhatsAppGroupCallPlugin(ArtefactPlugin):
             file_name = str(file_found)
             if file_name.endswith('msgstore.db'):
                whatsapp_msgstore_db = str(file_found)
-               # source_file_msg = file_found.replace(seeker.directory, '')
+               source_file_msg = file_found.replace(seeker.directory, '')
 
-        db = open_sqlite_db_readonly(whatsapp_msgstore_db)
-        cursor = db.cursor()
-        try:
-            cursor.execute('''
-            SELECT case CL.video_call when 1 then "Video Call" else "Audio Call" end as call_type, 
-                   CL.timestamp/1000 as start_time, 
-                   ((cl.timestamp/1000) + CL.duration) as end_time, 
-                   case CL.from_me when 0 then "Incoming" else "Outgoing" end as call_direction,
-                   J1.raw_string AS from_id,
-                                group_concat(J.raw_string) AS group_members
-                         FROM   call_log_participant_v2 AS CLP
-                                JOIN call_log AS CL
-                                  ON CL._id = CLP.call_log_row_id
-                                JOIN jid AS J
-                                  ON J._id = CLP.jid_row_id
-                                JOIN jid as J1
-                                  ON J1._id = CL.jid_row_id
-                                GROUP  BY CL._id
-            ''')
+            db = open_sqlite_db_readonly(whatsapp_msgstore_db)
+            cursor = db.cursor()
+            try:
+                cursor.execute('''
+                SELECT case CL.video_call when 1 then "Video Call" else "Audio Call" end as call_type, 
+                       CL.timestamp/1000 as start_time, 
+                       ((cl.timestamp/1000) + CL.duration) as end_time, 
+                       case CL.from_me when 0 then "Incoming" else "Outgoing" end as call_direction,
+                       J1.raw_string AS from_id,
+                                    group_concat(J.raw_string) AS group_members
+                             FROM   call_log_participant_v2 AS CLP
+                                    JOIN call_log AS CL
+                                      ON CL._id = CLP.call_log_row_id
+                                    JOIN jid AS J
+                                      ON J._id = CLP.jid_row_id
+                                    JOIN jid as J1
+                                      ON J1._id = CL.jid_row_id
+                                    GROUP  BY CL._id
+                ''')
 
-            all_rows = cursor.fetchall()
-            usageentries = len(all_rows)
-        except:
-            usageentries = 0
+                all_rows = cursor.fetchall()
+                usageentries = len(all_rows)
+            except:
+                usageentries = 0
 
-        if usageentries > 0:
-            data_headers = ('call_type','start_time', 'end_time', 'call_direction', 'from_id', 'group_members') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
-            data_list = []
-            for row in all_rows:
-                starttime = datetime.datetime.fromtimestamp(int(row[1])).strftime('%Y-%m-%d %H:%M:%S')
-                endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
-                data_list.append((row[0], starttime, endtime, row[3], row[4], row[5]))
+            if usageentries > 0:
+                data_headers = ('Start Time', 'End Time', 'Call Type', 'Call Direction', 'From ID', 'Group Members')
+                data_list = []
+                for row in all_rows:
+                    starttime = datetime.datetime.fromtimestamp(int(row[1])).strftime('%Y-%m-%d %H:%M:%S')
+                    endtime = datetime.datetime.fromtimestamp(int(row[2])).strftime('%Y-%m-%d %H:%M:%S')
+                    data_list.append((starttime, endtime, row[0], row[3], row[4], row[5]))
 
-            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.full_name())
+                tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_msg)
 
-            timeline(self.report_folder, self.full_name(), data_list, data_headers)
+                timeline(self.report_folder, self.full_name(), data_list, data_headers)
 
-        else:
-            logfunc('No Whatsapp Group Call Logs found')
+            else:
+                logfunc('No Whatsapp Group Call Logs found')
 
-        db.close()
+            db.close()
 
         return True

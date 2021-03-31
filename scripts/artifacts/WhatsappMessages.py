@@ -35,7 +35,7 @@ class WhatsAppMessagesPlugin(ArtefactPlugin):
             file_name = str(file_found)
             if file_name.endswith('msgstore.db'):
                whatsapp_msgstore_db = str(file_found)
-               # source_file_msg = file_found.replace(seeker.directory, '')
+               source_file_msg = file_found.replace(self.seeker.directory, '')
 
             if file_name.endswith('wa.db'):
                whatsapp_wa_db = str(file_found)
@@ -84,13 +84,13 @@ class WhatsAppMessagesPlugin(ArtefactPlugin):
 
             if usageentries > 0:
 
-                data_headers = ('message_id','recipients', 'direction', 'content', 'send_timestamp', 'received_timestamp', 'group_sender', 'attachment') # Don't remove the comma, that is required to make this a tuple as there is only 1 element
+                data_headers = ('Send Timestamp', 'Received Timestamp', 'Message ID', 'Recipients', 'Direction', 'Content', 'Group Sender', 'Attachment')
                 data_list = []
                 for row in all_rows:
                     sendtime = datetime.datetime.fromtimestamp(int(row[4])).strftime('%Y-%m-%d %H:%M:%S')
                     receivetime = datetime.datetime.fromtimestamp(int(row[5])).strftime('%Y-%m-%d %H:%M:%S')
 
-                    data_list.append((row[0], row[1], row[2], row[3], sendtime, receivetime, row[6], row[7]))
+                    data_list.append((sendtime, receivetime, row[0], row[1], row[2], row[3], row[6], row[7]))
 
                 artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 

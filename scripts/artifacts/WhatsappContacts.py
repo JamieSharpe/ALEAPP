@@ -37,7 +37,7 @@ class WhatsAppContactsPlugin(ArtefactPlugin):
 
             if file_name.endswith('wa.db'):
                whatsapp_wa_db = str(file_found)
-               # source_file_wa = file_found.replace(seeker.directory, '')
+               source_file_wa = file_found.replace(self.seeker.directory, '')
 
         db = open_sqlite_db_readonly(whatsapp_wa_db)
         cursor = db.cursor()
@@ -78,7 +78,7 @@ class WhatsAppContactsPlugin(ArtefactPlugin):
 
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsv(self.report_folder, data_headers, data_list, self.full_name())
+            tsv(self.report_folder, data_headers, data_list, self.full_name(), source_file_wa)
 
         else:
             logfunc('No Whatsapp Contacts found')
