@@ -118,7 +118,7 @@ tosearch = {
     # 'installedappsVending': ('Installed Apps', '**/com.android.vending/databases/localappstate.db'),
     # 'pSettings':('Device Info', '**/com.google.android.gsf/databases/googlesettings.db*'),
     # 'package_info': ('Installed Apps', '**/system/packages.xml'),
-    'quicksearch':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/app_session/*.binarypb'),
+    # 'quicksearch':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/app_session/*.binarypb'),
     'quicksearch_recent':('Google Now & QuickSearch', '**/com.google.android.googlequicksearchbox/files/recently/*'),
     'recentactivity':('Recent Activity', '**/system_ce/*'),
     'lgRCS':('RCS Chats', '*/mmssms.db*'),
