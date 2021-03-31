@@ -60,7 +60,7 @@ def main():
             return
         
         if args.t is None:
-            parser.error('No INPUT file or folder selected. Run the program again.')
+            parser.error('No INPUT FILE TYPE selected. Run the program again.')
             return
 
         if not os.path.exists(input_path):
