@@ -2,10 +2,8 @@ import codecs
 import csv
 import datetime
 import os
-import pathlib
 import re
 import sqlite3
-import sys
 import simplekml
 
 from bs4 import BeautifulSoup
