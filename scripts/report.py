@@ -10,67 +10,94 @@ from scripts.html_parts import *
 from scripts.ilapfuncs import logfunc
 from scripts.version_info import aleapp_version, aleapp_contributors
 
-def get_icon_name(category, artifact):
-    ''' Returns the icon name from the feathericons collection. To add an icon type for 
-        an artifact, select one of the types from ones listed @ feathericons.com
-        If no icon is available, the alert triangle is returned as default icon.
-    '''
+def get_icon_name(category: str, artifact: str) -> str:
+    """
+    Returns the icon name from the feathericons collection. To add an icon type for
+    an artifact, select one of the types from ones listed @ feathericons.com
+    If no icon is available, the alert triangle is returned as default icon.
+
+    :param category: Artifact category
+    :param artifact: Artifact item
+    :return: String: feathericon.
+    """
+
     category = category.upper()
     artifact = artifact.upper()
-    icon = 'alert-triangle' # default (if not defined!)
+    default_icon = 'alert-triangle'
 
-    if category.find('ACCOUNT') >= 0:
-        if artifact.find('AUTH') >= 0:  icon = 'key'
-        else:                           icon = 'user'
-    elif category == 'ADB HOSTS':       icon = 'terminal'
-    elif category == 'APP INTERACTION': icon = 'bar-chart-2'
-    elif category == 'BASH HISTORY':    icon = 'terminal'
-    elif category == 'BATTERY':         icon = 'battery-charging'
-    elif category == 'CAST':            icon = 'cast'
-    elif category == 'CALL LOGS':       icon = 'phone'
-    elif category == 'CHATS':           icon = 'message-circle'
-    elif category == 'CHROME':          
-        if artifact.find('SEARCH TERMS') >= 0:      icon = 'search'
-        elif artifact.find('DOWNLOADS') >= 0:       icon = 'download'
-        elif artifact.find('BOOKMARKS') >= 0:       icon = 'bookmark'
-        elif artifact.find('LOGIN') >= 0:           icon = 'log-in'
-        elif artifact.find('MEDIA HISTORY') >= 0:   icon = 'video'
-        elif artifact.find('NETWORK ACTION PREDICTOR') >=0:    icon = 'type'
-        elif artifact.find('TOP SITES') >= 0:       icon = 'list'
-        elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
-        else:                                       icon = 'chrome'
-    elif category == 'DEVICE INFO':     
-        if artifact == 'BUILD INFO':                icon = 'terminal'
-        elif artifact == 'PARTNER SETTINGS':        icon = 'settings'
-        elif artifact.find('SETTINGS_SECURE_') >= 0: icon = 'settings'
-        else:                                       icon = 'info'
-    elif category == 'ETC HOSTS':       icon = 'globe'
-    elif category == 'EMULATED STORAGE METADATA':     icon = 'database'
-    elif category == 'GBOARD KEYBOARD': icon = 'edit-3'
-    elif category == 'GOOGLE DOCS':     icon = 'file'
-    elif category == 'GOOGLE NOW & QUICKSEARCH': icon = 'search'
-    elif category == 'GOOGLE PLAY':     
-        if artifact == 'GOOGLE PLAY SEARCHES':      icon = 'search'
-        else:                                       icon = 'play'
-    elif category == 'INSTALLED APPS':  icon = 'package'
-    elif category == 'MEDIA METADATA':  icon = 'file-plus'
-    elif category == 'NOW PLAYING':           icon = 'music'
-    elif category == 'RCS CHATS':       icon = 'message-circle'
-    elif category == 'RECENT ACTIVITY': icon = 'activity'
-    elif category == 'SAMSUNG_CMH':     icon = 'disc'
-    elif category == 'SCRIPT LOGS':     icon = 'archive'
-    elif category == 'SMS & MMS':       icon = 'message-square'
-    elif category == 'SQLITE JOURNALING': icon = 'book-open'
-    elif category == 'USAGE STATS':     icon = 'bar-chart-2'
-    elif category == 'USER DICTIONARY': icon = 'book'
-    elif category == 'WELLBEING' or category == 'WELLBEING ACCOUNT': 
-        if artifact == 'ACCOUNT DATA':  icon = 'user'
-        else:                           icon = 'layers'
-    elif category == 'WIFI PROFILES':  icon = 'wifi'
-    elif category == 'PERMISSIONS':  icon = 'check'
-    elif category == 'APP ROLES':  icon = 'tool'
-        
-    return icon
+    # Dictionary of categories, artifacts, and their respective feathericon.
+    # First dictionary key is the category lookup value.
+    # Second dictionary keys, are the artifact lookup.
+    icon_database = {
+        'ACCOUNT': {
+            'AUTH': 'key',
+            'default': 'user'
+        },
+        'ADB HOSTS': 'terminal',
+        'APP INTERACTION': 'bar-chart-2',
+        'BASH HISTORY': 'terminal',
+        'BATTERY': 'battery-charging',
+        'CAST': 'cast',
+        'CALL LOGS': 'phone',
+        'CHATS': 'message-circle',
+        'CHROME': {
+            'SEARCH TERMS': 'search',
+            'DOWNLOADS': 'download',
+            'BOOKMARKS': 'bookmark',
+            'LOGIN': 'log-in',
+            'MEDIA HISTORY': 'video',
+            'NETWORK ACTION PREDICTOR': 'type',
+            'TOP SITES': 'list',
+            'OFFLINE PAGES': 'cloud-off',
+            'default': 'chrome'
+        },
+        'DEVICE INFO': {
+            'BUILD INFO': 'terminal',
+            'PARTNER SETTINGS': 'settings',
+            'SETTINGS_SECURE_': 'settings',
+            'default': 'info'
+        },
+        'ETC HOSTS': 'globe',
+        'EMULATED STORAGE METADATA': 'database',
+        'GBOARD KEYBOARD': 'edit-3',
+        'GOOGLE DOCS': 'file',
+        'GOOGLE NOW & QUICKSEARCH': 'search',
+        'GOOGLE PLAY': {
+            'GOOGLE PLAY SEARCHES': 'search',
+            'default': 'play'
+        },
+        'INSTALLED APPS': 'package',
+        'MEDIA METADATA': 'file-plus',
+        'NOW PLAYING': 'music',
+        'RCS CHATS': 'message-circle',
+        'RECENT ACTIVITY': 'activity',
+        'SAMSUNG_CMH': 'disc',
+        'SCRIPT LOGS': 'archive',
+        'SMS & MMS': 'message-square',
+        'SQLITE JOURNALING': 'book-open',
+        'USAGE STATS': 'bar-chart-2',
+        'USER DICTIONARY': 'book',
+        'WELLBEING': {
+            'ACCOUNT DATA': 'user',
+            'default': 'layers'
+        },
+        'WIFI PROFILES': 'wifi',
+        'PERMISSIONS': 'check',
+        'APP ROLES': 'tool',
+    }
+
+    for key_category, icon_set in icon_database.items():
+        if category.find(key_category.upper()) != -1:
+            if isinstance(icon_set, dict):
+                for icon_artifact_name, icon_name in icon_set.items():
+                    if artifact.find(icon_artifact_name.upper()) != -1:
+                        return icon_name
+
+                return icon_set.get('default', default_icon)
+            else:
+                return icon_set
+
+    return default_icon
     
 def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path):
 
