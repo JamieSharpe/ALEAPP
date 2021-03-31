@@ -4,6 +4,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows, open_sqlite_db_read
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/' 
@@ -19,12 +20,14 @@ class LgRcsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'RCS Chats'
+        self.name = 'RCS Chats - LG'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['*/mmssms.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         file_found = self.get_rcs_db_path()
@@ -67,9 +70,6 @@ class LgRcsPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('RCS Chats')
-            report.start_artifact_report(self.report_folder, 'RCS')
-            report.add_script()
             data_headers = ('Date','Address','Body','Read?','Thread ID','Is File?','Filename','File Path','File Size','Thumb File Path','Thumb File Size','File XML Path')
             data_list = []
             tsv_list = []
@@ -77,9 +77,7 @@ class LgRcsPlugin(ArtefactPlugin):
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],))
 
-
-            report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'RCS Chats - LG'
             tsv(self.report_folder, data_headers, tsv_list, tsvname)

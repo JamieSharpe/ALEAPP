@@ -6,6 +6,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows, open_sqlite_db_read
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -24,9 +25,13 @@ class GoogleNowPlayingPlugin(ArtefactPlugin):
         self.name = 'Google Now Playing'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'This is data stored by the Now Playing feature in Pixel phones, which '\
+                            'shows song data on the lock screen for any music playing nearby. It\'s ' \
+                            'part of Pixel Ambient Services (https://play.google.com/store/apps/details?id=com.google.intelligence.sense).'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.intelligence.sense/db/history_db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         for file_found in self.files_found:
@@ -58,13 +63,6 @@ class GoogleNowPlayingPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                description = 'This is data stored by the Now Playing feature in Pixel phones, which '\
-                            'shows song data on the lock screen for any music playing nearby. It\'s ' \
-                            'part of <a href="https://play.google.com/store/apps/details?id=com.google.intelligence.sense"'\
-                            ' target="_blank">Pixel Ambient Services</a>.'
-                report = ArtifactHtmlReport('Now Playing History')
-                report.start_artifact_report(self.report_folder, 'Now Playing', description)
-                report.add_script()
 
                 data_headers = ('Timestamp', 'Timezone', 'Song Title', 'Artist', 'Duration',
                                 'Album', 'Album Year')
@@ -110,15 +108,14 @@ class GoogleNowPlayingPlugin(ArtefactPlugin):
                         if last_data_set[0] == timestamp: # exact duplicate, do not add
                             pass
                         else:
-                            last_data_set[0] += ',<br />' + timestamp
+                            last_data_set[0] += ',\n' + timestamp
                     else:
                         data_list.append(last_data_set)
                         last_data_set = []
                 if last_data_set:
                     data_list.append(last_data_set)
                 logfunc("{} entries grouped into {}".format(usageentries, len(data_list)))
-                report.write_artifact_data_table(data_headers, data_list, file_found, html_escape=False)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'google now playing'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

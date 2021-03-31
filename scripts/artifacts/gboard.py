@@ -4,6 +4,8 @@ import sqlite3
 
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv, timeline, open_sqlite_db_readonly, does_table_exist
+from scripts import artifact_report
+
 
 class keyboard_event:
     def __init__(self, id, app, text, textbox_name, textbox_id, event_date, start_date='', end_date=''):
@@ -34,9 +36,11 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
         self.name = 'GBoard Keyboard'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'Keystrokes typed by the user in various input fields of apps, that have been temporarily cached by the Gboard keyboard app are seen here.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.inputmethod.latin/databases/trainingcache*.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -117,18 +121,13 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
 
         file_name = os.path.basename(file_found)
         if keyboard_events:
-            description = "Keystrokes typed by the user in various input fields of apps, that have been temporarily cached by the Gboard keyboard app are seen here."
-            report = ArtifactHtmlReport(f'Gboard Keystroke cache - {file_name}')
-            report.start_artifact_report(self.report_folder, f'{file_name}', description)
-            report.add_script()
 
             data_headers = ('Id','Text','App','Input Name','Input ID','Event Timestamp')
             data_list = []
             for ke in keyboard_events:
                 data_list.append((ke.id, ke.text, ke.app, ke.textbox_name, ke.textbox_id, ke.event_date))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Gboard Keystroke cache - {file_name}'
             tsv(self.report_folder, data_headers, data_list, tsvname)
@@ -203,18 +202,13 @@ class GBoardKeyboardPlugin(ArtefactPlugin):
 
         file_name = os.path.basename(file_found)
         if keyboard_events:
-            description = "Keystrokes typed by the user in various input fields of apps, that have been temporarily cached by the Gboard keyboard app are seen here."
-            report = ArtifactHtmlReport(f'Gboard Keystroke cache - {file_name}')
-            report.start_artifact_report(self.report_folder, f'{file_name}', description)
-            report.add_script()
 
             data_headers = ('Id','Text','App','Input Name','Input ID','Event Timestamp')
             data_list = []
             for ke in keyboard_events:
                 data_list.append((ke.id, ke.text, ke.app, ke.textbox_name, ke.textbox_id, ke.event_date))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Gboard Keystroke cache - {file_name}'
             tsv(self.report_folder, data_headers, data_list, tsvname)

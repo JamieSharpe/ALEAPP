@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class WiFiProfilesPlugin(ArtefactPlugin):
     """
@@ -15,7 +15,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'WiFi Profiles'
+        self.name = 'WiFi Hotspots'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -24,6 +24,8 @@ class WiFiProfilesPlugin(ArtefactPlugin):
             '**/misc**/apexdata/com.android.wifi/WifiConfigStoreSoftAp.xml'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -64,14 +66,9 @@ class WiFiProfilesPlugin(ArtefactPlugin):
                 data_list.append((ssid, passphrase, security_type))
 
         if data_list:
-            report = ArtifactHtmlReport('Wi-Fi Hotspot')
-            report.start_artifact_report(self.report_folder, 'Wi-Fi Hotspot')
-            report.add_script()
             data_headers = ('SSID', 'Passphrase', 'SecurityType')
-            report.write_artifact_data_table(data_headers, data_list, ", ".join(self.files_found))
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'wifi hotspot'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
         else:
             logfunc('No Wi-Fi Hotspot data available')

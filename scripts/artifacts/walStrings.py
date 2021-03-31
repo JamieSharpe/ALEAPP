@@ -5,7 +5,7 @@ import string
 from pathlib import Path
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
-
+from scripts import artifact_report
 
 class WalStringsPlugin(ArtefactPlugin):
     """
@@ -20,12 +20,14 @@ class WalStringsPlugin(ArtefactPlugin):
         self.name = 'SQLite Journaling'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'ASCII strings extracted from SQLite journal and WAL files.'  # Description on what the artefact is.
         self.path_filters = [
             '**/*-wal',
             '**/*-journal'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        # self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -77,6 +79,7 @@ class WalStringsPlugin(ArtefactPlugin):
         report.start_artifact_report(self.report_folder, 'Strings - SQLite Journal & WAL', description)
         report.add_script()
         data_headers = ('Report', 'Location')
+        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
         report.write_artifact_data_table(data_headers, data_list, location, html_escape=False)
         report.end_artifact_report()
 

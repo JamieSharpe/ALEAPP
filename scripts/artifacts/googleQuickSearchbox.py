@@ -8,6 +8,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -37,7 +38,7 @@ class GoogleQuickSearchPlugin(ArtefactPlugin):
         self.name = 'Google Now & QuickSearch'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'Recently searched terms from the Google Search widget and any interaction with the Google Personal Assistant / app (previously known as \'Google Now\') appear here. This can include previously searched items from another device too!'
         self.path_filters = ['**/com.google.android.googlequicksearchbox/app_session/*.binarypb']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 

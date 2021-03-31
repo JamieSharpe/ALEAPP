@@ -2,7 +2,7 @@ from scripts.ilapfuncs import is_platform_windows, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class SimInfoPlugin(ArtefactPlugin):
     """
@@ -14,12 +14,14 @@ class SimInfoPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Device Info'
+        self.name = 'SIM Info'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/user_de/*/com.android.providers.telephony/databases/telephony.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -77,9 +79,6 @@ class SimInfoPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Device Info')
-            report.start_artifact_report(self.report_folder, f'SIM_info_{uid}')
-            report.add_script()
             data_headers = ('Number', 'IMSI', 'Display Name','Carrier Name', 'ISO Code', 'Carrier ID', 'ICC ID')
 
             data_list = []
@@ -93,8 +92,8 @@ class SimInfoPlugin(ArtefactPlugin):
                     row4 = row[4]
                     row5 = row[5]
                 data_list.append((row[0], row1, row[2], row[3], row4, row5, row[6]))
-            report.write_artifact_data_table(data_headers, data_list, folder)
-            report.end_artifact_report()
+
+            artifact_report.GenerateHtmlReport(self, folder, data_headers, data_list)
 
             tsvname = f'sim info {uid}'
             tsv(self.report_folder, data_headers, data_list, tsvname)

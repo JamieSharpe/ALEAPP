@@ -4,7 +4,7 @@ from scripts.ilapfuncs import is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class RuntimePermissionsPlugin(ArtefactPlugin):
     """
@@ -16,7 +16,7 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Permissions'
+        self.name = 'Runtime Permissions'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -25,6 +25,8 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
             '*/misc_de/*/apexdata/com.android.permission/runtime-permissions.xml'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -73,12 +75,8 @@ class RuntimePermissionsPlugin(ArtefactPlugin):
                             data_list.append((usagetype, name, permission, granted, flags))
 
                     if len(data_list) > 0:
-                        report = ArtifactHtmlReport('Runtime Permissions')
-                        report.start_artifact_report(self.report_folder, f'Runtime Permissions_{user}')
-                        report.add_script()
                         data_headers = ('Type', 'Name', 'Permission', 'Granted?','Flag')
-                        report.write_artifact_data_table(data_headers, data_list, file_found)
-                        report.end_artifact_report()
+                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                         tsvname = f'Runtime Permissions_{user}'
                         tsv(self.report_folder, data_headers, data_list, tsvname)

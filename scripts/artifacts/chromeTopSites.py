@@ -4,7 +4,7 @@ from scripts.ilapfuncs import get_next_unused_name, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeTopSitesPlugin(ArtefactPlugin):
     """
@@ -25,6 +25,8 @@ class ChromeTopSitesPlugin(ArtefactPlugin):
             '**/app_sbrowser/Default/Top Sites*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -57,19 +59,12 @@ class ChromeTopSitesPlugin(ArtefactPlugin):
                 usageentries = 0
 
             if usageentries > 0:
-                report = ArtifactHtmlReport(f'{browser_name} Top Sites')
-                #check for existing and get next name for report file, so report from another file does not get overwritten
-                report_path = os.path.join(self.report_folder, f'{browser_name} Top Sites.temphtml')
-                report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
-                report.start_artifact_report(self.report_folder, os.path.basename(report_path))
-                report.add_script()
                 data_headers = ('URL','Rank','Title','Redirects')
                 data_list = []
                 for row in all_rows:
                     data_list.append((row[0],row[1],row[2],row[3]))
 
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'{browser_name} top sites'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

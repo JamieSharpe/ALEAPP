@@ -2,7 +2,7 @@ from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class CastPlugin(ArtefactPlugin):
     """
@@ -20,6 +20,8 @@ class CastPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.gms/databases/cast.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -59,16 +61,12 @@ class CastPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Cast')
-            report.start_artifact_report(self.report_folder, 'Cast')
-            report.add_script()
             data_headers = ('Device ID (SSDP UDN)','Capabilities','Device Version','Device Friendly Name','Device Model Name','Receiver Metrics ID','Service Instance Name','Device IP Address','Device Port','Supported Criteria','RCN Enabled Status','Hotspot BSSID','Cloud Device ID','Last Published Timestamp','Last Discovered Timestamp','Last Discovered By BLE Timestamp')
             data_list = []
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12],row[13],row[14],row[15]))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Cast'
             tsv(self.report_folder, data_headers, data_list, tsvname)

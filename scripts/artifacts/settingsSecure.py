@@ -5,9 +5,9 @@ from scripts.ilapfuncs import is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
-
-class DeviceInfoPlugin(ArtefactPlugin):
+class SettingsSecurePlugin(ArtefactPlugin):
     """
     """
 
@@ -17,12 +17,14 @@ class DeviceInfoPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Device Info'
+        self.name = 'Settings Secure'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/system/users/*/settings_secure.xml']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -65,12 +67,9 @@ class DeviceInfoPlugin(ArtefactPlugin):
                 data_list.append((nme, val))
 
         if len(data_list) > 0:
-            report = ArtifactHtmlReport('Settings Secure')
-            report.start_artifact_report(self.report_folder, f'Settings_Secure_{uid}')
-            report.add_script()
             data_headers = ('Name', 'Value')
-            report.write_artifact_data_table(data_headers, data_list, file_path)
-            report.end_artifact_report()
+
+            artifact_report.GenerateHtmlReport(self, file_path, data_headers, data_list)
 
             tsvname = f'settings secure'
             tsv(self.report_folder, data_headers, data_list, tsvname)

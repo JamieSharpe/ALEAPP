@@ -1,7 +1,7 @@
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class BuildPlugin(ArtefactPlugin):
     """
@@ -14,12 +14,14 @@ class BuildPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Device Info'
+        self.name = 'Build Info'
         self.description = 'Parses device build information.'
 
         self.artefact_reference = 'Build information of the acquired device.'  # Description on what the artefact is.
         self.path_filters = ['**/vendor/build.prop']  # Collection of regex search filters to locate an artefact.
         self.icon = 'terminal'  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         data_list = []
@@ -61,12 +63,9 @@ class BuildPlugin(ArtefactPlugin):
 
         itemqty = len(data_list)
         if itemqty > 0:
-            report = ArtifactHtmlReport('Build Info')
-            report.start_artifact_report(self.report_folder, f'Build Info')
-            report.add_script()
+
             data_headers = ('Key', 'Value')
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Build Info'
             tsv(self.report_folder, data_headers, data_list, tsvname)

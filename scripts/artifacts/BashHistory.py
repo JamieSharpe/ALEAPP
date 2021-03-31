@@ -2,7 +2,7 @@ import codecs
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class BashHistoryPlugin(ArtefactPlugin):
     """
@@ -21,6 +21,8 @@ class BashHistoryPlugin(ArtefactPlugin):
         self.path_filters = ['**/.bash_history']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
 
+        self.debug_mode = True
+
     def _processor(self) -> bool:
         data_list = []
         file_found = str(self.files_found[0])
@@ -31,12 +33,8 @@ class BashHistoryPlugin(ArtefactPlugin):
                 counter += 1
 
         if len(data_list) > 0:
-            report = ArtifactHtmlReport('Bash History')
-            report.start_artifact_report(self.report_folder, f'Bash History')
-            report.add_script()
             data_headers = ('Order', 'Command')
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Bash History'
             tsv(self.report_folder, data_headers, data_list, tsvname)

@@ -4,6 +4,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows, open_sqlite_db_read
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/'
@@ -19,12 +20,14 @@ class UsageAppsPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'App Interaction'
+        self.name = 'Personalisation Services'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'This is data stored by the reflection_gel_events.db, which shows data usage from apps to included deleted apps.'  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.as/databases/reflection_gel_events.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -52,11 +55,6 @@ class UsageAppsPlugin(ArtefactPlugin):
             usageentries = len(all_rows)
 
             if usageentries > 0:
-                description = 'This is data stored by the reflection_gel_events.db, which '\
-                            'shows data usage from apps to included deleted apps. '
-                report = ArtifactHtmlReport('Device Personalization Services')
-                report.start_artifact_report(self.report_folder, 'Personalization Services', description)
-                report.add_script()
 
                 data_headers = ('Timestamp', 'Deleted?', 'BundleID', 'From', 'From in Proto', 'Proto Full')
                 data_list = []
@@ -98,15 +96,11 @@ class UsageAppsPlugin(ArtefactPlugin):
                             source =''
 
                     data_list.append((row[0], idb, bundleid, row[3], usage, values))
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                tsv(self.report_folder, data_headers, data_list, self.name)
 
-                tsvname = f'personalization services'
-                tsv(self.report_folder, data_headers, data_list, tsvname)
-
-                tlactivity = f'Personalization Services'
-                timeline(self.report_folder, tlactivity, data_list, data_headers)
+                timeline(self.report_folder, self.name, data_list, data_headers)
             else:
                 logfunc('No Usage Apps data available')
 

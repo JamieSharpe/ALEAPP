@@ -6,7 +6,7 @@ from scripts.ilapfuncs import timeline, get_next_unused_name
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeBookmarksPlugin(ArtefactPlugin):
     """
@@ -27,6 +27,8 @@ class ChromeBookmarksPlugin(ArtefactPlugin):
             '**/app_sbrowser/Default/Bookmarks*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -63,15 +65,8 @@ class ChromeBookmarksPlugin(ArtefactPlugin):
                                     data_list.append((dateaddconv, url, name, parent, typed))
             num_entries = len(data_list)
             if num_entries > 0:
-                report = ArtifactHtmlReport(f'{browser_name} Bookmarks')
-                #check for existing and get next name for report file, so report from another file does not get overwritten
-                report_path = os.path.join(self.report_folder, f'{browser_name} Bookmarks.temphtml')
-                report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
-                report.start_artifact_report(self.report_folder, os.path.basename(report_path))
-                report.add_script()
                 data_headers = ('Added Date', 'URL', 'Name', 'Parent', 'Type')
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'{browser_name} Bookmarks'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

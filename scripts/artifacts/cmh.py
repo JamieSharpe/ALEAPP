@@ -2,7 +2,7 @@ from scripts.ilapfuncs import timeline, kmlgen, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class CmhPlugin(ArtefactPlugin):
     """
@@ -20,6 +20,8 @@ class CmhPlugin(ArtefactPlugin):
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/cmh.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -47,15 +49,12 @@ class CmhPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Samsung CMH')
-            report.start_artifact_report(self.report_folder, f'Geodata')
-            report.add_script()
             data_headers = ('Timestamp', 'Date Added', 'Date Modified', 'Title', 'Bucket Name', 'Latitude', 'Longitude','Address', 'URI', 'Data Location', 'Is Private')
             data_list = []
             for row in all_rows:
                 data_list.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]))
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'Samsung CMH Geodata'
             tsv(self.report_folder, data_headers, data_list, tsvname)

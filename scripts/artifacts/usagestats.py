@@ -11,6 +11,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 # Event types referenced from core\java\android\app\usage\UsageEvents.java
 
@@ -78,6 +79,8 @@ class UsageStatsPlugin(ArtefactPlugin):
             '**/system_ce/*/usagestats*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -567,9 +570,6 @@ class UsageStatsPlugin(ArtefactPlugin):
         ''')
         all_rows = cursor.fetchall()
 
-        report = ArtifactHtmlReport('Usagestats')
-        report.start_artifact_report(report_folder, f'UsageStats_{uid}')
-        report.add_script()
         data_headers = ('Last Time Active','Usage Type','Time Active in Msecs', 'Time Active in Secs',
                         'Last Time Service Used', 'Last Time Visible', 'Total Time Visible', 'App Launch Count',
                         'Package', 'Types', 'Class', 'Source')
@@ -595,14 +595,11 @@ class UsageStatsPlugin(ArtefactPlugin):
                     app_launch_count, package, types, classs, source))
             processed = processed + 1
 
-        report.write_artifact_data_table(data_headers, data_list, folder)
-        report.end_artifact_report()
+        artifact_report.GenerateHtmlReport(self, folder, data_headers, data_list)
 
-        tsvname = f'usagestats'
-        tsv(report_folder, data_headers, data_list, tsvname)
+        tsv(report_folder, data_headers, data_list, self.name)
 
-        tlactivity = f'Usagestats'
-        timeline(report_folder, tlactivity, data_list, data_headers)
+        timeline(report_folder, self.name, data_list, data_headers)
 
         logfunc(f'Records processed for user {uid}: {processed}')
         db.close()

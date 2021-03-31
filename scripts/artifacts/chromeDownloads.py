@@ -4,7 +4,7 @@ from scripts.ilapfuncs import timeline, get_next_unused_name, does_column_exist_
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeDownloadsPlugin(ArtefactPlugin):
     """
@@ -25,6 +25,8 @@ class ChromeDownloadsPlugin(ArtefactPlugin):
             '**/app_sbrowser/Default/History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -73,19 +75,12 @@ class ChromeDownloadsPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                report = ArtifactHtmlReport(f'{browser_name} Downloads')
-                #check for existing and get next name for report file, so report from another file does not get overwritten
-                report_path = os.path.join(self.report_folder, f'{browser_name} Downloads.temphtml')
-                report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
-                report.start_artifact_report(self.report_folder, os.path.basename(report_path))
-                report.add_script()
+
                 data_headers = ('Start Time','End Time','Last Access Time','URL','Target Path','State','Opened?','Received Bytes','Total Bytes')
                 data_list = []
                 for row in all_rows:
                     data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8]))
-
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'{browser_name} Downloads'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

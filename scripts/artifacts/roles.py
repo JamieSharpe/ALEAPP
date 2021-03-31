@@ -4,7 +4,7 @@ from scripts.ilapfuncs import is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import tsv
-
+from scripts import artifact_report
 
 class AppRolesPlugin(ArtefactPlugin):
     """
@@ -25,6 +25,8 @@ class AppRolesPlugin(ArtefactPlugin):
             '*/misc_de/*/apexdata/com.android.permission/roles.xml'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -71,12 +73,8 @@ class AppRolesPlugin(ArtefactPlugin):
                         data_list.append((role, holder))
 
                     if len(data_list) > 0:
-                        report = ArtifactHtmlReport('App Roles')
-                        report.start_artifact_report(self.report_folder, f'{ver} Roles_{user}')
-                        report.add_script()
                         data_headers = ('Role', 'Holder')
-                        report.write_artifact_data_table(data_headers, data_list, file_found)
-                        report.end_artifact_report()
+                        artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                         tsvname = f'App Roles_{user}'
                         tsv(self.report_folder, data_headers, data_list, tsvname)

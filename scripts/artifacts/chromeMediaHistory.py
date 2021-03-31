@@ -3,7 +3,7 @@ from scripts.ilapfuncs import timeline, get_next_unused_name, open_sqlite_db_rea
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeMediaHistoryPlugin(ArtefactPlugin):
     """
@@ -24,6 +24,8 @@ class ChromeMediaHistoryPlugin(ArtefactPlugin):
              '**/app_sbrowser/Default/Media History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 

@@ -8,7 +8,7 @@ from scripts.ilapfuncs import timeline, get_next_unused_name, open_sqlite_db_rea
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeLoginDataPlugin(ArtefactPlugin):
     """
@@ -29,6 +29,8 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
             '**/app_sbrowser/Default/Login Data*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -63,12 +65,6 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                report = ArtifactHtmlReport(f'{browser_name} Login Data')
-                #check for existing and get next name for report file, so report from another file does not get overwritten
-                report_path = os.path.join(self.report_folder, f'{browser_name} Login Data.temphtml')
-                report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
-                report.start_artifact_report(self.report_folder, os.path.basename(report_path))
-                report.add_script()
                 data_headers = ('Created Time','Username','Password','Origin URL','Blacklisted by User')
                 data_list = []
                 for row in all_rows:
@@ -79,8 +75,7 @@ class ChromeLoginDataPlugin(ArtefactPlugin):
                     valid_date = self.get_valid_date(row[2], row[3])
                     data_list.append( (valid_date, row[0], password, row[4], row[5]) )
 
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'{browser_name} login data'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

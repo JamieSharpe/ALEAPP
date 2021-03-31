@@ -34,8 +34,7 @@ class AdbHostsPlugin(ArtefactPlugin):
             data_headers = ('Username', 'Hostname')
             artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'ADB Hosts'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
         else:
             logfunc(f'No ADB Hosts file available')

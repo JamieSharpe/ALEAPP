@@ -7,7 +7,7 @@ import sqlite3
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class WiFiProfilesPlugin(ArtefactPlugin):
     """
@@ -19,7 +19,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'WiFiProfiles'
+        self.name = 'WiFi Profiles'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
@@ -28,6 +28,8 @@ class WiFiProfilesPlugin(ArtefactPlugin):
             '**/misc**/apexdata/com.android.wifi/WifiConfigStore.xml'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -181,8 +183,7 @@ class WiFiProfilesPlugin(ArtefactPlugin):
             report.start_artifact_report(self.report_folder, 'Wi-Fi Profiles')
             report.add_script()
             data_headers = ('SecurityMode', 'SSID', 'PreSharedKey', 'WEPKeys', 'Password', 'Identity', 'DefaultGwMacAddress', 'semCreationTime', 'semUpdateTime', 'LastConnectedTime', 'CaptivePortal', 'LoginUrl', 'IpAssignment', 'Path')
-            report.write_artifact_data_table(data_headers, data_list, ", ".join(self.files_found))
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
             tsvname = f'wifi profiles'
             tsv(self.report_folder, data_headers, data_list, tsvname)

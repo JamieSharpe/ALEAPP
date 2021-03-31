@@ -2,7 +2,7 @@ from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class EmulatedSMetaPlugin(ArtefactPlugin):
     """
@@ -14,12 +14,14 @@ class EmulatedSMetaPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Emulated Storage Metadata'
+        self.name = 'Downloads - Emulated Storage Metadata'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.google.android.providers.media.module/databases/external.db*']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -52,9 +54,7 @@ class EmulatedSMetaPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                report = ArtifactHtmlReport('Downloads - Emulated Storage Metadata')
-                report.start_artifact_report(self.report_folder, 'Downloads')
-                report.add_script()
+
                 data_headers = ('Key Timestamp','Date Added','Date Modified','Date Taken','Display Name','Size','Owner Package Name','Bucket Display Name','Referer URI','Download URI','Relative Path','Is download?','Is favorite?','Is trashed?','XMP')
                 data_list = []
                 for row in all_rows:
@@ -70,8 +70,7 @@ class EmulatedSMetaPlugin(ArtefactPlugin):
 
                     data_list.append((keytime, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12],xmp))
 
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'Emulated Storage Metadata - Downloads'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

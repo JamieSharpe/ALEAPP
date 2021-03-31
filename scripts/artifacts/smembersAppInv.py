@@ -2,7 +2,7 @@ from scripts.ilapfuncs import timeline, open_sqlite_db_readonly
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class SMembersPlugin(ArtefactPlugin):
     """
@@ -14,12 +14,14 @@ class SMembersPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'App Interactive'
+        self.name = 'Samsung Members - Apps'
         self.description = ''
 
         self.artefact_reference = ''  # Description on what the artefact is.
         self.path_filters = ['**/com.samsung.oh/databases/com_pocketgeek_sdk_app_inventory.db']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
 
@@ -41,22 +43,16 @@ class SMembersPlugin(ArtefactPlugin):
         all_rows = cursor.fetchall()
         usageentries = len(all_rows)
         if usageentries > 0:
-            report = ArtifactHtmlReport('Samsung Members - Apps')
-            report.start_artifact_report(self.report_folder, 'Samsung Members - Apps')
-            report.add_script()
             data_headers = ('Timestamp','Display Name','Package Name','System App?','Confidence Hash','SHA1','Classification' )
             data_list = []
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+            artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'samsung members - apps'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+            tsv(self.report_folder, data_headers, data_list, self.name)
 
-            tlactivity = f'Samsung Members - Apps'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
+            timeline(self.report_folder, self.name, data_list, data_headers)
         else:
             logfunc('No Samsung Members - Apps data available')
 

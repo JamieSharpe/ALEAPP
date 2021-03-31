@@ -6,7 +6,7 @@ from scripts.ilapfuncs import logfunc, tsv, timeline, get_next_unused_name, open
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
-
+from scripts import artifact_report
 
 class ChromeWebSearchPlugin(ArtefactPlugin):
     """
@@ -27,6 +27,8 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
             '**/app_sbrowser/Default/History*'
         ]  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
     
@@ -55,12 +57,6 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
             all_rows = cursor.fetchall()
             usageentries = len(all_rows)
             if usageentries > 0:
-                report = ArtifactHtmlReport(f'{browser_name} Search Terms')
-                #check for existing and get next name for report file, so report from another file does not get overwritten
-                report_path = os.path.join(self.report_folder, f'{browser_name} Search Terms.temphtml')
-                report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
-                report.start_artifact_report(self.report_folder, os.path.basename(report_path))
-                report.add_script()
                 data_headers = ('Last Visit Time','Search Term','URL', 'Title', 'Visit Count')
                 data_list = []
                 for row in all_rows:
@@ -71,8 +67,7 @@ class ChromeWebSearchPlugin(ArtefactPlugin):
                     else:
                         data_list.append((row[3], search, row[0], row[1], row[2]))
 
-                report.write_artifact_data_table(data_headers, data_list, file_found)
-                report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
                 tsvname = f'{browser_name} search terms'
                 tsv(self.report_folder, data_headers, data_list, tsvname)

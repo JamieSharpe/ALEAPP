@@ -6,6 +6,7 @@ from scripts.ilapfuncs import timeline, is_platform_windows
 from scripts.plugin_base import ArtefactPlugin
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, tsv
+from scripts import artifact_report
 
 is_windows = is_platform_windows()
 slash = '\\' if is_windows else '/' 
@@ -35,12 +36,14 @@ class InstalledAppsPackagesPlugin(ArtefactPlugin):
         self.author_email = ''
         self.author_url = ''
 
-        self.name = 'Installed Apps'
+        self.name = 'Installed Apps - Packages'
         self.description = ''
 
-        self.artefact_reference = ''  # Description on what the artefact is.
+        self.artefact_reference = 'All packages (user installed, oem installed and system) appear here. Many of these are not user apps'  # Description on what the artefact is.
         self.path_filters = ['**/system/packages.xml']  # Collection of regex search filters to locate an artefact.
         self.icon = ''  # feathricon for report.
+
+        self.debug_mode = True
 
     def _processor(self) -> bool:
         packages = []
@@ -71,31 +74,26 @@ class InstalledAppsPackagesPlugin(ArtefactPlugin):
             if len(packages):
                 break
 
-        if self.report_folder[-1] == slash:
-            folder_name = os.path.basename(self.report_folder[:-1])
-        else:
-            folder_name = os.path.basename(self.report_folder)
-        entries = len(packages)
-        if entries > 0:
-            description = "All packages (user installed, oem installed and system) appear here. Many of these are not user apps"
-            report = ArtifactHtmlReport('Packages')
-            report.start_artifact_report(self.report_folder, 'Packages', description)
-            report.add_script()
-            data_headers = ('ft','Name', 'Install Time', 'Update Time', 'Install Originator', 'Installer', 'Code Path', 'Public Flags', 'Private Flags')
-            data_list = []
-            for p in packages:
-                data_list.append( (p.ft, p.name, p.install_time, p.update_time, p.install_originator, p.installer, p.code_path, p.public_flags, p.private_flags) )
+            if self.report_folder[-1] == slash:
+                folder_name = os.path.basename(self.report_folder[:-1])
+            else:
+                folder_name = os.path.basename(self.report_folder)
+            entries = len(packages)
+            if entries > 0:
+                data_headers = ('ft','Name', 'Install Time', 'Update Time', 'Install Originator', 'Installer', 'Code Path', 'Public Flags', 'Private Flags')
+                data_list = []
+                for p in packages:
+                    data_list.append( (p.ft, p.name, p.install_time, p.update_time, p.install_originator, p.installer, p.code_path, p.public_flags, p.private_flags) )
 
-            report.write_artifact_data_table(data_headers, data_list, file_found)
-            report.end_artifact_report()
+                artifact_report.GenerateHtmlReport(self, file_found, data_headers, data_list)
 
-            tsvname = f'Packages'
-            tsv(self.report_folder, data_headers, data_list, tsvname)
+                tsvname = f'Packages'
+                tsv(self.report_folder, data_headers, data_list, tsvname)
 
-            tlactivity = f'Packages'
-            timeline(self.report_folder, tlactivity, data_list, data_headers)
-        else:
-            logfunc('No package data available')
+                tlactivity = f'Packages'
+                timeline(self.report_folder, tlactivity, data_list, data_headers)
+            else:
+                logfunc('No package data available')
 
         return True
 
