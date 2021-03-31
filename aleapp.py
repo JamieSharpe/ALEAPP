@@ -1,9 +1,9 @@
 import argparse
 import scripts.report as report
+import traceback
 
 from scripts.search_files import *
 from scripts.ilapfuncs import *
-from scripts.ilap_artifacts import *
 from scripts.version_info import aleapp_version
 from time import process_time, gmtime, strftime
 from scripts.plugin_manager import PluginManager
@@ -77,7 +77,7 @@ def main():
     crunch_artifacts(extracttype, input_path, out_params, 1, wrap_text)
 
 
-def crunch_artifacts( extracttype, input_path, out_params, ratio, wrap_text):
+def crunch_artifacts(extracttype, input_path, out_params, ratio, wrap_text):
     start = process_time()
 
     logfunc('Processing started. Please wait. This may take a few minutes...')

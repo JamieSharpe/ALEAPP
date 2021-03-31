@@ -1,3 +1,8 @@
+"""
+TODO: Delete this file in the future.
+This has been replaced with the plugin manager.
+"""
+
 # To add a new artifact module, import it here as shown below:
 #     from scripts.artifacts.fruitninja import get_fruitninja
 # Also add the grep search for that module using the same name
